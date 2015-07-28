@@ -24,7 +24,16 @@ export default class Mentions {
         content='<p>This is the initial content of the editor</p>'
         config={{
           plugins: 'autolink link image lists mentions print preview',
-          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
+
+          mentions: {
+            source: [
+              { name: 'Tyra Porcelli' },
+              { name: 'Brigid Reddish' },
+              { name: 'Ashely Buckler' },
+              { name: 'Teddy Whelan' }
+            ]
+          }
         }}
         onChange={this.handleEditorChange}
       />

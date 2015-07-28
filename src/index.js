@@ -1,3 +1,4 @@
+import 'mentions/plugin';
 import React from 'react';
 import App from './App';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import TinyMCE from 'react-tinymce';
 import { connect } from 'redux/react';
 import { bindActionCreators } from 'redux';
 import * as mentionActions from 'mentions/actions/mentionActions';
@@ -9,14 +10,24 @@ import * as mentionActions from 'mentions/actions/mentionActions';
   };
 })
 export default class Mentions {
+
+  handleEditorChange(event) {
+    console.log(event.target.getContent());
+  }
+
   render() {
-    const { hello, dispatch } = this.props;
+    const { dispatch } = this.props;
     const { fetchUsers } = bindActionCreators(mentionActions, dispatch);
 
     return (
-      <div>
-        hi! {hello}
-      </div>
+      <TinyMCE
+        content='<p>This is the initial content of the editor</p>'
+        config={{
+          plugins: 'autolink link image lists mentions print preview',
+          toolbar: 'undo redo | bold italic | alignleft aligncenter alignright'
+        }}
+        onChange={this.handleEditorChange}
+      />
     );
   }
 }

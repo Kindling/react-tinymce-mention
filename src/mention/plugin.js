@@ -1,7 +1,7 @@
 import _ from 'lodash-node';
-import * as MentionsActionTypes from 'mention/constants/MentionsActionTypes';
+import { fetchUsers } from 'mention/actions/mentionActions';
 
-export function initializeMentions(redux) {
+export function initializeMentions(store) {
   return new Promise( resolve => {
     window.tinymce.create('tinymce.plugins.Mentions', {
 
@@ -32,7 +32,7 @@ export function initializeMentions(redux) {
             if (autoComplete === undefined || (autoComplete.hasFocus !== undefined && !autoComplete.hasFocus)) {
               event.preventDefault();
 
-              console.log('should add autocomplete', redux.dispatch(MentionsActionTypes.SHOW_USERS));
+              console.log('should add autocomplete', store.dispatch(fetchUsers()));
             }
           }
         });

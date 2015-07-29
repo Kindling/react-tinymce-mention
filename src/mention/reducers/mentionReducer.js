@@ -1,13 +1,26 @@
 import _ from 'lodash-node';
 
 const initialState = {
-  hello: 'hi!'
+  users: ['chris'],
+  testing: 'not working'
 };
 
 const actionsMap = {
   fetchUsers(state, action) {
     return {
-      fetched: true
+      users: [
+        'jim',
+        'alex',
+        'chris',
+        'katy',
+        'sam'
+      ]
+    };
+  },
+
+  testing(state, action) {
+    return {
+      testing: 'is working'
     };
   }
 };

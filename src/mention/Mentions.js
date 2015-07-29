@@ -1,23 +1,23 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
-import { connect } from 'redux/react';
-import { bindActionCreators } from 'redux';
-import * as mentionActions from 'mention/actions/mentionActions';
+// import { connect } from 'redux/react';
+// import { bindActionCreators } from 'redux';
+// import * as mentionActions from 'mention/actions/mentionActions';
 
-@connect(state => {
-  return {
-    hello: state.mention.hello
-  };
-})
+// @connect(state => {
+//   return {
+//     hello: state.mention.hello
+//   };
+// })
 export default class Mentions {
 
   handleEditorChange(event) {
-    console.log(event.target.getContent());
+    // console.log(event.target.getContent());
   }
 
   render() {
-    const { dispatch } = this.props;
-    const { fetchUsers } = bindActionCreators(mentionActions, dispatch);
+    // const { dispatch } = this.props;
+    // const { fetchUsers } = bindActionCreators(mentionActions, dispatch);
 
     return (
       <TinyMCE

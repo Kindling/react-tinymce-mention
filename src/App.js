@@ -1,14 +1,14 @@
 import React from 'react';
 import { Provider } from 'redux/react';
-import { initializeMentions } from 'mentions/plugin';
-import initializeRedux from 'mentions/utils/initializeRedux';
-import renderComponent from 'mentions/utils/renderComponent';
-import mentionReducer from 'mentions/reducers/mentionReducer';
-import Mentions from 'mentions/Mentions';
-import UserItem from 'mentions/components/UserItem';
+import { initializeMentions } from 'mention/plugin';
+import initializeRedux from 'mention/utils/initializeRedux';
+import renderComponent from 'mention/utils/renderComponent';
+import mentionReducer from 'mention/reducers/mentionReducer';
+import Mentions from 'mention/Mentions';
+import UserItem from 'mention/components/UserItem';
 
 const redux = initializeRedux({
-  mentions: mentionReducer
+  mention: mentionReducer
 });
 
 initializeMentions(redux).then(function(editor) {
@@ -18,7 +18,7 @@ initializeMentions(redux).then(function(editor) {
   });
 });
 
-export default class Search {
+export default class App {
   render() {
     return (
       <Provider redux={redux} >{() =>

@@ -1,12 +1,12 @@
 import _ from 'lodash-node';
-import * as MentionActionTypes from 'mentions/constants/MentionActionTypes';
+import * as MentionsActionTypes from 'mention/constants/MentionsActionTypes';
 
 export function initializeMentions(redux) {
   return new Promise( resolve => {
     window.tinymce.create('tinymce.plugins.Mentions', {
 
       init(editor) {
-        var { delimiter } = editor.getParam('mentions');
+        var { delimiter } = editor.getParam('mention');
         var autoComplete;
 
         // Format delimiters from config
@@ -32,7 +32,7 @@ export function initializeMentions(redux) {
             if (autoComplete === undefined || (autoComplete.hasFocus !== undefined && !autoComplete.hasFocus)) {
               event.preventDefault();
 
-              console.log('should add autocomplete', redux.dispatch(MentionActionTypes.SHOW_USERS));
+              console.log('should add autocomplete', redux.dispatch(MentionsActionTypes.SHOW_USERS));
             }
           }
         });
@@ -41,6 +41,6 @@ export function initializeMentions(redux) {
       }
     });
 
-    window.tinymce.PluginManager.add('mentions', window.tinymce.plugins.Mentions);
+    window.tinymce.PluginManager.add('mention', window.tinymce.plugins.Mentions);
   });
 }

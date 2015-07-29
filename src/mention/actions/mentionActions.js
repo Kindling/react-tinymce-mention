@@ -1,4 +1,4 @@
-import * as Types from 'mentions/constants/MentionActionTypes';
+import * as Types from 'mention/constants/MentionsActionTypes';
 
 export function fetchUsers() {
   return {

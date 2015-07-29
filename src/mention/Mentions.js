@@ -2,11 +2,11 @@ import React from 'react';
 import TinyMCE from 'react-tinymce';
 import { connect } from 'redux/react';
 import { bindActionCreators } from 'redux';
-import * as mentionActions from 'mentions/actions/mentionActions';
+import * as mentionActions from 'mention/actions/mentionActions';
 
 @connect(state => {
   return {
-    hello: state.mentions.hello
+    hello: state.mention.hello
   };
 })
 export default class Mentions {
@@ -23,10 +23,10 @@ export default class Mentions {
       <TinyMCE
         content=''
         config={{
-          plugins: 'autolink link image lists mentions print preview',
+          plugins: 'autolink link image lists mention print preview',
           toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',
 
-          mentions: {
+          mention: {
             source: [
               { name: 'Tyra Porcelli' },
               { name: 'Brigid Reddish' },

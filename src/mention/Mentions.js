@@ -1,24 +1,37 @@
+import _ from 'lodash-node';
 import React from 'react';
+import { connect } from 'react-redux';
 import TinyMCE from 'react-tinymce';
-// import { connect } from 'redux/react';
-// import { bindActionCreators } from 'redux';
-// import * as mentionActions from 'mention/actions/mentionActions';
+import renderComponent from 'mention/utils/renderComponent';
+import UserItem from 'mention/components/UserItem';
 
-// @connect(state => {
-//   return {
-//     hello: state.mention.hello
-//   };
-// })
+@connect(state => {
+  return {
+    editor: state.mention.editor,
+    users: state.mention.users
+  };
+})
 export default class Mentions {
+
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(nextProps.users, this.props.users);
+  }
+
+  componentDidUpdate() {
+    const { editor } = this.props;
+    console.log(this.props);
+
+    if (editor) {
+      // editor.focus();
+      editor.execCommand('mceInsertContent', false, renderComponent(<UserItem />));
+    }
+  }
 
   handleEditorChange(event) {
     // console.log(event.target.getContent());
   }
 
   render() {
-    // const { dispatch } = this.props;
-    // const { fetchUsers } = bindActionCreators(mentionActions, dispatch);
-
     return (
       <TinyMCE
         content=''

@@ -1,12 +1,19 @@
 import _ from 'lodash-node';
 
 const initialState = {
-  users: ['chris'],
-  testing: 'not working'
+  editor: null,
+  users: ['chris']
 };
 
 const actionsMap = {
-  fetchUsers(state, action) {
+
+  setEditor(state, action) {
+    return {
+      editor: action.payload.editor
+    };
+  },
+
+  fetchUsers() {
     return {
       users: [
         'jim',
@@ -18,7 +25,7 @@ const actionsMap = {
     };
   },
 
-  testing(state, action) {
+  testing() {
     return {
       testing: 'is working'
     };

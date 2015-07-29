@@ -21,7 +21,7 @@ export default class Mentions {
 
     return (
       <TinyMCE
-        content='<p>This is the initial content of the editor</p>'
+        content=''
         config={{
           plugins: 'autolink link image lists mentions print preview',
           toolbar: 'undo redo | bold italic | alignleft aligncenter alignright',

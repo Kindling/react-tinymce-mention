@@ -5,13 +5,14 @@ import { setEditor } from 'mention/actions/mentionActions';
 import initializeRedux from 'mention/utils/initializeRedux';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import Mentions from 'mention/Mentions';
+import EditorManager from 'mention/components/EditorManager';
 
 const store = initializeRedux({
   mention: mentionReducer
 });
 
 @provide(store)
-export default class Users {
+export default class Mention {
   componentDidMount() {
     initializeMentions(store).then(function(editor) {
       store.dispatch(setEditor(editor));
@@ -20,7 +21,10 @@ export default class Users {
 
   render() {
     return (
-      <Mentions />
+      <div>
+        <Mentions />
+        <EditorManager />
+      </div>
     );
   }
 }

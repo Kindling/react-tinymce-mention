@@ -2,14 +2,34 @@ import _ from 'lodash-node';
 
 const initialState = {
   editor: null,
-  users: ['chris']
+  highlightIndex: 0,
+  users: [
+    'chris',
+    'bill',
+    'john',
+    'hey'
+  ]
 };
 
 const actionsMap = {
 
-  setEditor(state, action) {
+  moveDown(state) {
+    const { highlightIndex, users } = state;
+
     return {
-      editor: action.payload.editor
+      highlightIndex: highlightIndex < users.length - 1
+        ? highlightIndex + 1
+        : 0
+    };
+  },
+
+  moveUp(state) {
+    const { highlightIndex, users } = state;
+
+    return {
+      highlightIndex: highlightIndex > 0
+        ? highlightIndex - 1
+        : users.length - 1
     };
   },
 
@@ -25,9 +45,9 @@ const actionsMap = {
     };
   },
 
-  testing() {
+  setEditor(state, action) {
     return {
-      testing: 'is working'
+      editor: action.payload.editor
     };
   }
 };

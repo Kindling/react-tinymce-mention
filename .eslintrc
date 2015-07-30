@@ -9,6 +9,7 @@
   },
   "parser": "babel-eslint",
   "rules": {
+    "camelcase": 0,
     "quotes": [2, "single"],
     "strict": [2, "never"],
     "no-extra-boolean-cast": 0,

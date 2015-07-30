@@ -31,12 +31,6 @@ module.exports = {
     ]
   },
 
-  // resolveLoader: {
-  //   root: [
-  //     path.resolve('./node_modules'),
-  //   ]
-  // },
-
   module: {
     loaders: [{
       test: /\.jsx?$/,

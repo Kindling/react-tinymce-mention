@@ -6,19 +6,27 @@ import ListItem from 'mention/components/ListItem.js';
 import { moveDown, moveUp, selectItem } from 'mention/actions/mentionActions';
 
 @connect(state => ({
+  editor: state.mention.editor,
   highlightIndex: state.mention.highlightIndex,
   users: state.mention.users
 }))
 export default class List {
 
-  shouldComponentUpdate(nextProps) {
-    return !_.isEqual(nextProps.users, this.props.users);
-  }
-
   componentDidMount() {
     this.dispatch = this.props.dispatch;
 
     this.setupKeyHandlers();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(nextProps.users, this.props.users);
+  }
+
+  componentDidUpdate() {
+    const list = React.findDOMNode(this.refs.list);
+    if (this.props.editor) {
+      // this.props.editor.blur();
+    }
   }
 
   componentWillUnmount() {
@@ -51,7 +59,7 @@ export default class List {
     console.log(highlightIndex);
 
     return (
-      <ul>
+      <ul ref='list'>
         { users.map((user, index) => {
           return (
             <ListItem

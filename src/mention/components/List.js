@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import key from 'keymaster';
 import ListItem from 'mention/components/ListItem.js';
-import { moveDown, moveUp, selectItem } from 'mention/actions/mentionActions';
+import { moveDown, moveUp, select } from 'mention/actions/mentionActions';
 
 @connect(state => ({
   editor: state.mention.editor,
@@ -24,9 +24,6 @@ export default class List {
 
   componentDidUpdate() {
     const list = React.findDOMNode(this.refs.list);
-    if (this.props.editor) {
-      // this.props.editor.blur();
-    }
   }
 
   componentWillUnmount() {
@@ -50,7 +47,7 @@ export default class List {
   }
 
   handleEnterKey() {
-    this.dispatch(selectItem());
+    this.dispatch(select());
   }
 
   render() {
@@ -59,7 +56,7 @@ export default class List {
     console.log(highlightIndex);
 
     return (
-      <ul ref='list'>
+      <ul id='list' ref='list'>
         { users.map((user, index) => {
           return (
             <ListItem

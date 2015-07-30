@@ -12,13 +12,13 @@ export function moveUp() {
   };
 }
 
-export function fetchUsers() {
+export function fetch() {
   return {
-    type: Types.FETCH_USERS
+    type: Types.FETCH
   };
 }
 
-export function selectItem() {
+export function select() {
   return {
     type: Types.SELECT
   };

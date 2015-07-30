@@ -1,13 +1,17 @@
+import $ from 'jquery';
 import _ from 'lodash-node';
-import { fetchUsers } from 'mention/actions/mentionActions';
+import { fetch } from 'mention/actions/mentionActions';
 
 export function initializeMentions(store) {
   return new Promise( resolve => {
-    window.tinymce.create('tinymce.plugins.Mentions', {
+    window.tinymce.create('tinymce.plugins.Mention', {
 
       init(editor) {
         var { delimiter } = editor.getParam('mention');
         var autoComplete;
+
+        window.editor = editor;
+        window.$ = $;
 
         // Format delimiters from config
         if (!_.isUndefined(delimiter)) {
@@ -31,8 +35,10 @@ export function initializeMentions(store) {
           if (delimiterIndex > -1 && prevCharIsSpace()) {
             if (autoComplete === undefined || (autoComplete.hasFocus !== undefined && !autoComplete.hasFocus)) {
               event.preventDefault();
+              editor.execCommand('mceInsertContent', false, '@');
+              window.parent.focus();
 
-              console.log('should add autocomplete', store.dispatch(fetchUsers()));
+              console.log('should add autocomplete', store.dispatch(fetch()));
             }
           }
         });
@@ -41,6 +47,6 @@ export function initializeMentions(store) {
       }
     });
 
-    window.tinymce.PluginManager.add('mention', window.tinymce.plugins.Mentions);
+    window.tinymce.PluginManager.add('mention', window.tinymce.plugins.Mention);
   });
 }

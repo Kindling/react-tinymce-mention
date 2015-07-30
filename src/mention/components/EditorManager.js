@@ -3,7 +3,8 @@ import { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 @connect(state => ({
-  editor: state.mention.editor
+  editor: state.mention.editor,
+  selectedUser: state.mention.selectedUser
 }))
 export default class EditorManager {
 
@@ -12,14 +13,15 @@ export default class EditorManager {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !_.isEqual(nextProps.editor, this.props.editor);
+    return !_.isEqual(nextProps.editor, this.props.editor)
+      || nextProps.selectedUser !== this.props.selectedUser;
   }
 
   componentDidUpdate() {
-    const { editor } = this.props;
+    const { editor, selectedUser } = this.props;
 
-    if (editor) {
-      editor.execCommand('mceInsertContent', false, '@');
+    if (editor && selectedUser) {
+      editor.execCommand('mceInsertContent', false, `<bold>${selectedUser}</bold>`);
     }
   }
 

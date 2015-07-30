@@ -3,12 +3,8 @@ import _ from 'lodash-node';
 const initialState = {
   editor: null,
   highlightIndex: 0,
-  users: [
-    'chris',
-    'bill',
-    'john',
-    'hey'
-  ]
+  selectedUser: null,
+  users: []
 };
 
 const actionsMap = {
@@ -33,7 +29,7 @@ const actionsMap = {
     };
   },
 
-  fetchUsers() {
+  fetch() {
     return {
       users: [
         'jim',
@@ -42,6 +38,15 @@ const actionsMap = {
         'katy',
         'sam'
       ]
+    };
+  },
+
+  select(state) {
+    const { users, highlightIndex } = state;
+    const selectedUser = users[highlightIndex];
+
+    return {
+      selectedUser
     };
   },
 

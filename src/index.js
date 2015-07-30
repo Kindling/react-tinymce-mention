@@ -10,14 +10,14 @@ var plugins = [
   'image',
   'link',
   'media',
+  'mention',
   'tabfocus'
 ];
 
 React.render(
   <div>
-    <Mention />
     <TinyMCE
-      content='sample content'
+      content=''
       config={{
         browser_spellcheck: true,
         document_base_url: window.location.origin + '/',
@@ -42,7 +42,6 @@ React.render(
         theme: 'kindling',
         toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code',
 
-
         mention: {
           source: [
             { name: 'Tyra Porcelli' },
@@ -56,6 +55,6 @@ React.render(
         //this.handleEditorChange()
       }}
     />
-
+    <Mention />
   </div>
 , document.getElementById('root'));

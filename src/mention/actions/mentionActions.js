@@ -18,6 +18,22 @@ export function fetch() {
   };
 }
 
+export function query(character, { aggrigate = true } = {}) {
+  return {
+    type: Types.QUERY,
+    payload: {
+      query: character,
+      aggrigate
+    }
+  };
+}
+
+export function resetQuery() {
+  return {
+    type: Types.RESET_QUERY
+  };
+}
+
 export function select() {
   return {
     type: Types.SELECT

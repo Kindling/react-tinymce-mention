@@ -14,7 +14,6 @@ export default class List {
 
   componentDidMount() {
     this.dispatch = this.props.dispatch;
-
     this.setupKeyHandlers();
   }
 
@@ -23,7 +22,7 @@ export default class List {
   }
 
   componentDidUpdate() {
-    const list = React.findDOMNode(this.refs.list);
+    // const list = React.findDOMNode(this.refs.list);
   }
 
   componentWillUnmount() {
@@ -51,9 +50,7 @@ export default class List {
   }
 
   render() {
-    const { highlightIndex, users } = this.props;
-
-    console.log(highlightIndex);
+    const { users } = this.props;
 
     return (
       <ul id='list' ref='list'>

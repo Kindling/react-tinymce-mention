@@ -3,8 +3,24 @@ import _ from 'lodash-node';
 const initialState = {
   editor: null,
   highlightIndex: 0,
+  query: '',
   selectedUser: null,
-  users: []
+  allUsers: [
+    'chris',
+    'christina',
+    'jim',
+    'joseph',
+    'katy',
+    'kathrine'
+  ],
+  users: [
+    'chris',
+    'christina',
+    'jim',
+    'joseph',
+    'katy',
+    'kathrine'
+  ]
 };
 
 const actionsMap = {
@@ -29,16 +45,47 @@ const actionsMap = {
     };
   },
 
-  fetch() {
-    return {
-      users: [
+  fetch(state) {
+    const users = !_.isEmpty(state.users)
+      ? state.users
+      : [
         'jim',
         'alex',
         'chris',
         'katy',
         'sam'
-      ]
+      ];
+
+    return {
+      users
     };
+  },
+
+  query(state, action) {
+    const prevQuery = state.query;
+    const { query, aggrigate } = action.payload;
+
+    // If override, skip character aggrigate
+    const newQuery = aggrigate ? prevQuery + query : query;
+
+    const users = state.allUsers.filter(user => {
+      return !_.isEmpty(newQuery)
+        ? user.includes(newQuery)
+        : true;
+    });
+
+    return {
+      query: newQuery,
+      users
+    };
+  },
+
+  resetQuery(state) {
+    // console.log('resetting');
+    // return {
+    //   query: '',
+    //   users: state.allUsers
+    // };
   },
 
   select(state) {
@@ -46,7 +93,8 @@ const actionsMap = {
     const selectedUser = users[highlightIndex];
 
     return {
-      selectedUser
+      selectedUser,
+      users: _.without(state.users, selectedUser)
     };
   },
 

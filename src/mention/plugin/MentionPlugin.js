@@ -22,6 +22,8 @@ export default class MentionPlugin {
 
     this.delimiter = this.getDelimiter();
     this.addEventListeners();
+
+    return this;
   }
 
   addEventListeners() {
@@ -74,15 +76,20 @@ export default class MentionPlugin {
 
   handleTrackInput(event) {
     const character = String.fromCharCode(event.which || event.keyCode);
+
+    if (character === ' ') {
+      return this.stopTrackingInput();
+    }
+
     this.store.dispatch(query(character));
   }
 
   startTrackingInput() {
-    this.editor.on('keypress', ::this.handleTrackInput);
+    this.editor.on('keydown', this.handleTrackInput.bind(this));
   }
 
   stopTrackingInput() {
-    this.editor.off('keypress', this.handleTrackInput);
+    this.editor.off('keydown');
     this.store.dispatch(resetQuery());
   }
 

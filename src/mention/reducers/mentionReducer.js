@@ -3,6 +3,7 @@ import _ from 'lodash-node';
 const initialState = {
   editor: null,
   highlightIndex: 0,
+  mentions: [],
   query: '',
   selectedUser: null,
   allUsers: [
@@ -45,28 +46,11 @@ const actionsMap = {
     };
   },
 
-  fetch(state) {
-    const users = !_.isEmpty(state.users)
-      ? state.users
-      : [
-        'jim',
-        'alex',
-        'chris',
-        'katy',
-        'sam'
-      ];
-
-    return {
-      users
-    };
-  },
-
   query(state, action) {
     const prevQuery = state.query;
     const { query, aggrigate } = action.payload;
 
-    // If override, skip character aggrigate
-    const newQuery = aggrigate ? prevQuery + query : query;
+    const newQuery = (aggrigate ? prevQuery + query : query).toLowerCase();
 
     const users = state.allUsers.filter(user => {
       return !_.isEmpty(newQuery)
@@ -88,11 +72,12 @@ const actionsMap = {
   },
 
   select(state) {
-    const { users, highlightIndex } = state;
+    const { mentions, users, highlightIndex } = state;
     const selectedUser = users[highlightIndex];
 
     return {
       selectedUser,
+      mentions: state.mentions.push(selectedUser),
       users: _.without(state.users, selectedUser)
     };
   },
@@ -104,7 +89,7 @@ const actionsMap = {
   }
 };
 
-export default function searchReducer(state = initialState, action) {
+export default function mentionReducer(state = initialState, action) {
   const reduceFn = actionsMap[_.camelCase(action.type)];
 
   if (!reduceFn) {

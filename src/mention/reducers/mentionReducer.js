@@ -1,66 +1,55 @@
 import _ from 'lodash-node';
 
-const initialState = {
+export const initialState = {
+  dataSource: [],
   editor: null,
   highlightIndex: 0,
+  matchedSources: [],
   mentions: [],
   query: '',
-  selectedUser: null,
-  allUsers: [
-    'chris',
-    'christina',
-    'jim',
-    'joseph',
-    'katy',
-    'kathrine'
-  ],
-  users: [
-    'chris',
-    'christina',
-    'jim',
-    'joseph',
-    'katy',
-    'kathrine'
-  ]
+  selectedItem: null
 };
 
 const actionsMap = {
 
   moveDown(state) {
-    const { highlightIndex, users } = state;
+    const { highlightIndex, dataSource } = state;
 
     return {
-      highlightIndex: highlightIndex < users.length - 1
+      highlightIndex: highlightIndex < dataSource.length - 1
         ? highlightIndex + 1
         : 0
     };
   },
 
   moveUp(state) {
-    const { highlightIndex, users } = state;
+    const { highlightIndex, dataSource } = state;
 
     return {
       highlightIndex: highlightIndex > 0
         ? highlightIndex - 1
-        : users.length - 1
+        : dataSource.length - 1
     };
   },
 
   query(state, action) {
     const prevQuery = state.query;
-    const { query, aggrigate } = action.payload;
+    const { query } = action.payload;
 
-    const newQuery = (aggrigate ? prevQuery + query : query).toLowerCase();
+    // Check to see if we're typing in the editor or backspacing
+    // out from a previous @mention, which will regex over the
+    // string looking for the last iteration of an @.  If single,
+    // aggregate the previous result to build up a match; if
+    // multiple, simply use that.
+    const newQuery = (query.length > 1 ? query : prevQuery + query).toLowerCase();
 
-    const users = state.allUsers.filter(user => {
-      return !_.isEmpty(newQuery)
-        ? user.includes(newQuery)
-        : true;
+    const matchedSources = state.dataSource.filter(source => {
+      return source.includes(newQuery);
     });
 
     return {
       query: newQuery,
-      users
+      matchedSources
     };
   },
 

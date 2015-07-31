@@ -1,35 +1,38 @@
-import initializeRedux from 'mention/utils/initializeRedux';
+import { createStore } from 'redux';
 import mentionReducer from 'mention/reducers/mentionReducer';
 
-// import {
-//   moveDown,
-//   moveUp,
-//   query,
-//   resetQuery,
-//   select,
-//   setEditor
-// } from 'mention/actions/mentionActions';
+import {
+  moveDown,
+  moveUp,
+  query,
+  // resetQuery,
+  // select,
+  // setEditor
+} from 'mention/actions/mentionActions';
 
 describe('mentionReducer', () => {
 
   var store;
 
+  const getState = () => store.getState();
+
   beforeEach(() => {
-    store = initializeRedux({
-      mention: mentionReducer
+    store = createStore(mentionReducer, {
+      dataSource: [
+        'chris',
+        'katy',
+        'jim',
+        'alex',
+        'garrett'
+      ],
+      highlightIndex: 0,
+      query: ''
     });
   });
 
-  it('should move the highlighter down', () => {
-
-  });
-
-  it('should move the highlighter up', () => {
-
-  });
-
-  it('should update the current lookup query', () => {
-
+  fit('should update the current lookup query', () => {
+    store.dispatch(query('hello'));
+    expect(getState().query).toBe('hello');
   });
 
   it('should reset the lookup query', () => {
@@ -42,6 +45,26 @@ describe('mentionReducer', () => {
 
   it('set the editor', () => {
 
+  });
+
+  it('should move the highlighter down', () => {
+    store.dispatch(moveDown());
+    expect(getState().highlightIndex).toBe(1);
+    store.dispatch(moveDown());
+    store.dispatch(moveDown());
+    expect(getState().highlightIndex).toBe(3);
+    store.dispatch(moveDown());
+    expect(getState().highlightIndex).toBe(0);
+  });
+
+  it('should move the highlighter up', () => {
+    store.dispatch(moveUp());
+    expect(getState().highlightIndex).toBe(3);
+    store.dispatch(moveUp());
+    store.dispatch(moveUp());
+    expect(getState().highlightIndex).toBe(1);
+    store.dispatch(moveUp());
+    expect(getState().highlightIndex).toBe(0);
   });
 
 });

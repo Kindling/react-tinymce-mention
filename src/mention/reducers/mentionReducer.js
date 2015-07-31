@@ -88,13 +88,20 @@ const actionsMap = {
   },
 
   select(state) {
-    const { mentions, users, highlightIndex } = state;
-    const selectedUser = users[highlightIndex];
+    const { mentions, matchedSources, highlightIndex } = state;
+
+    invariant(matchedSources && matchedSources.length,
+      'Error selecting item: `matchedSources` is emtpy.'
+    );
+
+    const selectedItem = matchedSources[highlightIndex];
+    const updatedMentions = _.clone(mentions);
+    updatedMentions.push(selectedItem);
 
     return {
-      selectedUser,
-      mentions: state.mentions.push(selectedUser),
-      users: _.without(state.users, selectedUser)
+      selectedItem,
+      mentions: updatedMentions,
+      matchedSources: _.without(matchedSources, selectedItem)
     };
   },
 

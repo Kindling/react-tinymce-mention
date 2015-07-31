@@ -8,7 +8,7 @@ import {
   moveUp,
   query,
   resetQuery,
-  // select,
+  select,
   // setEditor
 } from 'mention/actions/mentionActions';
 
@@ -22,6 +22,7 @@ describe('mentionReducer', () => {
     store = createStore(mentionReducer, {
       dataSource: dataSourceStatic,
       highlightIndex: 0,
+      mentions: [],
       query: ''
     });
   });
@@ -63,15 +64,19 @@ describe('mentionReducer', () => {
     expect(getState().matchedSources).toEqual([]);
   });
 
-  it('should select the currently selected item', () => {
+  fit('should select the currently selected item', () => {
+    store.dispatch(query('k'));
 
+    store.dispatch(moveDown());
+    store.dispatch(select());
+    expect(getState().selectedItem).toEqual('katherine');
+
+    store.dispatch(moveUp());
+    store.dispatch(select());
+    expect(getState().selectedItem).toEqual('katy');
   });
 
-  it('set the editor', () => {
-
-  });
-
-  fit('should move the highlighter down', () => {
+  it('should move the highlighter down', () => {
     store.dispatch(query('k'));
     expect(getState().matchedSources).toEqual([
       'katy',
@@ -90,6 +95,14 @@ describe('mentionReducer', () => {
   });
 
   it('should move the highlighter up', () => {
+    store.dispatch(query('k'));
+    expect(getState().matchedSources).toEqual([
+      'katy',
+      'katherine',
+      'kim',
+      'karl'
+    ]);
+
     store.dispatch(moveUp());
     expect(getState().highlightIndex).toBe(3);
     store.dispatch(moveUp());
@@ -97,6 +110,10 @@ describe('mentionReducer', () => {
     expect(getState().highlightIndex).toBe(1);
     store.dispatch(moveUp());
     expect(getState().highlightIndex).toBe(0);
+  });
+
+  it('set the editor', () => {
+
   });
 
 });

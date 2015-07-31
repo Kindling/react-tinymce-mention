@@ -81,11 +81,10 @@ const actionsMap = {
   },
 
   resetQuery(state) {
-    // console.log('resetting');
-    // return {
-    //   query: '',
-    //   users: state.allUsers
-    // };
+    return {
+      query: '',
+      users: state.allUsers
+    };
   },
 
   select(state) {

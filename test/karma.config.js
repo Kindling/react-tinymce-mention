@@ -1,3 +1,4 @@
+var path = require('path');
 
 module.exports = function (config) {
 
@@ -42,9 +43,20 @@ module.exports = function (config) {
       watch: true,
       devtool: 'eval',
 
+      resolve: {
+        extensions: ['', '.js', '.jsx'],
+        modulesDirectories: [
+          path.resolve(__dirname, '../src'),
+          'node_modules'
+        ]
+      },
+
       module: {
         loaders: [
-          { test: /\.js$/, loader: 'babel-loader' }
+          {
+            test: /\.js$/,
+            loader: 'babel-loader'
+          }
         ]
       }
     },

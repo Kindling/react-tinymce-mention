@@ -1,18 +1,47 @@
-import initializeRedux from '../../utils/initializeRedux';
-import mentionReducer from '../mentionReducer';
+import initializeRedux from 'mention/utils/initializeRedux';
+import mentionReducer from 'mention/reducers/mentionReducer';
 
-describe('mentionReducer', function() {
+// import {
+//   moveDown,
+//   moveUp,
+//   query,
+//   resetQuery,
+//   select,
+//   setEditor
+// } from 'mention/actions/mentionActions';
+
+describe('mentionReducer', () => {
 
   var store;
 
-  beforeEach(function() {
+  beforeEach(() => {
     store = initializeRedux({
       mention: mentionReducer
     });
   });
 
-  it('Should work', function() {
-    console.log(store.getState())
-    expect(true).toBe(true);
+  it('should move the highlighter down', () => {
+
   });
+
+  it('should move the highlighter up', () => {
+
+  });
+
+  it('should update the current lookup query', () => {
+
+  });
+
+  it('should reset the lookup query', () => {
+
+  });
+
+  it('should select the currently selected item', () => {
+
+  });
+
+  it('set the editor', () => {
+
+  });
+
 });

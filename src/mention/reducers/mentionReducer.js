@@ -1,4 +1,5 @@
 import _ from 'lodash-node';
+import invariant from 'invariant';
 
 export const initialState = {
   dataSource: [],
@@ -13,38 +14,64 @@ export const initialState = {
 const actionsMap = {
 
   moveDown(state) {
-    const { highlightIndex, dataSource } = state;
+    const { highlightIndex, matchedSources } = state;
+    const len = matchedSources.length;
+    var newIndex;
+
+    invariant(matchedSources.length,
+      'Error moving up: `matchedSources` cannot be empty or undefined'
+    );
+
+    if (highlightIndex < len - 1) {
+      newIndex = highlightIndex + 1;
+    } else {
+      newIndex = 0;
+    }
 
     return {
-      highlightIndex: highlightIndex < dataSource.length - 1
-        ? highlightIndex + 1
-        : 0
+      highlightIndex: newIndex
     };
   },
 
   moveUp(state) {
-    const { highlightIndex, dataSource } = state;
+    const { highlightIndex, matchedSources } = state;
+
+    invariant(matchedSources.length,
+      'Error moving up: `matchedSources` cannot be empty or undefined'
+    );
+
+    const len = matchedSources.length;
+    var newIndex;
+
+    if (highlightIndex > 0) {
+      newIndex = highlightIndex - 1;
+    } else {
+      newIndex = len - 1;
+    }
 
     return {
-      highlightIndex: highlightIndex > 0
-        ? highlightIndex - 1
-        : dataSource.length - 1
+      highlightIndex: newIndex
     };
   },
 
   query(state, action) {
     const prevQuery = state.query;
     const { query } = action.payload;
+    const len = query.length;
 
     // Check to see if we're typing in the editor or backspacing
     // out from a previous @mention, which will regex over the
     // string looking for the last iteration of an @.  If single,
     // aggregate the previous result to build up a match; if
     // multiple, simply use that.
-    const newQuery = (query.length > 1 ? query : prevQuery + query).toLowerCase();
+    const newQuery = (len > 1 || len === 0 ? query : prevQuery + query).toLowerCase();
 
     const matchedSources = state.dataSource.filter(source => {
-      return source.includes(newQuery);
+      if(!_.isEmpty(query)) {
+        return source.includes(newQuery);
+      } else {
+        return false;
+      }
     });
 
     return {
@@ -53,10 +80,10 @@ const actionsMap = {
     };
   },
 
-  resetQuery(state) {
+  resetQuery() {
     return {
       query: '',
-      users: state.allUsers
+      matchedSources: []
     };
   },
 

@@ -1,12 +1,13 @@
 import { createStore } from 'redux';
 import mentionReducer from 'mention/reducers/mentionReducer';
-import dataSource from './fixtures/dataSource';
+import dataSourceStatic from './fixtures/dataSourceStatic';
+// import dataSourceAsync from './fixtures/dataSourceAsync';
 
 import {
   moveDown,
   moveUp,
   query,
-  // resetQuery,
+  resetQuery,
   // select,
   // setEditor
 } from 'mention/actions/mentionActions';
@@ -19,19 +20,47 @@ describe('mentionReducer', () => {
 
   beforeEach(() => {
     store = createStore(mentionReducer, {
-      dataSource,
+      dataSource: dataSourceStatic,
       highlightIndex: 0,
       query: ''
     });
   });
 
-  fit('should update the current lookup query', () => {
-    store.dispatch(query('hello'));
-    expect(getState().query).toBe('hello');
+  it('should update the current lookup query', () => {
+    store.dispatch(query('alex'));
+    expect(getState().query).toBe('alex');
+    expect(getState().matchedSources).toEqual([
+      'alex',
+      'alexandra'
+    ]);
+
+    store.dispatch(query('chris'));
+    expect(getState().matchedSources).toEqual([
+      'chris',
+      'christopher'
+    ]);
+
+    store.dispatch(query(''));
+    expect(getState().matchedSources).toEqual([]);
+
+    store.dispatch(query('c'));
+    store.dispatch(query('h'));
+    store.dispatch(query('r'));
+    expect(getState().matchedSources).toEqual([
+      'chris',
+      'christopher'
+    ]);
   });
 
   it('should reset the lookup query', () => {
+    store.dispatch(query('alex'));
+    expect(getState().matchedSources).toEqual([
+      'alex',
+      'alexandra'
+    ]);
 
+    store.dispatch(resetQuery('alex'));
+    expect(getState().matchedSources).toEqual([]);
   });
 
   it('should select the currently selected item', () => {
@@ -42,7 +71,15 @@ describe('mentionReducer', () => {
 
   });
 
-  it('should move the highlighter down', () => {
+  fit('should move the highlighter down', () => {
+    store.dispatch(query('k'));
+    expect(getState().matchedSources).toEqual([
+      'katy',
+      'katherine',
+      'kim',
+      'karl'
+    ]);
+
     store.dispatch(moveDown());
     expect(getState().highlightIndex).toBe(1);
     store.dispatch(moveDown());

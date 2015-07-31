@@ -2,6 +2,7 @@ export default [
   'alex',
   'alexandra',
   'chris',
+  'christopher',
   'carlos',
   'dan',
   'desiree',
@@ -9,5 +10,7 @@ export default [
   'jim',
   'james',
   'katy',
-  'katherine'
-]
+  'katherine',
+  'kim',
+  'karl'
+];

@@ -1,5 +1,6 @@
 import { createStore } from 'redux';
 import mentionReducer from 'mention/reducers/mentionReducer';
+import dataSource from './fixtures/dataSource';
 
 import {
   moveDown,
@@ -18,13 +19,7 @@ describe('mentionReducer', () => {
 
   beforeEach(() => {
     store = createStore(mentionReducer, {
-      dataSource: [
-        'chris',
-        'katy',
-        'jim',
-        'alex',
-        'garrett'
-      ],
+      dataSource,
       highlightIndex: 0,
       query: ''
     });

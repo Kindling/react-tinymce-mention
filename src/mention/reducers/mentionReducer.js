@@ -3,12 +3,9 @@ import invariant from 'invariant';
 
 export const initialState = {
   dataSource: [],
-  editor: null,
   highlightIndex: 0,
-  matchedSources: [],
   mentions: [],
-  query: '',
-  selectedItem: null
+  query: ''
 };
 
 const actionsMap = {
@@ -95,7 +92,7 @@ const actionsMap = {
     );
 
     const selectedItem = matchedSources[highlightIndex];
-    const updatedMentions = _.clone(mentions);
+    const updatedMentions = _.cloneDeep(mentions);
     updatedMentions.push(selectedItem);
 
     return {

@@ -5,7 +5,7 @@ module.exports = function (config) {
   config.set({
 
     browserNoActivityTimeout: 50000,
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
     client: {
       captureConsole: true

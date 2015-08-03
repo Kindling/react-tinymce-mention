@@ -22,8 +22,6 @@ export default class Mention {
   componentDidMount() {
     const { dataSource, delimiter } = this.props;
 
-    console.log(dataSource);
-
     initializePlugin(store, dataSource, delimiter).then(editor => {
       store.dispatch(setEditor(editor));
     });

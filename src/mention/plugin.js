@@ -14,7 +14,11 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
     'Plugin must be initialized with a dataSource.  Datasource can be an array or promise.'
   );
 
-  return new Promise( resolve => {
+  return new Promise((resolve, reject) => {
+
+    if (_.isUndefined(window.tinymce)) {
+      return reject('Error initializing Mention plugin: `tinymce` is undefined.');
+    }
 
     window.tinymce.create('tinymce.plugins.Mention', {
       init(editor) {

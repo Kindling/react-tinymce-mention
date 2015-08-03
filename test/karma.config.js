@@ -4,8 +4,10 @@ module.exports = function (config) {
 
   config.set({
 
+    basePath: process.cwd(),
     browserNoActivityTimeout: 50000,
     browsers: ['PhantomJS'],
+    // browsers: ['Chrome'],
 
     client: {
       captureConsole: true
@@ -19,19 +21,22 @@ module.exports = function (config) {
     reporters: ['progress', 'beep'],
 
     files: [
-      { pattern: 'vendor/es5-shim.min.js', watched: false, served: true, included: true },
-      { pattern: 'vendor/es5-sham.min.js', watched: false, served: true, included: true },
-      { pattern: 'vendor/jasmine-matchers.js', watched: false, served: true, included: true },
-      { pattern: 'vendor/sinon-1.12.2.js', watched: false, served: true, included: true },
-      { pattern: 'vendor/modernizr.js', watched: false, served: true, included: true },
-      { pattern: 'vendor/matchers.js', watched: false, served: true, included: true },
+      { pattern: 'test/vendor/jquery-2.1.4.js', watched: false, served: true, included: true },
+      { pattern: 'public/scripts/vendor/tinymce/tinymce.full.js', watched: false, served: true, included: true },
+      // { pattern: 'public/scripts/vendor/tinymce/tinymce.jquery.js', watched: false, served: true, included: true },
+      { pattern: 'test/vendor/es5-shim.min.js', watched: false, served: true, included: true },
+      { pattern: 'test/vendor/es5-sham.min.js', watched: false, served: true, included: true },
+      { pattern: 'test/vendor/jasmine-matchers.js', watched: false, served: true, included: true },
+      { pattern: 'test/vendor/sinon-1.12.2.js', watched: false, served: true, included: true },
+      { pattern: 'test/vendor/modernizr.js', watched: false, served: true, included: true },
+      { pattern: 'test/vendor/matchers.js', watched: false, served: true, included: true },
 
       // Main sources
-      { pattern: 'unit.webpack.loader.js', watched: true }
+      { pattern: 'test/unit.webpack.loader.js', watched: true }
     ],
 
     preprocessors: {
-      'unit.webpack.loader.js': [
+      'test/unit.webpack.loader.js': [
         'webpack',
         'sourcemap'
       ]

@@ -114,7 +114,7 @@ describe('mentionReducer', () => {
     expect(getState().highlightIndex).toBe(0);
   });
 
-  fit('should remove the selected item if no characters match from query', function() {
+  it('should remove the selected item if no characters match from query', function() {
     store.dispatch(query('kalleberg'));
     expect(getState().matchedSources).toEqual([
       'garrett kalleberg'

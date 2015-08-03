@@ -4,24 +4,25 @@ import { connect } from 'react-redux';
 
 @connect(state => ({
   editor: state.mention.editor,
-  selectedUser: state.mention.selectedUser
+  mentions: state.mention.mentions
 }))
 export default class EditorManager {
 
   static propTypes = {
-    editor: PropTypes.object
+    editor: PropTypes.object,
+    mentions: PropTypes.array
   }
 
   shouldComponentUpdate(nextProps) {
     return !_.isEqual(nextProps.editor, this.props.editor)
-      || nextProps.selectedUser !== this.props.selectedUser;
+      || !_.isEqual(nextProps.mentions, this.props.mentions);
   }
 
   componentDidUpdate() {
-    const { editor, selectedUser } = this.props;
+    const { editor, mentions } = this.props;
 
-    if (editor && selectedUser) {
-      editor.execCommand('mceInsertContent', false, `<bold>${selectedUser}</bold>`);
+    if (editor && !_.isEmpty(mentions)) {
+      editor.execCommand('mceInsertContent', false, `<bold>${mentions[0]}</bold>`);
     }
   }
 

@@ -54,7 +54,7 @@ export default class List {
 
     return (
       <ul id='list' ref='list'>
-        { users.map((user, index) => {
+        { users && users.map((user, index) => {
           return (
             <ListItem
               user={user}

@@ -72,6 +72,9 @@ const actionsMap = {
       }
     });
 
+    console.log(newQuery);
+    console.log(matchedSources);
+
     return {
       query: newQuery,
       matchedSources

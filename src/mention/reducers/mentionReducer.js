@@ -4,6 +4,7 @@ import invariant from 'invariant';
 export const initialState = {
   dataSource: [],
   highlightIndex: 0,
+  matchedSources: [],
   mentions: [],
   query: ''
 };
@@ -74,6 +75,21 @@ const actionsMap = {
     return {
       query: newQuery,
       matchedSources
+    };
+  },
+
+  remove(state, action) {
+    const prevMentions = state.mentions;
+    const match = action.payload.match;
+
+    invariant(prevMentions && prevMentions.length,
+      'Error removing @mention: `mentions` is empty.'
+    );
+
+    const mentions = _.without(prevMentions, match);
+
+    return {
+      mentions
     };
   },
 

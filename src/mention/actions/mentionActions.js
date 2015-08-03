@@ -18,12 +18,20 @@ export function fetch() {
   };
 }
 
-export function query(character, { aggrigate = true } = {}) {
+export function query(input) {
   return {
     type: Types.QUERY,
     payload: {
-      query: character,
-      aggrigate
+      query: input
+    }
+  };
+}
+
+export function remove(match) {
+  return {
+    type: Types.REMOVE,
+    payload: {
+      match
     }
   };
 }

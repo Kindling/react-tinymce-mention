@@ -2,6 +2,7 @@ import 'babel/polyfill';
 import React from 'react';
 import TinyMCE from 'react-tinymce';
 import Mention from './mention/Mention';
+import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 
 var plugins = [
   'autolink',
@@ -55,6 +56,9 @@ React.render(
         //this.handleEditorChange()
       }}
     />
-    <Mention />
+    <Mention
+      dataSource={dataSourceStatic}
+      delimiter={'@'}
+    />
   </div>
 , document.getElementById('root'));

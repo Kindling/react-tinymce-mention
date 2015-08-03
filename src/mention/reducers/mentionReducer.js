@@ -72,8 +72,8 @@ const actionsMap = {
       }
     });
 
-    console.log(newQuery);
-    console.log(matchedSources);
+    // console.log(newQuery);
+    // console.log(matchedSources);
 
     return {
       query: newQuery,
@@ -82,17 +82,19 @@ const actionsMap = {
   },
 
   remove(state, action) {
-    const prevMentions = state.mentions;
+    const mentions = state.mentions;
     const match = action.payload.match;
 
-    invariant(prevMentions && prevMentions.length,
-      'Error removing @mention: `mentions` is empty.'
-    );
+    if (!mentions.length) {
+      return { mentions };
+    }
 
-    const mentions = _.without(prevMentions, match);
+    const updatedMentions = _.without(mentions, match);
+
+    console.log(updatedMentions);
 
     return {
-      mentions
+      mentions: updatedMentions
     };
   },
 

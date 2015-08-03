@@ -1,18 +1,36 @@
 import $ from 'jquery';
 import _ from 'lodash-node';
 import invariant from 'invariant';
-import { query, resetQuery } from 'mention/actions/mentionActions';
+import { query, remove, resetQuery } from 'mention/actions/mentionActions';
+import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
 
-export function initializePlugin(store) {
+export function initializePlugin(store, dataSource, delimiter = '@') {
+
+  invariant(store,
+    'Plugin must be initialized with a Redux store.'
+  );
+
+  invariant(dataSource,
+    'Plugin must be initialized with a dataSource.  Datasource can be an array or promise.'
+  );
+
   return new Promise( resolve => {
+
     window.tinymce.create('tinymce.plugins.Mention', {
       init(editor) {
-        const mentionPlugin = new MentionPlugin({
-          editor,
-          store
-        });
+        const mentionPlugin = new MentionPlugin(editor, store, delimiter);
+        const resolveInit = () => resolve(editor, mentionPlugin);
 
-        resolve(editor, mentionPlugin);
+        // Check if we're using a promise the dataSource or a
+        // raw array.  If promise, wait for it to resolve before
+        // resolving the outer promise and initializing the app.
+        if (_.isFunction(dataSource.then)) {
+
+          // TODO: Implement promise-based lookup
+          resolveInit();
+        } else {
+          resolveInit();
+        }
       }
     });
 
@@ -20,9 +38,9 @@ export function initializePlugin(store) {
   });
 }
 
-class MentionPlugin {
+export class MentionPlugin {
 
-  constructor({ editor, store }) {
+  constructor(editor, store, delimiter) {
 
     invariant(editor,
       'Error initializing MentionPlugin: `editor` cannot be undefined.'
@@ -34,12 +52,12 @@ class MentionPlugin {
 
     this.store = store;
     this.editor = editor;
+    this.delimiter = this.getDelimiter(delimiter);
 
     // FIXME: Remove helper refs
     window.editor = editor;
     window.$ = $;
 
-    this.delimiter = this.getDelimiter();
     this.addEventListeners();
 
     return this;
@@ -54,11 +72,11 @@ class MentionPlugin {
     const keyCode = String.fromCharCode(event.which || event.keyCode);
     const delimiterIndex = _.indexOf(this.delimiter, keyCode);
 
-    if (delimiterIndex > -1 && this.prevCharIsSpace()) {
+    if (delimiterIndex > -1 && prevCharIsSpace()) {
       this.startTrackingInput();
 
     // Stop tracking if we've exited the @ zone.
-    } else if (this.prevCharIsSpace()) {
+    } else if (prevCharIsSpace()) {
       this.stopTrackingInput();
     }
   }
@@ -79,13 +97,13 @@ class MentionPlugin {
 
       if (match) {
 
+        console.log(match);
+
         // Pop the @ symbol off, and update the entire query
         // so that we can filter properly.
-        const searchQuery = _.rest(_.first(match).split('')).join('');
+        const removeQuery = _.rest(_.first(match).split('')).join('');
 
-        this.store.dispatch(query(searchQuery, {
-          aggrigate: false
-        }));
+        this.store.dispatch(remove(removeQuery));
       }
     }
   }
@@ -109,17 +127,7 @@ class MentionPlugin {
     this.store.dispatch(resetQuery());
   }
 
-  prevCharIsSpace() {
-    const start = this.editor.selection.getRng(true).startOffset;
-    const text = this.editor.selection.getRng(true).startContainer.data || '';
-    const character = text.substr(start - 1, 1);
-
-    return !!character.trim().length ? false : true;
-  }
-
-  getDelimiter() {
-    var { delimiter } = this.editor.getParam('mention');
-
+  getDelimiter(delimiter) {
     if (!_.isUndefined(delimiter)) {
       delimiter = !_.isArray(delimiter) ? [delimiter] : delimiter;
     } else {

@@ -3,14 +3,8 @@
   "version": "0.1.0",
   "description": "@Mention functionality for TinyMCE, built with React and Redux.",
   "scripts": {
-    "browser": "scripts/browser",
-    "build": "scripts/build",
-    "clean": "scripts/clean",
-    "lint": "scripts/lint",
     "start": "node server.js",
-    "test": "node test/index.js",
-    "test:watch": "scripts/test-watch",
-    "test:cov": "scripts/test-cov"
+    "test": "node test/index.js"
   },
   "repository": {
     "type": "git",

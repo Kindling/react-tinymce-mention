@@ -1,6 +1,6 @@
 import React from 'react';
 import { provide } from 'react-redux';
-import { initializeMentions } from 'mention/plugin';
+import { initializePlugin } from 'mention/plugin';
 import { setEditor } from 'mention/actions/mentionActions';
 import initializeRedux from 'mention/utils/initializeRedux';
 import mentionReducer from 'mention/reducers/mentionReducer';
@@ -14,7 +14,7 @@ const store = initializeRedux({
 @provide(store)
 export default class Mention {
   componentDidMount() {
-    initializeMentions(store).then(editor => {
+    initializePlugin(store).then(editor => {
       store.dispatch(setEditor(editor));
     });
   }

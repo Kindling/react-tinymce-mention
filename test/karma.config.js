@@ -19,7 +19,6 @@ module.exports = function (config) {
     reporters: ['progress', 'beep'],
 
     files: [
-
       { pattern: 'vendor/es5-shim.min.js', watched: false, served: true, included: true },
       { pattern: 'vendor/es5-sham.min.js', watched: false, served: true, included: true },
       { pattern: 'vendor/jasmine-matchers.js', watched: false, served: true, included: true },

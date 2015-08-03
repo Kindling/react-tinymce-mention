@@ -1,7 +1,6 @@
 import { createStore } from 'redux';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import dataSourceStatic from './fixtures/dataSourceStatic';
-// import dataSourceAsync from './fixtures/dataSourceAsync';
 
 import {
   moveDown,
@@ -9,7 +8,6 @@ import {
   query,
   resetQuery,
   select,
-  // setEditor
 } from 'mention/actions/mentionActions';
 
 describe('mentionReducer', () => {
@@ -64,7 +62,7 @@ describe('mentionReducer', () => {
     expect(getState().matchedSources).toEqual([]);
   });
 
-  fit('should select the currently selected item', () => {
+  it('should select the currently selected item', () => {
     store.dispatch(query('k'));
 
     store.dispatch(moveDown());
@@ -110,10 +108,6 @@ describe('mentionReducer', () => {
     expect(getState().highlightIndex).toBe(1);
     store.dispatch(moveUp());
     expect(getState().highlightIndex).toBe(0);
-  });
-
-  it('set the editor', () => {
-
   });
 
 });

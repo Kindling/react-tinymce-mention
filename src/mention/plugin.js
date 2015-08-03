@@ -3,14 +3,16 @@ import _ from 'lodash-node';
 import invariant from 'invariant';
 import { query, resetQuery } from 'mention/actions/mentionActions';
 
-export function initializeMentions(store) {
+export function initializePlugin(store) {
   return new Promise( resolve => {
     window.tinymce.create('tinymce.plugins.Mention', {
       init(editor) {
-        resolve(editor, new MentionPlugin({
+        const mentionPlugin = new MentionPlugin({
           editor,
           store
-        }));
+        });
+
+        resolve(editor, mentionPlugin);
       }
     });
 
@@ -18,7 +20,7 @@ export function initializeMentions(store) {
   });
 }
 
-export default class MentionPlugin {
+class MentionPlugin {
 
   constructor({ editor, store }) {
 

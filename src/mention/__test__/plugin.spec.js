@@ -1,3 +1,4 @@
+import _ from 'lodash-node';
 import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -5,11 +6,10 @@ import { initializePlugin } from 'mention/plugin';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 import initializeEditor from './fixtures/initializeEditor';
-import { query, resetQuery, select, setEditor } from 'mention/actions/mentionActions';
+import { query, resetQuery, select, finializeSetup } from 'mention/actions/mentionActions';
 import { removeMention } from 'mention/utils/tinyMCEUtils';
 
 describe('TinyMCE Plugin', () => {
-
   var store;
 
   const miscKeyCodes = {
@@ -36,7 +36,7 @@ describe('TinyMCE Plugin', () => {
 
     setTimeout(() => {
       getPlugin().store = store;
-      store.dispatch(setEditor(window.tinymce.activeEditor));
+      store.dispatch(finializeSetup(window.tinymce.activeEditor, dataSourceStatic));
       done();
     }, 0);
   });
@@ -112,17 +112,17 @@ describe('TinyMCE Plugin', () => {
     store.dispatch(select())
     expect(getState().mentions).toEqual(['chris_pappas']);
 
-    editor.fire('keyup', {
-      keyCode: miscKeyCodes.backspace
-    });
-
     // Ensure we're inside of the matched Mention
     // with a cursor position like `@chri|s`
-    editor.fire('keyup', {
-      keyCode: miscKeyCodes.backspace
+    _.times(2, () => {
+      editor.fire('keyup', {
+        keyCode: miscKeyCodes.backspace
+      });
     });
 
     expect(getState().mentions).toEqual([]);
+
+    // And content should backespace until last `@`
     expect(editor.getContent({ format: 'text' }))
       .toEqual(initial.replace('@chris', '@').trim())
   });

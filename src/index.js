@@ -41,16 +41,7 @@ React.render(
         // Suppress the target option for links.
         target_list: false,
         theme: 'kindling',
-        toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code',
-
-        mention: {
-          source: [
-            { name: 'Tyra Porcelli' },
-            { name: 'Brigid Reddish' },
-            { name: 'Ashely Buckler' },
-            { name: 'Teddy Whelan' }
-          ]
-        }
+        toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code'
       }}
       onChange={() => {
         //this.handleEditorChange()

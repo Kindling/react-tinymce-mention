@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { provide } from 'react-redux';
 import { initializePlugin } from 'mention/plugin';
-import { setEditor } from 'mention/actions/mentionActions';
+import { finializeSetup } from 'mention/actions/mentionActions';
 import initializeRedux from 'mention/utils/initializeRedux';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import EditorManager from 'mention/components/EditorManager';
@@ -23,7 +23,7 @@ export default class Mention {
     const { dataSource, delimiter } = this.props;
 
     initializePlugin(store, dataSource, delimiter).then(editor => {
-      store.dispatch(setEditor(editor));
+      store.dispatch(finializeSetup(editor, dataSource));
     });
   }
 

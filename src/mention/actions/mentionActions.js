@@ -1,5 +1,21 @@
 import * as Types from 'mention/constants/MentionActionTypes';
 
+export function fetch() {
+  return {
+    type: Types.FETCH
+  };
+}
+
+export function finializeSetup(editor, dataSource) {
+  return {
+    type: Types.FINALIZE_SETUP,
+    payload: {
+      editor,
+      dataSource
+    }
+  };
+}
+
 export function moveDown() {
   return {
     type: Types.MOVE_DOWN
@@ -9,12 +25,6 @@ export function moveDown() {
 export function moveUp() {
   return {
     type: Types.MOVE_UP
-  };
-}
-
-export function fetch() {
-  return {
-    type: Types.FETCH
   };
 }
 
@@ -45,14 +55,5 @@ export function resetQuery() {
 export function select() {
   return {
     type: Types.SELECT
-  };
-}
-
-export function setEditor(editor) {
-  return {
-    type: Types.SET_EDITOR,
-    payload: {
-      editor: editor
-    }
   };
 }

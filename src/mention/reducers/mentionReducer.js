@@ -19,6 +19,15 @@ function filterMentions(state, mention) {
 
 const actionsMap = {
 
+  finalizeSetup(state, action) {
+    const { editor, dataSource } = action.payload;
+
+    return {
+      editor,
+      dataSource
+    };
+  },
+
   moveDown(state) {
     const { highlightIndex, matchedSources } = state;
     const len = matchedSources.length;
@@ -124,12 +133,6 @@ const actionsMap = {
       selectedItem,
       mentions: updatedMentions,
       matchedSources: _.without(matchedSources, selectedItem)
-    };
-  },
-
-  setEditor(state, action) {
-    return {
-      editor: action.payload.editor
     };
   }
 };

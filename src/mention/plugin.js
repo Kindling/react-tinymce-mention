@@ -80,11 +80,11 @@ export class MentionPlugin {
     const character = String.fromCharCode(event.which || event.keyCode);
     const delimiterIndex = _.indexOf(this.delimiter, character);
 
-    if (delimiterIndex > -1 && prevCharIsSpace()) {
+    if (delimiterIndex > -1 && prevCharIsSpace(this.editor)) {
       this.startTrackingInput();
 
     // Stop tracking if we've exited the @ zone.
-    } else if (prevCharIsSpace()) {
+  } else if (prevCharIsSpace(this.editor)) {
       this.stopTrackingInput();
     }
   }
@@ -120,6 +120,8 @@ export class MentionPlugin {
           } = mentions;
 
           this.editor.setContent(removeMention(this.editor, startPos, endPos));
+
+          // Set cursor at the very end
           this.editor.selection.select(this.editor.getBody(), true);
           this.editor.selection.collapse(false);
 

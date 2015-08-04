@@ -21,10 +21,6 @@ export default class List {
     return !_.isEqual(nextProps.users, this.props.users);
   }
 
-  componentDidUpdate() {
-    // const list = React.findDOMNode(this.refs.list);
-  }
-
   componentWillUnmount() {
     key.unbind('down');
     key.unbind('up');

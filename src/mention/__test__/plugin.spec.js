@@ -8,7 +8,7 @@ import initializeEditor from './fixtures/initializeEditor';
 import { query, resetQuery, select, setEditor } from 'mention/actions/mentionActions';
 import { removeMention } from 'mention/utils/tinyMCEUtils';
 
-fdescribe('TinyMCE Plugin', () => {
+describe('TinyMCE Plugin', () => {
 
   var store;
 
@@ -103,22 +103,28 @@ fdescribe('TinyMCE Plugin', () => {
     expect(getState().query).toBe('');
   });
 
-  fit('should match closest @mention when backspace is pressed', () => {
-    const initial = 'hello, how are you @chris';
+  it('should match closest @mention when backspace is pressed', () => {
+    const initial = 'hello, how are you @chris ';
     const editor = getEditor();
 
     editor.setContent(initial);
     store.dispatch(query('chris'));
     store.dispatch(select())
-    expect(getState().mentions).toEqual(['chris pappas']);
+    expect(getState().mentions).toEqual(['chris_pappas']);
 
     editor.fire('keyup', {
       keyCode: miscKeyCodes.backspace
     });
 
+    // Ensure we're inside of the matched Mention
+    // with a cursor position like `@chri|s`
+    editor.fire('keyup', {
+      keyCode: miscKeyCodes.backspace
+    });
+
     expect(getState().mentions).toEqual([]);
-    editor.setContent(removeMention(editor, '@chris'));
-    expect(editor.getContent({ format: 'text' })).toEqual(initial.replace('@chris', '').trim())
+    expect(editor.getContent({ format: 'text' }))
+      .toEqual(initial.replace('@chris', '@').trim())
   });
 
 });

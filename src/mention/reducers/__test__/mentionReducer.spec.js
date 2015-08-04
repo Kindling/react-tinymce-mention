@@ -13,9 +13,7 @@ import {
 } from 'mention/actions/mentionActions';
 
 describe('mentionReducer', () => {
-
   var store;
-
   const getState = () => store.getState();
 
   beforeEach(() => {
@@ -33,14 +31,14 @@ describe('mentionReducer', () => {
     store.dispatch(query('alex'));
     expect(getState().query).toBe('alex');
     expect(getState().matchedSources).toEqual([
-      'alex gray',
-      'alexandra spell'
+      'alex_gray',
+      'alexandra_spell'
     ]);
 
     store.dispatch(query('chris'));
     expect(getState().matchedSources).toEqual([
-      'chris pappas',
-      'christopher pappas'
+      'chris_pappas',
+      'christopher_pappas'
     ]);
 
     store.dispatch(query(''));
@@ -50,16 +48,16 @@ describe('mentionReducer', () => {
     store.dispatch(query('h'));
     store.dispatch(query('r'));
     expect(getState().matchedSources).toEqual([
-      'chris pappas',
-      'christopher pappas'
+      'chris_pappas',
+      'christopher_pappas'
     ]);
   });
 
   it('should reset the lookup query', () => {
     store.dispatch(query('alex'));
     expect(getState().matchedSources).toEqual([
-      'alex gray',
-      'alexandra spell'
+      'alex_gray',
+      'alexandra_spell'
     ]);
 
     store.dispatch(resetQuery());
@@ -71,20 +69,20 @@ describe('mentionReducer', () => {
 
     store.dispatch(moveDown());
     store.dispatch(select());
-    expect(getState().selectedItem).toEqual('katy curtis');
+    expect(getState().selectedItem).toEqual('katy_curtis');
 
     store.dispatch(moveUp());
     store.dispatch(select());
-    expect(getState().selectedItem).toEqual('garrett kalleberg');
+    expect(getState().selectedItem).toEqual('garrett_kalleberg');
   });
 
   it('should move the highlighter down', () => {
     store.dispatch(query('ka'));
     expect(getState().matchedSources).toEqual([
-      'garrett kalleberg',
-      'katy curtis',
-      'katherine curtis',
-      'karl popper'
+      'garrett_kalleberg',
+      'katy_curtis',
+      'katherine_curtis',
+      'karl_popper'
     ]);
 
     store.dispatch(moveDown());
@@ -99,10 +97,10 @@ describe('mentionReducer', () => {
   it('should move the highlighter up', () => {
     store.dispatch(query('ka'));
     expect(getState().matchedSources).toEqual([
-      'garrett kalleberg',
-      'katy curtis',
-      'katherine curtis',
-      'karl popper'
+      'garrett_kalleberg',
+      'katy_curtis',
+      'katherine_curtis',
+      'karl_popper'
     ]);
 
     store.dispatch(moveUp());
@@ -117,27 +115,34 @@ describe('mentionReducer', () => {
   it('should remove the selected item if no characters match from query', function() {
     store.dispatch(query('kalleberg'));
     expect(getState().matchedSources).toEqual([
-      'garrett kalleberg'
+      'garrett_kalleberg'
     ]);
 
     store.dispatch(select());
-    expect(getState().selectedItem).toEqual('garrett kalleberg');
-    expect(getState().mentions).toEqual(['garrett kalleberg']);
+    expect(getState().selectedItem).toEqual('garrett_kalleberg');
+    expect(getState().mentions).toEqual([
+      'garrett_kalleberg'
+    ]);
 
     store.dispatch(query('chris'));
     expect(getState().matchedSources).toEqual([
-      'chris pappas',
-      'christopher pappas'
+      'chris_pappas',
+      'christopher_pappas'
     ]);
 
     store.dispatch(moveDown());
     store.dispatch(select());
-    expect(getState().mentions).toEqual(['garrett kalleberg', 'christopher pappas']);
+    expect(getState().mentions).toEqual([
+      'garrett_kalleberg',
+      'christopher_pappas'
+    ]);
 
-    store.dispatch(remove('christopher pappas'));
-    expect(getState().mentions).toEqual(['garrett kalleberg']);
+    store.dispatch(remove('christopher_pappas'));
+    expect(getState().mentions).toEqual([
+      'garrett_kalleberg'
+    ]);
 
-    store.dispatch(remove('garrett kalleberg'));
+    store.dispatch(remove('garrett_kalleberg'));
     expect(getState().mentions).toEqual([]);
   });
 

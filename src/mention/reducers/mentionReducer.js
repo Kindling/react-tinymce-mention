@@ -10,11 +10,11 @@ export const initialState = {
 };
 
 function filterMentions(state, mention) {
-  const matchedSources = state.mentions.filter(source => {
+  const foundMentions = state.mentions.filter(source => {
     return source.includes(mention);
   });
 
-  return matchedSources;
+  return foundMentions;
 }
 
 const actionsMap = {
@@ -80,9 +80,6 @@ const actionsMap = {
       }
     });
 
-    // console.log(newQuery);
-    // console.log(matchedSources);
-
     return {
       query: newQuery,
       matchedSources
@@ -97,7 +94,7 @@ const actionsMap = {
       return { mentions };
     }
 
-    const foundMention = _.first(filterMentions(state, match));
+    const foundMention = _.last(filterMentions(state, match));
     const updatedMentions = _.without(mentions, foundMention);
 
     return {

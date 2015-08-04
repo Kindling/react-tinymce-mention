@@ -1,8 +1,9 @@
 import $ from 'jquery';
 import _ from 'lodash-node';
 import invariant from 'invariant';
+import twitter from 'twitter-text';
 import { query, remove, resetQuery } from 'mention/actions/mentionActions';
-import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
+import { prevCharIsSpace, removeMention } from 'mention/utils/tinyMCEUtils';
 
 export function initializePlugin(store, dataSource, delimiter = '@') {
 
@@ -44,6 +45,8 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
 
 export class MentionPlugin {
 
+  insideWord = -1;
+
   constructor(editor, store, delimiter) {
 
     invariant(editor,
@@ -74,8 +77,8 @@ export class MentionPlugin {
   }
 
   handleKeyPress(event) {
-    const keyCode = String.fromCharCode(event.which || event.keyCode);
-    const delimiterIndex = _.indexOf(this.delimiter, keyCode);
+    const character = String.fromCharCode(event.which || event.keyCode);
+    const delimiterIndex = _.indexOf(this.delimiter, character);
 
     if (delimiterIndex > -1 && prevCharIsSpace()) {
       this.startTrackingInput();
@@ -99,16 +102,32 @@ export class MentionPlugin {
 
       // Check to see if the surrounding area contains an @
       // and only match the immediate contents.
-      const re = /@\w+\b(?! )/;
+      const re = /@\w+\b(?! *.)/;
       const match = re.exec(content);
 
       if (match) {
 
-        // Pop the @ symbol off, and update the entire query
-        // so that we can filter properly.
-        const removeQuery = _.rest(_.first(match).split('')).join('');
+        // Increment until truthy so that we can remove mention
+        // only after we've entered the word, e.g. `@joh|n`.
+        this.insideWord++;
 
-        this.store.dispatch(remove(removeQuery));
+        if (this.insideWord) {
+          const mentions = _.last(twitter.extractMentionsWithIndices(content));
+
+          const {
+            screenName,
+            indices: [startPos, endPos]
+          } = mentions;
+
+          this.editor.setContent(removeMention(this.editor, startPos, endPos));
+          this.editor.selection.select(this.editor.getBody(), true);
+          this.editor.selection.collapse(false);
+
+          this.store.dispatch(remove(screenName));
+
+          // Reset index after removal and continue listening.
+          this.insideWord = -1;
+        }
       }
     }
   }

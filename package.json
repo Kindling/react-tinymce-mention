@@ -60,6 +60,7 @@
     "redux-thunk": "^0.1.0",
     "rewire": "^2.3.4",
     "rewire-webpack": "^1.0.0",
+    "twitter-text": "^1.12.0",
     "webpack": "^1.10.5",
     "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.10.1"

@@ -1,33 +1,35 @@
+import React from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { initializePlugin } from 'mention/plugin';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 import initializeEditor from './fixtures/initializeEditor';
-import { setEditor } from 'mention/actions/mentionActions';
+import { query, resetQuery, setEditor  } from 'mention/actions/mentionActions';
 
 fdescribe('TinyMCE Plugin', () => {
 
   var store;
 
-  const keyCodes = {
-    '@': 64,
-
-    'c': 67,
-    'h': 72,
-    'r': 82,
-    'i': 73,
-    's': 83,
-
-    'k': 75,
-    'a': 65,
-    't': 84,
-    'y': 89
+  const miscKeyCodes = {
+    'backspace': 8
   }
 
-  const getEditor = () => store.getState().editor;
-  const getPlugin = () => window.mentionPlugin;
-  const getState = () => window.mentionPlugin.store.getState().mention;
+  function getKeyCode(character) {
+    return character.charCodeAt(0);
+  }
+
+  function getEditor() {
+    return store.getState().editor;
+  }
+
+  function getPlugin() {
+    return window.mentionPlugin;
+  }
+
+  function getState() {
+    return store.getState();
+  }
 
   beforeEach((done) => {
     const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -40,48 +42,93 @@ fdescribe('TinyMCE Plugin', () => {
     });
 
     initializeEditor();
-    initializePlugin(store, [], '@');
+    initializePlugin(store, dataSourceStatic, '@');
 
     setTimeout(() => {
+      getPlugin().store = store;
       store.dispatch(setEditor(window.tinymce.activeEditor));
       done();
     }, 0);
   });
+
+  afterEach(() => {
+    store.dispatch(resetQuery());
+    window.tinymce.remove();
+    React.unmountComponentAtNode(document.getElementById('root'));
+  })
 
   it('should add keyboard event listeners', () => {
     expect(getEditor().hasEventListeners('keypress')).toBe(true);
     expect(getEditor().hasEventListeners('keyup')).toBe(true);
   });
 
-  fit('should start tracking input if delimiter pressed', () => {
+  it('should start tracking input if delimiter pressed', () => {
     const editor = getEditor();
 
     editor.fire('keypress', {
-      keyCode: keyCodes['@']
+      keyCode: getKeyCode('@')
     });
 
     expect(editor.hasEventListeners('keydown')).toBe(true);
 
     ['c', 'h', 'r', 'i', 's'].forEach((key) => {
       editor.fire('keydown', {
-        keyCode: keyCodes[key]
+        keyCode: getKeyCode(key)
+      });
+    })
+
+    expect(getState().query).toBe('chris');
+  });
+
+  it('should stop tracking input if prev char is space', () => {
+    const editor = getEditor();
+
+    // Start listening for input
+    editor.fire('keypress', {
+      keyCode: getKeyCode('@')
+    });
+
+    ['c', 'h', 'r', 'i', 's'].forEach((key) => {
+      editor.fire('keydown', {
+        keyCode: getKeyCode(key)
       });
     })
 
     expect(getState().query).toBe('chris');
 
-  });
+    // Add space, unbind listeners
+    editor.fire('keydown', {
+      keyCode: getKeyCode(' ')
+    });
 
-  it('should stop tracking input if prev char is space', () => {
+    expect(getState().query).toBe('');
 
-  });
+    // Test further input
+    ['c', 'h', 'r', 'i', 's'].forEach((key) => {
+      editor.fire('keydown', {
+        keyCode: getKeyCode(key)
+      });
+    })
 
-  it('should stop tracking input if prev char is empty', () => {
-
+    expect(getState().query).toBe('');
   });
 
   it('should match closest @mention when backspace is pressed', () => {
+    const initial = '@chris';
+    const editor = getEditor();
+    store.dispatch(query(initial.replace('@', '')));
+    editor.setContent(initial);
+    console.log(getState().matchedSources)
+    console.log(getState().query)
+
+    editor.fire('keyup', {
+      keyCode: miscKeyCodes.backspace
+    });
 
   });
+
+  // fit('fuck', () => {
+
+  // })
 
 });

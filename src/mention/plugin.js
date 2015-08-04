@@ -102,12 +102,11 @@ export class MentionPlugin {
 
       if (match) {
 
-        // console.log(match);
-
         // Pop the @ symbol off, and update the entire query
         // so that we can filter properly.
         const removeQuery = _.rest(_.first(match).split('')).join('');
 
+        // console.log(removeQuery);
         this.store.dispatch(remove(removeQuery));
       }
     }

@@ -21,9 +21,10 @@ module.exports = function (config) {
     reporters: ['progress', 'beep'],
 
     files: [
+
       { pattern: 'test/vendor/jquery-2.1.4.js', watched: false, served: true, included: true },
+      { pattern: 'public/scripts/vendor/tinymce/skins/kindling/*.{css,svg,woff,ttf}', watched: false, served: true, included: true },
       { pattern: 'public/scripts/vendor/tinymce/tinymce.full.js', watched: false, served: true, included: true },
-      // { pattern: 'public/scripts/vendor/tinymce/tinymce.jquery.js', watched: false, served: true, included: true },
       { pattern: 'test/vendor/es5-shim.min.js', watched: false, served: true, included: true },
       { pattern: 'test/vendor/es5-sham.min.js', watched: false, served: true, included: true },
       { pattern: 'test/vendor/jasmine-matchers.js', watched: false, served: true, included: true },

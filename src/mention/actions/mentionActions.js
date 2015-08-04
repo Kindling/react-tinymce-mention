@@ -6,7 +6,7 @@ export function fetch() {
   };
 }
 
-export function finializeSetup(editor, dataSource) {
+export function finalizeSetup(editor, dataSource) {
   return {
     type: Types.FINALIZE_SETUP,
     payload: {

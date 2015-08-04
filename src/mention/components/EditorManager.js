@@ -22,6 +22,7 @@ export default class EditorManager {
     const { editor, mentions } = this.props;
 
     if (editor && !_.isEmpty(mentions)) {
+      console.log(mentions);
       editor.execCommand('mceInsertContent', false, `<bold>${mentions[0]}</bold>`);
     }
   }

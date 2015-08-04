@@ -57,6 +57,8 @@
     "react-tinymce": "^0.2.3",
     "react-tools": "^0.13.3",
     "redux": "^1.0.0-rc",
+    "redux-devtools": "^0.1.2",
+    "redux-devtools-diff-monitor": "^0.2.0",
     "redux-thunk": "^0.1.0",
     "rewire": "^2.3.4",
     "rewire-webpack": "^1.0.0",

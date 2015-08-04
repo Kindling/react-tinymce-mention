@@ -106,7 +106,6 @@ export class MentionPlugin {
         // so that we can filter properly.
         const removeQuery = _.rest(_.first(match).split('')).join('');
 
-        // console.log(removeQuery);
         this.store.dispatch(remove(removeQuery));
       }
     }

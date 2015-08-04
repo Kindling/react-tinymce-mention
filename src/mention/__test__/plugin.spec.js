@@ -5,7 +5,7 @@ import { initializePlugin } from 'mention/plugin';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 import initializeEditor from './fixtures/initializeEditor';
-import { query, resetQuery, setEditor  } from 'mention/actions/mentionActions';
+import { query, resetQuery, select, setEditor } from 'mention/actions/mentionActions';
 
 fdescribe('TinyMCE Plugin', () => {
 
@@ -113,22 +113,20 @@ fdescribe('TinyMCE Plugin', () => {
     expect(getState().query).toBe('');
   });
 
-  it('should match closest @mention when backspace is pressed', () => {
+  fit('should match closest @mention when backspace is pressed', () => {
     const initial = '@chris';
     const editor = getEditor();
     store.dispatch(query(initial.replace('@', '')));
+    store.dispatch(select())
     editor.setContent(initial);
-    console.log(getState().matchedSources)
-    console.log(getState().query)
+
+    expect(getState().mentions).toEqual(['chris pappas']);
 
     editor.fire('keyup', {
       keyCode: miscKeyCodes.backspace
     });
 
+    expect(getState().mentions).toEqual([]);
   });
-
-  // fit('fuck', () => {
-
-  // })
 
 });

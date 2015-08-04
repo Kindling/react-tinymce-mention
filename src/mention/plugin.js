@@ -61,6 +61,7 @@ export class MentionPlugin {
     // FIXME: Remove helper refs
     window.editor = editor;
     window.$ = $;
+    window.mentionPlugin = this;
 
     this.addEventListeners();
 
@@ -101,7 +102,7 @@ export class MentionPlugin {
 
       if (match) {
 
-        console.log(match);
+        // console.log(match);
 
         // Pop the @ symbol off, and update the entire query
         // so that we can filter properly.

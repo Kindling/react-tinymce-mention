@@ -6,11 +6,28 @@ import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStati
 import initializeEditor from './fixtures/initializeEditor';
 import { setEditor } from 'mention/actions/mentionActions';
 
-describe('TinyMCE Plugin', () => {
+fdescribe('TinyMCE Plugin', () => {
 
   var store;
 
-  const getState = () => store.getState();
+  const keyCodes = {
+    '@': 64,
+
+    'c': 67,
+    'h': 72,
+    'r': 82,
+    'i': 73,
+    's': 83,
+
+    'k': 75,
+    'a': 65,
+    't': 84,
+    'y': 89
+  }
+
+  const getEditor = () => store.getState().editor;
+  const getPlugin = () => window.mentionPlugin;
+  const getState = () => window.mentionPlugin.store.getState().mention;
 
   beforeEach((done) => {
     const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -31,23 +48,27 @@ describe('TinyMCE Plugin', () => {
     }, 0);
   });
 
-  fit('should initialize with correct parameters', () => {
-    // console.log(getState());
-  });
-
   it('should add keyboard event listeners', () => {
-
+    expect(getEditor().hasEventListeners('keypress')).toBe(true);
+    expect(getEditor().hasEventListeners('keyup')).toBe(true);
   });
 
-  it('should listen for input', () => {
+  fit('should start tracking input if delimiter pressed', () => {
+    const editor = getEditor();
 
-  });
+    editor.fire('keypress', {
+      keyCode: keyCodes['@']
+    });
 
-  it('should listen for backspace', () => {
+    expect(editor.hasEventListeners('keydown')).toBe(true);
 
-  });
+    ['c', 'h', 'r', 'i', 's'].forEach((key) => {
+      editor.fire('keydown', {
+        keyCode: keyCodes[key]
+      });
+    })
 
-  it('should start tracking input if delimiter pressed', () => {
+    expect(getState().query).toBe('chris');
 
   });
 

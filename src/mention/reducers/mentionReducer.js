@@ -91,7 +91,7 @@ const actionsMap = {
 
     const updatedMentions = _.without(mentions, match);
 
-    console.log(updatedMentions);
+    // console.log(updatedMentions);
 
     return {
       mentions: updatedMentions

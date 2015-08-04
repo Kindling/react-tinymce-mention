@@ -9,11 +9,11 @@ export default class ListItem {
 
   static propTypes = {
     index: PropTypes.number.isRequired,
-    user: PropTypes.string.isRequired
+    match: PropTypes.string.isRequired
   }
 
   render() {
-    const { index, highlightIndex, user } = this.props;
+    const { index, highlightIndex, match } = this.props;
 
     const classes = classNames({
       'selected': highlightIndex === index
@@ -21,7 +21,7 @@ export default class ListItem {
 
     return (
       <li className={classes}>
-        {user}
+        {match}
       </li>
     );
   }

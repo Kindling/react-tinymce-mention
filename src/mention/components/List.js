@@ -8,7 +8,7 @@ import { moveDown, moveUp, select } from 'mention/actions/mentionActions';
 @connect(state => ({
   editor: state.mention.editor,
   highlightIndex: state.mention.highlightIndex,
-  users: state.mention.users
+  matchedSources: state.mention.matchedSources
 }))
 export default class List {
 
@@ -18,7 +18,7 @@ export default class List {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !_.isEqual(nextProps.users, this.props.users);
+    return !_.isEqual(nextProps.matchedSources, this.props.matchedSources);
   }
 
   componentWillUnmount() {
@@ -46,16 +46,16 @@ export default class List {
   }
 
   render() {
-    const { users } = this.props;
+    const { matchedSources } = this.props;
 
     return (
       <ul id='list' ref='list'>
-        { users && users.map((user, index) => {
+        { matchedSources && matchedSources.map((match, index) => {
           return (
             <ListItem
-              user={user}
+              match={match}
               index={index}
-              key={`user-${index}`}
+              key={`match-${index}`}
             />
           );
         })}

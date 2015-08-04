@@ -36,6 +36,26 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
         } else {
           resolveInit();
         }
+
+        // Add top-level listener for delegating events related to
+        // binding and unbinding events related to the UI / querying.
+        editor.on('keypress', function(event) {
+          const character = String.fromCharCode(event.which || event.keyCode);
+          const delimiterIndex = _.indexOf(delimiter, character);
+
+          // User has typed `@`; begin tracking
+          if (delimiterIndex > -1 && prevCharIsSpace(editor)) {
+            if (!mentionPlugin.isFocused) {
+              mentionPlugin.initialize();
+            }
+
+          // User has exited mentions, stop tracking
+          } else if (prevCharIsSpace(editor) || character === ' ') {
+            if (mentionPlugin.isFocused) {
+              mentionPlugin.cleanup();
+            }
+          }
+        });
       }
     });
 
@@ -46,6 +66,7 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
 export class MentionPlugin {
 
   insideWord = -1;
+  isFocused = false;
 
   constructor(editor, store, delimiter) {
 
@@ -59,34 +80,57 @@ export class MentionPlugin {
 
     this.store = store;
     this.editor = editor;
-    this.delimiter = this.getDelimiter(delimiter);
+    this.delimiter = delimiter;
 
     // FIXME: Remove helper refs
     window.editor = editor;
     window.$ = $;
     window.mentionPlugin = this;
 
-    this.addEventListeners();
-
     return this;
   }
 
+  initialize() {
+    if (!this.isFocued) {
+      this.isFocused = true;
+      this.addEventListeners();
+    }
+  }
+
+  cleanup() {
+    if (this.isFocused) {
+      this.isFocused = false;
+      this.store.dispatch(resetQuery());
+      this.removeEventListeners();
+    }
+  }
+
   addEventListeners() {
-    this.editor.on('keypress', ::this.handleKeyPress);
-    this.editor.on('keyup', ::this.handleBackspaceKey);
+    this.editor.on('keydown', this.keyPressProxy = $.proxy(this.handleKeyPress, this));
+    this.editor.on('keyup', this.keyUpProxy = $.proxy(this.handleBackspaceKey, this));
+  }
+
+  removeEventListeners() {
+    this.editor.off('keydown', this.keyPressProxy);
+    this.editor.off('keyup', this.keyUpProxy);
   }
 
   handleKeyPress(event) {
     const character = String.fromCharCode(event.which || event.keyCode);
-    const delimiterIndex = _.indexOf(this.delimiter, character);
 
-    if (delimiterIndex > -1 && prevCharIsSpace(this.editor)) {
-      this.startTrackingInput();
+    _.defer(() => {
+      console.log(character);
 
-    // Stop tracking if we've exited the @ zone.
-  } else if (prevCharIsSpace(this.editor)) {
-      this.stopTrackingInput();
-    }
+      const content = this.editor.getContent({
+        format: 'text'
+      });
+
+      const mentions = _.last(twitter.extractMentionsWithIndices(content));
+
+      if (mentions && this.isFocused) {
+        this.store.dispatch(query(mentions.screenName));
+      }
+    });
   }
 
   handleBackspaceKey(event) {
@@ -94,6 +138,7 @@ export class MentionPlugin {
 
     // Backspace key
     if (keyCode === 8) {
+      console.log('backspace');
 
       // TODO: Narrow this to a reasonable start and end range.
       const content = this.editor.getContent({
@@ -104,62 +149,52 @@ export class MentionPlugin {
       // and only match the immediate contents.
       const re = /@\w+\b(?! *.)/;
       const match = re.exec(content);
-
-      if (match) {
-
-        // Increment until truthy so that we can remove mention
-        // only after we've entered the word, e.g. `@joh|n`.
-        this.insideWord++;
-
-        if (this.insideWord) {
-          const mentions = _.last(twitter.extractMentionsWithIndices(content));
-
-          const {
-            screenName,
-            indices: [startPos, endPos]
-          } = mentions;
-
-          this.editor.setContent(removeMention(this.editor, startPos, endPos));
-
-          // Set cursor at the very end
-          this.editor.selection.select(this.editor.getBody(), true);
-          this.editor.selection.collapse(false);
-
-          this.store.dispatch(remove(screenName));
-
-          // Reset index after removal and continue listening.
-          this.insideWord = -1;
-        }
-      }
     }
   }
 
-  handleTrackInput(event) {
-    const character = String.fromCharCode(event.which || event.keyCode);
-
-    if (character === ' ') {
-      return this.stopTrackingInput();
-    }
-
-    this.store.dispatch(query(character));
-  }
-
-  startTrackingInput() {
-    this.editor.on('keydown', this.handleTrackInput.bind(this));
-  }
-
-  stopTrackingInput() {
-    this.editor.off('keydown');
-    this.store.dispatch(resetQuery());
-  }
-
-  getDelimiter(delimiter) {
-    if (!_.isUndefined(delimiter)) {
-      delimiter = !_.isArray(delimiter) ? [delimiter] : delimiter;
-    } else {
-      delimiter = ['@'];
-    }
-
-    return delimiter;
-  }
+  // handleBackspaceKey(event) {
+  //   const keyCode = event.which || event.keyCode;
+  //
+  //   // Backspace key
+  //   if (keyCode === 8) {
+  //
+  //     // TODO: Narrow this to a reasonable start and end range.
+  //     const content = this.editor.getContent({
+  //       format: 'text'
+  //     });
+  //
+  //     // Check to see if the surrounding area contains an @
+  //     // and only match the immediate contents.
+  //     const re = /@\w+\b(?! *.)/;
+  //     const match = re.exec(content);
+  //
+  //     return;
+  //     if (match) {
+  //
+  //       // Increment until truthy so that we can remove mention
+  //       // only after we've entered the word, e.g. `@joh|n`.
+  //       this.insideWord++;
+  //
+  //       if (this.insideWord) {
+  //         const mentions = _.last(twitter.extractMentionsWithIndices(content));
+  //
+  //         const {
+  //           screenName,
+  //           indices: [startPos, endPos]
+  //         } = mentions;
+  //
+  //         this.editor.setContent(removeMention(this.editor, startPos, endPos));
+  //
+  //         // Set cursor at the very end
+  //         this.editor.selection.select(this.editor.getBody(), true);
+  //         this.editor.selection.collapse(false);
+  //
+  //         this.store.dispatch(remove(screenName));
+  //
+  //         // Reset index after removal and continue listening.
+  //         this.insideWord = -1;
+  //       }
+  //     }
+  //   }
+  // }
 }

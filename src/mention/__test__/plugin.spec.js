@@ -6,7 +6,7 @@ import { initializePlugin } from 'mention/plugin';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 import initializeEditor from './fixtures/initializeEditor';
-import { query, resetQuery, select, finializeSetup } from 'mention/actions/mentionActions';
+import { query, resetQuery, select, finalizeSetup } from 'mention/actions/mentionActions';
 import { removeMention } from 'mention/utils/tinyMCEUtils';
 
 describe('TinyMCE Plugin', () => {
@@ -36,7 +36,7 @@ describe('TinyMCE Plugin', () => {
 
     setTimeout(() => {
       getPlugin().store = store;
-      store.dispatch(finializeSetup(window.tinymce.activeEditor, dataSourceStatic));
+      store.dispatch(finalizeSetup(window.tinymce.activeEditor, dataSourceStatic));
       done();
     }, 0);
   });

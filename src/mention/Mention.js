@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 import { provide } from 'react-redux';
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
-import DiffMonitor from 'redux-devtools-diff-monitor';
 import { initializePlugin } from 'mention/plugin';
-// import { finalizeSetup } from 'mention/actions/mentionActions';
+import { finalizeSetup } from 'mention/actions/mentionActions';
 import initializeRedux from 'mention/utils/initializeRedux';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import EditorManager from 'mention/components/EditorManager';
@@ -33,9 +31,8 @@ export default class Mention {
   componentDidMount() {
     const { dataSource, delimiter } = this.props;
 
-    initializePlugin(store, dataSource, delimiter).then(() => {
-      // FIXME: This creates a circular ref when using the dev tools
-      // store.dispatch(finalizeSetup(editor, dataSource));
+    initializePlugin(store, dataSource, delimiter).then((editor) => {
+      store.dispatch(finalizeSetup(editor, dataSource));
     });
   }
 
@@ -44,7 +41,6 @@ export default class Mention {
       <div>
         <List />
         <EditorManager />
-        <DevTools store={store} monitor={DiffMonitor} />
       </div>
     );
   }

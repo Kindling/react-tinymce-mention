@@ -89,6 +89,9 @@ const actionsMap = {
       }
     });
 
+    console.error(newQuery);
+    // console.log(matchedSources);
+
     return {
       query: newQuery,
       matchedSources

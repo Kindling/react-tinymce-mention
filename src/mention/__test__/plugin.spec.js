@@ -6,6 +6,7 @@ import mentionReducer from 'mention/reducers/mentionReducer';
 import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 import initializeEditor from './fixtures/initializeEditor';
 import { query, resetQuery, select, setEditor } from 'mention/actions/mentionActions';
+import { removeMention } from 'mention/utils/tinyMCEUtils';
 
 fdescribe('TinyMCE Plugin', () => {
 
@@ -15,21 +16,10 @@ fdescribe('TinyMCE Plugin', () => {
     'backspace': 8
   }
 
-  function getKeyCode(character) {
-    return character.charCodeAt(0);
-  }
-
-  function getEditor() {
-    return store.getState().editor;
-  }
-
-  function getPlugin() {
-    return window.mentionPlugin;
-  }
-
-  function getState() {
-    return store.getState();
-  }
+  const getKeyCode = (character) => character.charCodeAt(0);
+  const getEditor = () => store.getState().editor;
+  const getPlugin = () => window.mentionPlugin;
+  const getState = () => store.getState();
 
   beforeEach((done) => {
     const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
@@ -114,12 +104,12 @@ fdescribe('TinyMCE Plugin', () => {
   });
 
   fit('should match closest @mention when backspace is pressed', () => {
-    const initial = '@chris';
+    const initial = 'hello, how are you @chris';
     const editor = getEditor();
-    store.dispatch(query(initial.replace('@', '')));
-    store.dispatch(select())
-    editor.setContent(initial);
 
+    editor.setContent(initial);
+    store.dispatch(query('chris'));
+    store.dispatch(select())
     expect(getState().mentions).toEqual(['chris pappas']);
 
     editor.fire('keyup', {
@@ -127,6 +117,8 @@ fdescribe('TinyMCE Plugin', () => {
     });
 
     expect(getState().mentions).toEqual([]);
+    editor.setContent(removeMention(editor, '@chris'));
+    expect(editor.getContent({ format: 'text' })).toEqual(initial.replace('@chris', '').trim())
   });
 
 });

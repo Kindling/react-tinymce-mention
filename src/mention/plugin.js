@@ -93,7 +93,9 @@ export class MentionPlugin {
     if (keyCode === 8) {
 
       // TODO: Narrow this to a reasonable start and end range.
-      const content = this.editor.getContent({format: 'text'});
+      const content = this.editor.getContent({
+        format: 'text'
+      });
 
       // Check to see if the surrounding area contains an @
       // and only match the immediate contents.

@@ -1,10 +1,8 @@
 #!/bin/sh -e
 
-BIN = ./node_modules/.bin
-
 git checkout gh-pages
 git merge master
-@$(BIN)/webpack --config webpack.config.js
+./node_modules/.bin/webpack --config webpack.config.js
 git add --all .
 git commit -m "New release"
 git push origin gh-pages

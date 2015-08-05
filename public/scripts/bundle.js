@@ -54,7 +54,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ae8869f0607264a7ffed"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "96ada3ec39cc9f758078"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -8045,7 +8045,75 @@
 	  _react2['default'].createElement(_mentionMention2['default'], {
 	    dataSource: _mentionReducers__test__FixturesDataSourceStatic2['default'],
 	    delimiter: '@'
-	  })
+	  }),
+	  _react2['default'].createElement(
+	    'div',
+	    null,
+	    _react2['default'].createElement(
+	      'h2',
+	      null,
+	      'Available users'
+	    ),
+	    _react2['default'].createElement(
+	      'ul',
+	      null,
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'sima shimansky'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'alex gutierrez'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'eric kong'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'timothy meaney'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'desiree beckman'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'garrett kalleberg'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'misty edwards'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'david ashby'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'ivete tecedor'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'jim nielsen'
+	      ),
+	      _react2['default'].createElement(
+	        'li',
+	        null,
+	        'christopher pappas'
+	      )
+	    )
+	  )
 	), document.getElementById('root'));
 	
 	/* REACT HOT LOADER */ }).call(this); if (true) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(440), foundReactClasses = false; if (makeExportsHot(module, __webpack_require__(115))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "index.js" + ": " + err.message); } }); } } })(); }
@@ -59608,7 +59676,7 @@
 	    var mentions = state.mentions;
 	    var mention = action.payload.mention;
 	
-	    if (!mentions.length) {
+	    if (!mentions || _lodashNode2['default'].isEmpty(mentions)) {
 	      return {};
 	    }
 	
@@ -59633,7 +59701,7 @@
 	    var matchedSources = state.matchedSources;
 	    var highlightIndex = state.highlightIndex;
 	
-	    if (!matchedSources && matchedSources.length) {
+	    if (!matchedSources || _lodashNode2['default'].isEmpty(matchedSources)) {
 	      return {};
 	    }
 	
@@ -59642,6 +59710,7 @@
 	    updatedMentions.push(selectedItem);
 	
 	    return {
+	      highlightIndex: 0,
 	      matchedSources: [],
 	      mentions: updatedMentions,
 	      selectedItem: selectedItem
@@ -60508,10 +60577,10 @@
 	        _react2['default'].createElement(
 	          'ul',
 	          null,
-	          mentions && mentions.map(function (mention) {
+	          mentions && mentions.map(function (mention, index) {
 	            return _react2['default'].createElement(
 	              'li',
-	              null,
+	              { key: 'mention-' + index },
 	              mention
 	            );
 	          })
@@ -60546,7 +60615,7 @@
 	Object.defineProperty(exports, '__esModule', {
 	  value: true
 	});
-	exports['default'] = ['alex gray', 'alexandra spell', 'chris pappas', 'christopher pappas', 'carlos bee', 'dan dean', 'desiree dees', 'garrett kalleberg', 'jim nelson', 'james pound', 'katy curtis', 'katherine curtis', 'kim berdstat', 'karl popper'];
+	exports['default'] = ['sima shimansky', 'alex gutierrez', 'alex gray', 'alexandra spell', 'eric kong', 'timothy meaney', 'desiree beckman', 'garrett kalleberg', 'misty edwards', 'david ashby', 'ivete tecedor', 'jim nielsen', 'christopher pappas', 'chris pappas', 'katherine curtis', 'katy curtis'];
 	module.exports = exports['default'];
 
 	/* REACT HOT LOADER */ }).call(this); if (true) { (function () { module.hot.dispose(function (data) { data.makeHot = module.makeHot; }); if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(440), foundReactClasses = false; if (makeExportsHot(module, __webpack_require__(115))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "dataSourceStatic.js" + ": " + err.message); } }); } } })(); }

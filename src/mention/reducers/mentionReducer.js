@@ -30,12 +30,8 @@ const actionsMap = {
 
   moveDown(state) {
     const { highlightIndex, matchedSources } = state;
-    const len = matchedSources.length;
+    const len = matchedSources && matchedSources.length;
     var newIndex;
-
-    invariant(matchedSources.length,
-      'Error moving up: `matchedSources` cannot be empty or undefined'
-    );
 
     if (highlightIndex < len - 1) {
       newIndex = highlightIndex + 1;
@@ -50,12 +46,7 @@ const actionsMap = {
 
   moveUp(state) {
     const { highlightIndex, matchedSources } = state;
-
-    invariant(matchedSources.length,
-      'Error moving up: `matchedSources` cannot be empty or undefined'
-    );
-
-    const len = matchedSources.length;
+    const len = matchedSources && matchedSources.length;
     var newIndex;
 
     if (highlightIndex > 0) {
@@ -74,11 +65,8 @@ const actionsMap = {
     const { query } = action.payload;
     const len = query.length;
 
-    // Check to see if we're typing in the editor or backspacing
-    // out from a previous @mention, which will search over the
-    // string looking for the last iteration of an @.  If single,
-    // aggregate the previous result to build up a match; if
-    // multiple, simply use that.
+    // Check to see if we're typing in a sequence of characters or
+    // querying by an entire word.  Build up if the former.
     const newQuery = (len > 1 || len === 0 ? query : prevQuery + query).toLowerCase();
 
     const matchedSources = state.dataSource.filter(source => {
@@ -100,7 +88,7 @@ const actionsMap = {
     const mention = action.payload.mention;
 
     if (!mentions.length) {
-      return { mentions };
+      return {};
     }
 
     const foundMention = _.last(filterMentions(state, mention));
@@ -121,20 +109,21 @@ const actionsMap = {
 
   select(state) {
     const { mentions, matchedSources, highlightIndex } = state;
+    const len = matchedSources && matchedSources.length;
 
-    if (matchedSources && matchedSources.length) {
-      const selectedItem = matchedSources[highlightIndex];
-      const updatedMentions = _.cloneDeep(mentions);
-      updatedMentions.push(selectedItem);
-
-      return {
-        matchedSources: [],
-        mentions: updatedMentions,
-        selectedItem
-      };
-    } else {
+    if (!len) {
       return {};
     }
+
+    const selectedItem = matchedSources[highlightIndex];
+    const updatedMentions = _.cloneDeep(mentions);
+    updatedMentions.push(selectedItem);
+
+    return {
+      matchedSources: [],
+      mentions: updatedMentions,
+      selectedItem
+    };
   }
 };
 

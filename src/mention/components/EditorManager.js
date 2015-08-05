@@ -22,10 +22,12 @@ export default class EditorManager extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const shouldRender = nextProps.mentions.length >= this.props.mentions.length;
+    const currLength = this.props.mentions.length;
+    const nextLength = nextProps.mentions.length;
+    const shouldRender =
 
     this.setState({
-      shouldRender
+      shouldRender: currLength <= nextLength
     });
   }
 

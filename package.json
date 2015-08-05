@@ -4,7 +4,8 @@
   "description": "@Mention functionality for TinyMCE, built with React and Redux.",
   "scripts": {
     "start": "node server.js",
-    "test": "node test/index.js"
+    "test": "node test/index.js",
+    "gh-pages": "scripts/gh-pages"
   },
   "repository": {
     "type": "git",

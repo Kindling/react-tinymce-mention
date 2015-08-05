@@ -5,6 +5,11 @@ import twitter from 'twitter-text';
 import { query, remove, resetQuery, select } from 'mention/actions/mentionActions';
 import { findMentions, prevCharIsSpace, removeMention } from 'mention/utils/tinyMCEUtils';
 
+const keys = {
+  backspace: 8,
+  tab: 9
+};
+
 export function initializePlugin(store, dataSource, delimiter = '@') {
 
   invariant(store,
@@ -43,8 +48,8 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
           resolveInit();
         }
 
-        // Add top-level listener for delegating events related to
-        // binding and unbinding events related to the UI / querying.
+        // Add persistent top-level listener for delegating events related
+        // to binding and unbinding events related to the UI / querying.
         editor.on('keypress', function(event) {
           const character = String.fromCharCode(event.which || event.keyCode);
           const delimiterIndex = _.indexOf(delimiter, character);
@@ -112,7 +117,6 @@ export class MentionPlugin {
       'Error initializing MentionPlugin: `store` cannot be undefined.'
     );
 
-
     this.insideWord = -1;
     this.isFocused = false;
     this.store = store;
@@ -172,7 +176,7 @@ export class MentionPlugin {
     const keyCode = event.which || event.keyCode;
 
     // Tab key -- Autocomplete current suggestion
-    if (keyCode === 9) {
+    if (keyCode === keys.tab) {
       event.preventDefault();
       return this.store.dispatch(select());
     }
@@ -200,7 +204,7 @@ export class MentionPlugin {
     const keyCode = event.which || event.keyCode;
 
     // Backspace key
-    if (keyCode === 8) {
+    if (keyCode === keys.backspace) {
       console.log('backspace');
 
       // TODO: Narrow this to a reasonable start and end range.

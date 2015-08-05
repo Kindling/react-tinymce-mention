@@ -6,19 +6,10 @@ import initializeRedux from 'mention/utils/initializeRedux';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import EditorManager from 'mention/components/EditorManager';
 import List from 'mention/components/List';
-import TempMentions from 'mention/components/TempMentions';
-import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
+import Mentions from 'mention/components/Mentions';
 
 const store = initializeRedux({
   mention: mentionReducer
-}, {
-  mention: {
-    dataSource: dataSourceStatic,
-    highlightIndex: 0,
-    matchedSources: [],
-    mentions: [],
-    query: ''
-  }
 });
 
 @provide(store)
@@ -41,7 +32,7 @@ export default class Mention {
     return (
       <div>
         <List />
-        <TempMentions />
+        <Mentions />
         <EditorManager />
       </div>
     );

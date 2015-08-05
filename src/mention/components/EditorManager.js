@@ -2,6 +2,8 @@ import _ from 'lodash-node';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { findMentions, removeMention } from 'mention/utils/tinyMCEUtils';
+import renderComponent from 'mention/utils/renderComponent';
+import Mention from 'mention/components/Mention';
 
 @connect(state => ({
   editor: state.mention.editor,
@@ -23,34 +25,37 @@ export default class EditorManager {
     const { editor, mentions } = this.props;
 
     if (editor && !_.isEmpty(mentions)) {
-      const mention = _.last(mentions);
-      const uid = _.uniqueId('mention-');
-      const { lastMention } = findMentions(editor);
-      const { startPos } = lastMention;
-
-      // Remove last mention and set cursor at the very end
-      editor.setContent(removeMention(editor, startPos));
-      editor.selection.select(editor.getBody(), true);
-      editor.selection.collapse(false);
-
-      const markup = React.renderToStaticMarkup(
-        <strong className='test' style={{background: '#ccc'}}>
-          <a className={uid} href='foo'>
-            @{mention}
-          </a>
-        </strong>
-      );
-
-      // Insert new link
-      editor.execCommand('mceInsertContent', false,
-        markup
-      );
-
-      // Exit styling entry
-      editor.execCommand('mceInsertContent', false,
-        '&nbsp;'
-      );
+      this._clearUnfinishedMention();
+      this._renderMentionIntoEditor();
     }
+  }
+
+  /**
+   * Remove last mention and set cursor at the very end
+   * in order to replace with proper Mention component.
+   */
+  _clearUnfinishedMention() {
+    const { editor } = this.props;
+    const { lastMention } = findMentions(editor);
+    const { startPos } = lastMention;
+
+    editor.setContent(removeMention(editor, startPos));
+    editor.selection.select(editor.getBody(), true);
+    editor.selection.collapse(false);
+  }
+
+  _renderMentionIntoEditor() {
+    const { editor, mentions } = this.props;
+    const mention = _.last(mentions);
+
+    const markup = renderComponent(
+      <Mention mention={mention} />
+    );
+
+    // Insert new link and exit styling
+    editor.execCommand('mceInsertContent', false,
+      markup + '&nbsp;'
+    );
   }
 
   render() {

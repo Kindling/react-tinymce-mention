@@ -133,7 +133,6 @@ const actionsMap = {
       return {
         selectedItem,
         mentions: updatedMentions
-        // matchedSources: _.without(matchedSources, selectedItem)
       };
     } else {
       return {};

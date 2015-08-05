@@ -51,5 +51,23 @@ React.render(
       dataSource={dataSourceStatic}
       delimiter={'@'}
     />
+    <div>
+      <h2>
+        Available users
+      </h2>
+      <ul>
+        <li>sima shimansky</li>
+        <li>alex gutierrez</li>
+        <li>eric kong</li>
+        <li>timothy meaney</li>
+        <li>desiree beckman</li>
+        <li>garrett kalleberg</li>
+        <li>misty edwards</li>
+        <li>david ashby</li>
+        <li>ivete tecedor</li>
+        <li>jim nielsen</li>
+        <li>christopher pappas</li>
+      </ul>
+    </div>
   </div>
 , document.getElementById('root'));

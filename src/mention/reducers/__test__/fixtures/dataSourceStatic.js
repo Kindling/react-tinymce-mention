@@ -1,16 +1,18 @@
 export default [
+  'sima shimansky',
+  'alex gutierrez',
   'alex gray',
   'alexandra spell',
-  'chris pappas',
-  'christopher pappas',
-  'carlos bee',
-  'dan dean',
-  'desiree dees',
+  'eric kong',
+  'timothy meaney',
+  'desiree beckman',
   'garrett kalleberg',
-  'jim nelson',
-  'james pound',
-  'katy curtis',
+  'misty edwards',
+  'david ashby',
+  'ivete tecedor',
+  'jim nielsen',
+  'christopher pappas',
+  'chris pappas',
   'katherine curtis',
-  'kim berdstat',
-  'karl popper'
+  'katy curtis'
 ];

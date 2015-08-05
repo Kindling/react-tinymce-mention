@@ -64,16 +64,18 @@ describe('mentionReducer', () => {
     expect(getState().matchedSources).toEqual([]);
   });
 
-  it('should select the currently selected item', () => {
+  it('should select the currently highlighted item', () => {
     store.dispatch(query('k'));
-
     store.dispatch(moveDown());
+    expect(getState().highlightIndex).toBe(1)
+    store.dispatch(moveDown());
+    expect(getState().highlightIndex).toBe(2)
     store.dispatch(select());
-    expect(getState().selectedItem).toEqual('katy curtis');
-
+    expect(getState().selectedItem).toEqual('katherine curtis');
+    store.dispatch(query('ka'));
     store.dispatch(moveUp());
     store.dispatch(select());
-    expect(getState().selectedItem).toEqual('garrett kalleberg');
+    expect(getState().selectedItem).toEqual('karl popper');
   });
 
   it('should move the highlighter down', () => {

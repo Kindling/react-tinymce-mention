@@ -79,29 +79,4 @@ describe('TinyMCE Plugin', () => {
 
     expect(getPlugin().isFocused).toBe(false);
   });
-
-  // it('should match closest @mention when backspace is pressed', () => {
-  //   const initial = 'hello, how are you @chris ';
-  //   const editor = getEditor();
-  //
-  //   editor.setContent(initial);
-  //   store.dispatch(query('chris'));
-  //   store.dispatch(select())
-  //   expect(getState().mentions).toEqual(['chris_pappas']);
-  //
-  //   // Ensure we're inside of the matched Mention
-  //   // with a cursor position like `@chri|s`
-  //   _.times(2, () => {
-  //     editor.fire('keyup', {
-  //       keyCode: miscKeyCodes.backspace
-  //     });
-  //   });
-  //
-  //   expect(getState().mentions).toEqual([]);
-  //
-  //   // And content should backespace until last `@`
-  //   expect(editor.getContent({ format: 'text' }))
-  //     .toEqual(initial.replace('@chris', '@').trim())
-  // });
-
 });

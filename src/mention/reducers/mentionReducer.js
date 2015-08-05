@@ -119,6 +119,7 @@ const actionsMap = {
     updatedMentions.push(selectedItem);
 
     return {
+      highlightIndex: 0,
       matchedSources: [],
       mentions: updatedMentions,
       selectedItem

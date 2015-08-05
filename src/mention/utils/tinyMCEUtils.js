@@ -48,13 +48,12 @@ export function prevCharIsSpace(editor) {
  * @param  {Number} endPos   End position to remove to
  * @return {String} the updated content without mentions
  */
-export function removeMention(editor, text, startPos, endPos) {
+export function removeMention(editor, text, startPos) {
   invariant(editor,
     'Error removing mention: `editor` is undefined.'
   );
 
-  // Extract the mention but keep the delimiter around
-  return text.slice(0, -(endPos - (startPos - 1))) + '&nbsp;';
+  return text.slice(0, startPos - 1) + '&nbsp;';
 }
 
 /**
@@ -64,10 +63,7 @@ export function removeMention(editor, text, startPos, endPos) {
  * @return {Object} Returns an object containing the current mentions
  */
 export function findMentions(editor) {
-  const content = editor.getContent({
-    format: 'text'
-  });
-
+  const content = editor.getContent();
   const mentions = twitter.extractMentionsWithIndices(content);
   const lastMention = _.last(mentions);
   const { screenName, indices: [startPos, endPos] } = lastMention;

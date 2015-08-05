@@ -5,6 +5,8 @@ import twitter from 'twitter-text';
 import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
 
 import {
+  moveDown,
+  moveUp,
   query,
   remove,
   resetMentions,
@@ -14,9 +16,11 @@ import {
 
 const Keys = {
   BACKSPACE: 8,
+  DOWN: 40,
   ENTER: 13,
   SPACE: 32,
-  TAB: 9
+  TAB: 9,
+  UP: 38
 };
 
 export function initializePlugin(store, dataSource, delimiter = '@') {
@@ -177,10 +181,22 @@ export class MentionPlugin {
   handleKeyPress(event) {
     const keyCode = event.which || event.keyCode;
 
-    // Autocomplete current suggestion and prevent unnecessary lookup.
-    if (keyCode === Keys.TAB || keyCode === Keys.ENTER) {
-      event.preventDefault();
+    // Override default behavior if we're using anything from our keyset.
+    _.each(Keys, (key) => {
+      if (keyCode === key && key !== Keys.BACKSPACE) {
+        event.preventDefault();
+      }
+    });
+
+    switch(keyCode) {
+    case Keys.TAB:
       return this.store.dispatch(select());
+    case Keys.ENTER:
+      return this.store.dispatch(select());
+    case Keys.DOWN:
+      return this.store.dispatch(moveDown());
+    case Keys.UP:
+      return this.store.dispatch(moveUp());
     }
 
     _.defer(() => {

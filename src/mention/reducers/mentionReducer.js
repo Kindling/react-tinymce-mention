@@ -87,7 +87,7 @@ const actionsMap = {
     const mentions = state.mentions;
     const mention = action.payload.mention;
 
-    if (!mentions.length) {
+    if (!mentions || _.isEmpty(mentions)) {
       return {};
     }
 
@@ -110,7 +110,7 @@ const actionsMap = {
   select(state) {
     const { mentions, matchedSources, highlightIndex } = state;
 
-    if (!matchedSources && matchedSources.length) {
+    if (!matchedSources || _.isEmpty(matchedSources)) {
       return {};
     }
 

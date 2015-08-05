@@ -128,7 +128,7 @@ const actionsMap = {
       const selectedItem = matchedSources[highlightIndex];
       const updatedMentions = _.cloneDeep(mentions);
       updatedMentions.push(selectedItem);
-      console.log(selectedItem);
+      // console.log(selectedItem);
 
       return {
         selectedItem,

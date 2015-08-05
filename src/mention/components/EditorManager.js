@@ -1,5 +1,5 @@
 import _ from 'lodash-node';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { findMentions, removeMention } from 'mention/utils/tinyMCEUtils';
 import renderComponent from 'mention/utils/renderComponent';
@@ -9,7 +9,7 @@ import Mention from 'mention/components/Mention';
   editor: state.mention.editor,
   mentions: state.mention.mentions
 }))
-export default class EditorManager {
+export default class EditorManager extends Component {
 
   static propTypes = {
     editor: PropTypes.object,
@@ -21,10 +21,19 @@ export default class EditorManager {
         || !_.isEqual(nextProps.mentions, this.props.mentions);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const shouldRender = nextProps.mentions.length >= this.props.mentions.length;
+
+    this.setState({
+      shouldRender
+    });
+  }
+
   componentDidUpdate() {
+    const { shouldRender } = this.state;
     const { editor, mentions } = this.props;
 
-    if (editor && !_.isEmpty(mentions)) {
+    if (editor && !_.isEmpty(mentions) && shouldRender) {
       this._clearUnfinishedMention();
       this._renderMentionIntoEditor();
     }

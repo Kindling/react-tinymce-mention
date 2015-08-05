@@ -109,9 +109,8 @@ const actionsMap = {
 
   select(state) {
     const { mentions, matchedSources, highlightIndex } = state;
-    const len = matchedSources && matchedSources.length;
 
-    if (!len) {
+    if (!matchedSources && matchedSources.length) {
       return {};
     }
 

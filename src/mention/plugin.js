@@ -14,6 +14,7 @@ import {
 
 const Keys = {
   BACKSPACE: 8,
+  ENTER: 13,
   SPACE: 32,
   TAB: 9
 };
@@ -177,7 +178,7 @@ export class MentionPlugin {
     const keyCode = event.which || event.keyCode;
 
     // Autocomplete current suggestion and prevent unnecessary lookup.
-    if (keyCode === Keys.TAB) {
+    if (keyCode === Keys.TAB || keyCode === Keys.ENTER) {
       event.preventDefault();
       return this.store.dispatch(select());
     }

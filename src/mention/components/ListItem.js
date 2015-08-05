@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import { select } from 'mention/actions/mentionActions';
+
 
 @connect(state => ({
   highlightIndex: state.mention.highlightIndex
@@ -12,6 +14,10 @@ export default class ListItem {
     match: PropTypes.string.isRequired
   }
 
+  handleClick() {
+    this.props.dispatch(select());
+  }
+
   render() {
     const { index, highlightIndex, match } = this.props;
 
@@ -20,7 +26,7 @@ export default class ListItem {
     });
 
     return (
-      <li className={classes}>
+      <li className={classes} onClick={::this.handleClick}>
         {match}
       </li>
     );

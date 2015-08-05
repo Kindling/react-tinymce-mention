@@ -31,8 +31,9 @@ export default class EditorManager {
   }
 
   /**
-   * Remove last mention and set cursor at the very end
-   * in order to replace with proper Mention component.
+   * Remove last, incomplete mention before autocomplete (@carl_be...)
+   * and sets cursor at the end in order to replace with proper Mention
+   * component.
    */
   _clearUnfinishedMention() {
     const { editor } = this.props;

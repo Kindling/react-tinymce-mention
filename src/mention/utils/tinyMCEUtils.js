@@ -48,12 +48,12 @@ export function prevCharIsSpace(editor) {
  * @param  {Number} endPos   End position to remove to
  * @return {String} the updated content without mentions
  */
-export function removeMention(editor, text, startPos) {
+export function removeMention(editor, startPos) {
   invariant(editor,
     'Error removing mention: `editor` is undefined.'
   );
 
-  return text.slice(0, startPos - 1) + '&nbsp;';
+  return editor.getContent().slice(0, startPos - 1) + '&nbsp;';
 }
 
 /**

@@ -26,16 +26,10 @@ export default class EditorManager {
       const mention = _.last(mentions);
       const uid = _.uniqueId('mention-');
       const { lastMention } = findMentions(editor);
-      const { screenName, startPos, endPos } = lastMention;
-
-      // Replace up to currently entered @ment... and replace
-      // with full name.
-      const content = editor.getContent({
-        // format: 'text'
-      });
+      const { startPos } = lastMention;
 
       // Remove last mention and set cursor at the very end
-      editor.setContent(removeMention(editor, content, startPos, endPos));
+      editor.setContent(removeMention(editor, startPos));
       editor.selection.select(editor.getBody(), true);
       editor.selection.collapse(false);
 
@@ -46,8 +40,6 @@ export default class EditorManager {
           </a>
         </strong>
       );
-
-      console.log(screenName, startPos, endPos);
 
       // Insert new link
       editor.execCommand('mceInsertContent', false,

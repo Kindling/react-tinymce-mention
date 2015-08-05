@@ -16,11 +16,13 @@ export default class Mention {
     const { mention } = this.props;
     const uid = _.uniqueId('mention-');
 
+    // <a href='foo'>
+    //
+    // </a>
+
     return (
-      <strong className={`mention-${uid}`} style={{background: '#ccc'}}>
-        <a href='foo'>
-          @{mention}
-        </a>
+      <strong className={`mention`}>
+        @{mention}
       </strong>
     );
   }

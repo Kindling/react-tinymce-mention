@@ -3,11 +3,11 @@ import _ from 'lodash-node';
 import invariant from 'invariant';
 import twitter from 'twitter-text';
 import { query, remove, resetQuery, select } from 'mention/actions/mentionActions';
-import { findMentions, prevCharIsSpace, removeMention } from 'mention/utils/tinyMCEUtils';
+import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
 
-const keys = {
-  backspace: 8,
-  tab: 9
+const Keys = {
+  BACKSPACE: 8,
+  TAB: 9
 };
 
 export function initializePlugin(store, dataSource, delimiter = '@') {
@@ -67,6 +67,8 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
             }
           }
         });
+
+        editor.on('keyup', mentionPlugin.handleBackspaceKey.bind(mentionPlugin));
       }
     });
 
@@ -158,12 +160,12 @@ export class MentionPlugin {
 
   addEventListeners() {
     this.editor.on('keydown', this.keyPressProxy = $.proxy(this.handleKeyPress, this));
-    this.editor.on('keyup', this.keyUpProxy = $.proxy(this.handleBackspaceKey, this));
+    // this.editor.on('keyup', this.keyUpProxy = $.proxy(this.handleBackspaceKey, this));
   }
 
   removeEventListeners() {
     this.editor.off('keydown', this.keyPressProxy);
-    this.editor.off('keyup', this.keyUpProxy);
+    // this.editor.off('keyup', this.keyUpProxy);
   }
 
   /**
@@ -176,7 +178,7 @@ export class MentionPlugin {
     const keyCode = event.which || event.keyCode;
 
     // Tab key -- Autocomplete current suggestion
-    if (keyCode === keys.tab) {
+    if (keyCode === Keys.TAB) {
       event.preventDefault();
       return this.store.dispatch(select());
     }
@@ -203,65 +205,23 @@ export class MentionPlugin {
   handleBackspaceKey(event) {
     const keyCode = event.which || event.keyCode;
 
-    // Backspace key
-    if (keyCode === keys.backspace) {
-      console.log('backspace');
+    if (keyCode === Keys.BACKSPACE) {
 
-      // TODO: Narrow this to a reasonable start and end range.
-      const content = this.editor.getContent({
-        format: 'text'
-      });
+      // Check to see if the surrounding area contains an @ and remove.
+      const $node = $(this.editor.selection.getNode()).closest('.mention');
 
-      // Check to see if the surrounding area contains an @
-      // and only match the immediate contents.
-      const re = /@\w+\b(?! *.)/;
-      const match = re.exec(content);
+      if ($node.length) {
+        const mention = $node
+          .first()
+          .text()
+          .replace(/(?:@|_)/g, ' ')
+          .trim();
+
+        this.store.dispatch(remove(mention));
+
+        // Remove @mention node from editor
+        $node.remove();
+      }
     }
   }
-
-  // handleBackspaceKey(event) {
-  //   const keyCode = event.which || event.keyCode;
-  //
-  //   // Backspace key
-  //   if (keyCode === 8) {
-  //
-  //     // TODO: Narrow this to a reasonable start and end range.
-  //     const content = this.editor.getContent({
-  //       format: 'text'
-  //     });
-  //
-  //     // Check to see if the surrounding area contains an @
-  //     // and only match the immediate contents.
-  //     const re = /@\w+\b(?! *.)/;
-  //     const match = re.exec(content);
-  //
-  //     return;
-  //     if (match) {
-  //
-  //       // Increment until truthy so that we can remove mention
-  //       // only after we've entered the word, e.g. `@joh|n`.
-  //       this.insideWord++;
-  //
-  //       if (this.insideWord) {
-  //         const mentions = _.last(twitter.extractMentionsWithIndices(content));
-  //
-  //         const {
-  //           screenName,
-  //           indices: [startPos, endPos]
-  //         } = mentions;
-  //
-  //         this.editor.setContent(removeMention(this.editor, startPos, endPos));
-  //
-  //         // Set cursor at the very end
-  //         this.editor.selection.select(this.editor.getBody(), true);
-  //         this.editor.selection.collapse(false);
-  //
-  //         this.store.dispatch(remove(screenName));
-  //
-  //         // Reset index after removal and continue listening.
-  //         this.insideWord = -1;
-  //       }
-  //     }
-  //   }
-  // }
 }

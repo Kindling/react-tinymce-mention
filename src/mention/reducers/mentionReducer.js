@@ -100,13 +100,13 @@ const actionsMap = {
 
   remove(state, action) {
     const mentions = state.mentions;
-    const match = action.payload.match;
+    const mention = action.payload.mention;
 
     if (!mentions.length) {
       return { mentions };
     }
 
-    const foundMention = _.last(filterMentions(state, match));
+    const foundMention = _.last(filterMentions(state, mention));
     const updatedMentions = _.without(mentions, foundMention);
 
     return {

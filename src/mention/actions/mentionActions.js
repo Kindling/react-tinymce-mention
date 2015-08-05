@@ -37,11 +37,11 @@ export function query(input) {
   };
 }
 
-export function remove(match) {
+export function remove(mention) {
   return {
     type: Types.REMOVE,
     payload: {
-      match
+      mention
     }
   };
 }

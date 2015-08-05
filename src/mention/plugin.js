@@ -169,8 +169,7 @@ export class MentionPlugin {
   handleKeyPress(event) {
     const keyCode = event.which || event.keyCode;
 
-    // Autocomplete current suggestion and prevent
-    // unnecessary lookup.
+    // Autocomplete current suggestion and prevent unnecessary lookup.
     if (keyCode === Keys.TAB) {
       event.preventDefault();
       return this.store.dispatch(select());
@@ -181,6 +180,7 @@ export class MentionPlugin {
         format: 'text'
       });
 
+      // Only matches @ if cursor is inside or around; e.g. "hello @jim and [@chri|s]".
       const re = /@\w+\b(?! *.)/;
       const match = re.exec(content);
 

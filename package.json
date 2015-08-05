@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "node test/index.js",
+    "build": "sh scripts/build",
     "gh-pages": "sh scripts/gh-pages"
   },
   "repository": {

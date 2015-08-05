@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+BIN = ./node_modules/.bin
+
+@$(BIN)/webpack --config webpack.config.js

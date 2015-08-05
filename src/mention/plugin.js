@@ -80,12 +80,6 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
 export class MentionPlugin {
 
   /**
-   * Increments to truthy for detecting if we're inside of a word.
-   * @type {Number}
-   */
-  insideWord = -1;
-
-  /**
    * Checks if we're currently focused on @mention lookup.
    * @type {Boolean}
    */
@@ -159,7 +153,7 @@ export class MentionPlugin {
   }
 
   addEventListeners() {
-    this.editor.on('keydown', this.keyPressProxy = $.proxy(this.handleKeyPress, this));
+    this.editor.on('keydown', this.keyPressProxy = this.handleKeyPress.bind(this));
   }
 
   removeEventListeners() {

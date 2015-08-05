@@ -89,7 +89,7 @@ const actionsMap = {
       }
     });
 
-    console.error(newQuery);
+    // console.log(newQuery);
     // console.log(matchedSources);
 
     return {
@@ -124,19 +124,20 @@ const actionsMap = {
   select(state) {
     const { mentions, matchedSources, highlightIndex } = state;
 
-    invariant(matchedSources && matchedSources.length,
-      'Error selecting item: `matchedSources` is emtpy.'
-    );
+    if (matchedSources && matchedSources.length) {
+      const selectedItem = matchedSources[highlightIndex];
+      const updatedMentions = _.cloneDeep(mentions);
+      updatedMentions.push(selectedItem);
+      console.log(selectedItem);
 
-    const selectedItem = matchedSources[highlightIndex];
-    const updatedMentions = _.cloneDeep(mentions);
-    updatedMentions.push(selectedItem);
-
-    return {
-      selectedItem,
-      mentions: updatedMentions,
-      matchedSources: _.without(matchedSources, selectedItem)
-    };
+      return {
+        selectedItem,
+        mentions: updatedMentions
+        // matchedSources: _.without(matchedSources, selectedItem)
+      };
+    } else {
+      return {};
+    }
   }
 };
 

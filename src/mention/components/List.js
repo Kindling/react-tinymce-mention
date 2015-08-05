@@ -49,17 +49,20 @@ export default class List {
     const { matchedSources } = this.props;
 
     return (
-      <ul id='list' ref='list'>
-        { matchedSources && matchedSources.map((match, index) => {
-          return (
-            <ListItem
-              match={match}
-              index={index}
-              key={`match-${index}`}
-            />
-          );
-        })}
-      </ul>
+      <div>
+        <h2>List popup</h2>
+        <ul id='list' ref='list'>
+          { matchedSources && matchedSources.map((match, index) => {
+            return (
+              <ListItem
+                match={match}
+                index={index}
+                key={`match-${index}`}
+              />
+            );
+          })}
+        </ul>
+      </div>
     );
   }
 }

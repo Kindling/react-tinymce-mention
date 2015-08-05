@@ -6,6 +6,7 @@ import initializeRedux from 'mention/utils/initializeRedux';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import EditorManager from 'mention/components/EditorManager';
 import List from 'mention/components/List';
+import TempMentions from 'mention/components/TempMentions';
 import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 
 const store = initializeRedux({
@@ -40,6 +41,7 @@ export default class Mention {
     return (
       <div>
         <List />
+        <TempMentions />
         <EditorManager />
       </div>
     );

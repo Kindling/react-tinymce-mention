@@ -2,8 +2,8 @@ import $ from 'jquery';
 import _ from 'lodash-node';
 import invariant from 'invariant';
 import twitter from 'twitter-text';
-import { query, remove, resetQuery } from 'mention/actions/mentionActions';
-import { prevCharIsSpace, removeMention } from 'mention/utils/tinyMCEUtils';
+import { query, remove, resetQuery, select } from 'mention/actions/mentionActions';
+import { findMentions, prevCharIsSpace, removeMention } from 'mention/utils/tinyMCEUtils';
 
 export function initializePlugin(store, dataSource, delimiter = '@') {
 
@@ -22,6 +22,12 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
     }
 
     window.tinymce.create('tinymce.plugins.Mention', {
+
+      /**
+       * Callback when the Editor has been registered and is ready
+       * to accept plugin initialization.
+       * @param  {Object} editor The editor
+       */
       init(editor) {
         const mentionPlugin = new MentionPlugin(editor, store, delimiter);
         const resolveInit = () => resolve(editor, mentionPlugin);
@@ -65,8 +71,36 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
 
 export class MentionPlugin {
 
+  /**
+   * Increments to truthy for detecting if we're inside of a word.
+   * @type {Number}
+   */
   insideWord = -1;
-  isFocused = false;
+
+  /**
+   * Checks if we're currently focused on @mention lookup.
+   * @type {Boolean}
+   */
+  isFocued = false;
+
+  /**
+   * The Redux store for handling lookups, mentions and tracking.
+   * @type {Object}
+   */
+  store = null;
+
+  /**
+   * Reference to the TinyMCE editor.
+   * @type {Object}
+   */
+  editor = null;
+
+  /**
+   * The delimiter we're using to trigger @mentions. Defaults to @.
+   * @type {String}
+   */
+  delimiter = '@';
+
 
   constructor(editor, store, delimiter) {
 
@@ -78,6 +112,9 @@ export class MentionPlugin {
       'Error initializing MentionPlugin: `store` cannot be undefined.'
     );
 
+
+    this.insideWord = -1;
+    this.isFocused = false;
     this.store = store;
     this.editor = editor;
     this.delimiter = delimiter;
@@ -90,6 +127,11 @@ export class MentionPlugin {
     return this;
   }
 
+  /**
+   * Initializes the MentionPlugin once a user has typed the delimiter.
+   *
+   * @return {MentionPlugin}
+   */
   initialize() {
     if (!this.isFocued) {
       this.isFocused = true;
@@ -97,6 +139,11 @@ export class MentionPlugin {
     }
   }
 
+  /**
+   * Cleans up all event listeners and de-initializes plugin. Triggered
+   * when outer listener detects a literal ' ' in entry, signifying
+   * that we've exited the @mention lookup.
+   */
   cleanup() {
     if (this.isFocused) {
       this.isFocused = false;
@@ -115,12 +162,22 @@ export class MentionPlugin {
     this.editor.off('keyup', this.keyUpProxy);
   }
 
+  /**
+   * Handler for internal key-presses. Parses the input and dispatches
+   * queries back to the store for list view and selection.
+   *
+   * @param  {jQuery.Event}
+   */
   handleKeyPress(event) {
-    const character = String.fromCharCode(event.which || event.keyCode);
+    const keyCode = event.which || event.keyCode;
+
+    // Tab key -- Autocomplete current suggestion
+    if (keyCode === 9) {
+      event.preventDefault();
+      return this.store.dispatch(select());
+    }
 
     _.defer(() => {
-      console.log(character);
-
       const content = this.editor.getContent({
         format: 'text'
       });
@@ -133,6 +190,12 @@ export class MentionPlugin {
     });
   }
 
+  /**
+   * Handler for backspace presses. Dispatches back to store with request
+   * to reset the current query and matches.
+   *
+   * @param  {jQuery.Event}
+   */
   handleBackspaceKey(event) {
     const keyCode = event.which || event.keyCode;
 

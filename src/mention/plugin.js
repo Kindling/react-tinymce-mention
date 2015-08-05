@@ -7,6 +7,7 @@ import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
 
 const Keys = {
   BACKSPACE: 8,
+  SPACE: 32,
   TAB: 9
 };
 
@@ -119,7 +120,6 @@ export class MentionPlugin {
       'Error initializing MentionPlugin: `store` cannot be undefined.'
     );
 
-    this.insideWord = -1;
     this.isFocused = false;
     this.store = store;
     this.editor = editor;
@@ -160,12 +160,10 @@ export class MentionPlugin {
 
   addEventListeners() {
     this.editor.on('keydown', this.keyPressProxy = $.proxy(this.handleKeyPress, this));
-    // this.editor.on('keyup', this.keyUpProxy = $.proxy(this.handleBackspaceKey, this));
   }
 
   removeEventListeners() {
     this.editor.off('keydown', this.keyPressProxy);
-    // this.editor.off('keyup', this.keyUpProxy);
   }
 
   /**
@@ -177,7 +175,8 @@ export class MentionPlugin {
   handleKeyPress(event) {
     const keyCode = event.which || event.keyCode;
 
-    // Tab key -- Autocomplete current suggestion
+    // Autocomplete current suggestion and prevent
+    // unnecessary lookup.
     if (keyCode === Keys.TAB) {
       event.preventDefault();
       return this.store.dispatch(select());
@@ -188,10 +187,15 @@ export class MentionPlugin {
         format: 'text'
       });
 
-      const mentions = _.last(twitter.extractMentionsWithIndices(content));
+      const re = /@\w+\b(?! *.)/;
+      const match = re.exec(content);
 
-      if (mentions && this.isFocused) {
-        this.store.dispatch(query(mentions.screenName));
+      if (match) {
+        const mentions = _.last(twitter.extractMentionsWithIndices(content));
+
+        if (mentions && this.isFocused) {
+          this.store.dispatch(query(mentions.screenName));
+        }
       }
     });
   }

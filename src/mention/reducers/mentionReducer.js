@@ -75,7 +75,7 @@ const actionsMap = {
     const len = query.length;
 
     // Check to see if we're typing in the editor or backspacing
-    // out from a previous @mention, which will regex over the
+    // out from a previous @mention, which will search over the
     // string looking for the last iteration of an @.  If single,
     // aggregate the previous result to build up a match; if
     // multiple, simply use that.
@@ -88,9 +88,6 @@ const actionsMap = {
         return false;
       }
     });
-
-    // console.log(newQuery);
-    // console.log(matchedSources);
 
     return {
       query: newQuery,
@@ -110,6 +107,7 @@ const actionsMap = {
     const updatedMentions = _.without(mentions, foundMention);
 
     return {
+      matchedSources: [],
       mentions: updatedMentions
     };
   },
@@ -128,11 +126,11 @@ const actionsMap = {
       const selectedItem = matchedSources[highlightIndex];
       const updatedMentions = _.cloneDeep(mentions);
       updatedMentions.push(selectedItem);
-      // console.log(selectedItem);
 
       return {
-        selectedItem,
-        mentions: updatedMentions
+        matchedSources: [],
+        mentions: updatedMentions,
+        selectedItem
       };
     } else {
       return {};

@@ -17,7 +17,8 @@ export default class Mention {
 
   static propTypes = {
     dataSource: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
-    delimiter: PropTypes.string
+    delimiter: PropTypes.string,
+    specialTags: PropTypes.array
   }
 
   componentDidMount() {
@@ -29,11 +30,27 @@ export default class Mention {
   }
 
   render() {
+    const { dataSource } = this.props;
+
     return (
       <div>
         <List />
         <Mentions />
         <EditorManager />
+        <div>
+          <h2>
+            Available users
+          </h2>
+          <ul>
+            { dataSource.map((source, index) => {
+              return (
+                <li key={`source-${index}`}>
+                  {source}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     );
   }

@@ -100,6 +100,14 @@ const actionsMap = {
     };
   },
 
+  resetMentions() {
+    return {
+      query: '',
+      matchedSources: [],
+      mentions: []
+    };
+  },
+
   resetQuery() {
     return {
       query: '',

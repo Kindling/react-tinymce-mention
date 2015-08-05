@@ -2,8 +2,15 @@ import $ from 'jquery';
 import _ from 'lodash-node';
 import invariant from 'invariant';
 import twitter from 'twitter-text';
-import { query, remove, resetQuery, select } from 'mention/actions/mentionActions';
 import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
+
+import {
+  query,
+  remove,
+  resetMentions,
+  resetQuery,
+  select
+} from 'mention/actions/mentionActions';
 
 const Keys = {
   BACKSPACE: 8,
@@ -219,6 +226,14 @@ export class MentionPlugin {
 
         // Remove @mention node from editor
         $node.remove();
+
+      // Check to see if we've erased all content
+      } else {
+        const content = this.editor.getContent({ format: 'text' }).trim();
+
+        if (_.isEmpty(content)) {
+          this.store.dispatch(resetMentions());
+        }
       }
     }
   }

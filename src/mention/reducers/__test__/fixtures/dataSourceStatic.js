@@ -14,5 +14,8 @@ export default [
   'christopher pappas',
   'chris pappas',
   'katherine curtis',
-  'katy curtis'
-];
+  'katy curtis',
+  'all',
+  'moderator',
+  'moderators'
+].sort();

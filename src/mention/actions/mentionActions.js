@@ -46,6 +46,12 @@ export function remove(mention) {
   };
 }
 
+export function resetMentions() {
+  return {
+    type: Types.RESET_MENTIONS
+  };
+}
+
 export function resetQuery() {
   return {
     type: Types.RESET_QUERY

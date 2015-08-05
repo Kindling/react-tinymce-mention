@@ -4,6 +4,7 @@ export const MOVE_DOWN = 'MOVE_DOWN';
 export const MOVE_UP = 'MOVE_UP';
 export const QUERY = 'QUERY';
 export const REMOVE = 'REMOVE';
+export const RESET_MENTIONS = 'RESET_MENTIONS';
 export const RESET_QUERY = 'RESET_QUERY';
 export const SELECT = 'SELECT';
 export const SHOW_LIST = 'SHOW_LIST';

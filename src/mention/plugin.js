@@ -1,6 +1,7 @@
-import $ from 'jquery';
 import invariant from 'invariant';
 import twitter from 'twitter-text';
+import closest from 'dom-closest';
+import removeNode from 'dom-remove';
 import last from 'mention/utils/last';
 import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
 
@@ -18,7 +19,6 @@ const keyMap = {
   BACKSPACE: 8,
   DOWN: 40,
   ENTER: 13,
-  SPACE: 32,
   TAB: 9,
   UP: 38
 };
@@ -184,7 +184,8 @@ class MentionPlugin {
     // Override default behavior if we're using anything from our keyset.
     Object.keys(keyMap).forEach(key => {
       const keyValue = keyMap[key];
-      if (keyCode === keyValue && keyValue !== keyMap.BACKSPACE) {
+      if (keyCode === keyValue
+          && keyValue !== keyMap.BACKSPACE) {
         event.preventDefault();
       }
     });
@@ -231,19 +232,18 @@ class MentionPlugin {
     if (keyCode === keyMap.BACKSPACE) {
 
       // Check to see if the surrounding area contains an @ and remove.
-      const $node = $(this.editor.selection.getNode()).closest('.mention');
+      const mentionNode = closest(this.editor.selection.getNode(), '.mention');
 
-      if ($node.length) {
-        const mention = $node
-          .first()
-          .text()
+      if (mentionNode) {
+        const mention = mentionNode
+          .innerText
           .replace(/(?:@|_)/g, ' ')
           .trim();
 
         this.store.dispatch(remove(mention));
 
         // Remove @mention node from editor
-        $node.remove();
+        removeNode(mentionNode);
 
       // Check to see if we've erased all content
       } else {

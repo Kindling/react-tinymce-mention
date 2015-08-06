@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import _ from 'lodash-node';
 import invariant from 'invariant';
 import twitter from 'twitter-text';
 import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
@@ -14,7 +13,7 @@ import {
   select
 } from 'mention/actions/mentionActions';
 
-const Keys = {
+const keyMap = {
   BACKSPACE: 8,
   DOWN: 40,
   ENTER: 13,
@@ -35,7 +34,7 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
 
   return new Promise((resolve, reject) => {
 
-    if (_.isUndefined(window.tinymce)) {
+    if (typeof window.tinymce === 'undefined') {
       return reject('Error initializing Mention plugin: `tinymce` is undefined.');
     }
 
@@ -53,7 +52,7 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
         // Check if we're using a promise the dataSource or a
         // raw array.  If promise, wait for it to resolve before
         // resolving the outer promise and initializing the app.
-        if (_.isFunction(dataSource.then)) {
+        if (typeof dataSource.then === 'function') {
 
           // TODO: Implement promise-based lookup
           resolveInit();
@@ -65,7 +64,7 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
         // to binding and unbinding events related to the UI / querying.
         editor.on('keypress', function(event) {
           const character = String.fromCharCode(event.which || event.keyCode);
-          const delimiterIndex = _.indexOf(delimiter, character);
+          const delimiterIndex = delimiter.indexOf(character);
 
           // User has typed `@`; begin tracking
           if (delimiterIndex > -1 && prevCharIsSpace(editor)) {
@@ -182,24 +181,25 @@ class MentionPlugin {
     const keyCode = event.which || event.keyCode;
 
     // Override default behavior if we're using anything from our keyset.
-    _.each(Keys, (key) => {
-      if (keyCode === key && key !== Keys.BACKSPACE) {
+    Object.keys(keyMap).forEach(key => {
+      const keyValue = keyMap[key];
+      if (keyCode === keyValue && keyValue !== keyMap.BACKSPACE) {
         event.preventDefault();
       }
     });
 
     switch(keyCode) {
-    case Keys.TAB:
+    case keyMap.TAB:
       return this.store.dispatch(select());
-    case Keys.ENTER:
+    case keyMap.ENTER:
       return this.store.dispatch(select());
-    case Keys.DOWN:
+    case keyMap.DOWN:
       return this.store.dispatch(moveDown());
-    case Keys.UP:
+    case keyMap.UP:
       return this.store.dispatch(moveUp());
     }
 
-    _.defer(() => {
+    setTimeout(() => {
       const content = this.editor.getContent({
         format: 'text'
       });
@@ -209,13 +209,13 @@ class MentionPlugin {
       const match = re.exec(content);
 
       if (match) {
-        const mentions = _.last(twitter.extractMentionsWithIndices(content));
+        const mention = twitter.extractMentionsWithIndices(content).slice(-1)[0];
 
-        if (mentions && this.isFocused) {
-          this.store.dispatch(query(mentions.screenName));
+        if (mention && this.isFocused) {
+          this.store.dispatch(query(mention.screenName));
         }
       }
-    });
+    }, 0);
   }
 
   /**
@@ -227,7 +227,7 @@ class MentionPlugin {
   handleBackspaceKey(event) {
     const keyCode = event.which || event.keyCode;
 
-    if (keyCode === Keys.BACKSPACE) {
+    if (keyCode === keyMap.BACKSPACE) {
 
       // Check to see if the surrounding area contains an @ and remove.
       const $node = $(this.editor.selection.getNode()).closest('.mention');
@@ -248,7 +248,7 @@ class MentionPlugin {
       } else {
         const content = this.editor.getContent({ format: 'text' }).trim();
 
-        if (_.isEmpty(content)) {
+        if (!content.length) {
           this.store.dispatch(resetMentions());
         }
       }

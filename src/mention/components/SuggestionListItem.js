@@ -3,11 +3,10 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { select } from 'mention/actions/mentionActions';
 
-
 @connect(state => ({
   highlightIndex: state.mention.highlightIndex
 }))
-export default class ListItem {
+export default class SuggestionListItem {
 
   static propTypes = {
     index: PropTypes.number.isRequired,

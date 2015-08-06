@@ -2,7 +2,7 @@ import _ from 'lodash-node';
 import React from 'react';
 import { connect } from 'react-redux';
 import key from 'keymaster';
-import ListItem from 'mention/components/ListItem.js';
+import SuggestionListItem from 'mention/components/SuggestionListItem.js';
 import { moveDown, moveUp, select } from 'mention/actions/mentionActions';
 
 @connect(state => ({
@@ -10,7 +10,7 @@ import { moveDown, moveUp, select } from 'mention/actions/mentionActions';
   highlightIndex: state.mention.highlightIndex,
   matchedSources: state.mention.matchedSources
 }))
-export default class List {
+export default class SuggestionList {
 
   componentDidMount() {
     this.dispatch = this.props.dispatch;
@@ -54,7 +54,7 @@ export default class List {
         <ul id='list' ref='list'>
           { matchedSources && matchedSources.map((match, index) => {
             return (
-              <ListItem
+              <SuggestionListItem
                 match={match}
                 index={index}
                 key={`match-${index}`}

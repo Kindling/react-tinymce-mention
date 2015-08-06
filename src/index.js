@@ -43,9 +43,6 @@ React.render(
         theme: 'kindling',
         toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code'
       }}
-      onChange={() => {
-        //this.handleEditorChange()
-      }}
     />
 
     <Mention

@@ -3,13 +3,13 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { findMentions, removeMention } from 'mention/utils/tinyMCEUtils';
 import renderComponent from 'mention/utils/renderComponent';
-import Mention from 'mention/components/Mention';
+import EditorMention from 'mention/components/EditorMention';
 
 @connect(state => ({
   editor: state.mention.editor,
   mentions: state.mention.mentions
 }))
-export default class EditorManager extends Component {
+export default class TinyMCEDelegate extends Component {
 
   static propTypes = {
     editor: PropTypes.object,
@@ -24,7 +24,6 @@ export default class EditorManager extends Component {
   componentWillReceiveProps(nextProps) {
     const currLength = this.props.mentions.length;
     const nextLength = nextProps.mentions.length;
-    const shouldRender =
 
     this.setState({
       shouldRender: currLength <= nextLength
@@ -61,7 +60,7 @@ export default class EditorManager extends Component {
     const mention = _.last(mentions);
 
     const markup = renderComponent(
-      <Mention mention={mention} />
+      <EditorMention mention={mention} />
     );
 
     // Insert new link and exit styling

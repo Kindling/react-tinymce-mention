@@ -4,9 +4,9 @@ import { initializePlugin } from 'mention/plugin';
 import { finalizeSetup } from 'mention/actions/mentionActions';
 import initializeRedux from 'mention/utils/initializeRedux';
 import mentionReducer from 'mention/reducers/mentionReducer';
-import EditorManager from 'mention/components/EditorManager';
-import List from 'mention/components/List';
-import Mentions from 'mention/components/Mentions';
+import TinyMCEDelegate from 'mention/components/TinyMCEDelegate';
+import SuggestionList from 'mention/components/SuggestionList';
+import MentionsDebugger from 'mention/components/MentionsDebugger';
 
 const store = initializeRedux({
   mention: mentionReducer
@@ -34,9 +34,9 @@ export default class Mention {
 
     return (
       <div>
-        <List />
-        <Mentions />
-        <EditorManager />
+        <SuggestionList />
+        <MentionsDebugger />
+        <TinyMCEDelegate />
         <div>
           <h2>
             Available users

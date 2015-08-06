@@ -48,11 +48,6 @@ React.render(
     <Mention
       dataSource={dataSourceStatic}
       delimiter={'@'}
-      specialTags={[
-        'moderator',
-        'moderators',
-        'all'
-      ]}
     />
 
   </div>

@@ -14,7 +14,7 @@ export const initialState = {
 
 function filterMentions(state, mention) {
   const foundMentions = state.mentions.filter(source => {
-    return source.includes(mention);
+    return source && source.includes(mention);
   });
 
   return foundMentions;

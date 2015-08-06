@@ -23,9 +23,34 @@ const keyMap = {
   UP: 38
 };
 
-export function initializePlugin(store, dataSource, delimiter = '@') {
+/**
+ * Reference to the TinyMCE editor.
+ * @type {Object}
+ */
+var editor = null;
 
-  invariant(store,
+/**
+ * The delimiter we're using to trigger @mentions. Defaults to @.
+ * @type {String}
+ */
+var delimiter = '@';
+
+/**
+ * Checks if we're currently focused on @mention lookup.
+ * @type {Boolean}
+ */
+var isFocused = false;
+
+/**
+ * The Redux store for handling lookups, mentions and tracking.
+ * @type {Object}
+ */
+var store = null;
+
+
+export function initializePlugin(reduxStore, dataSource, delimiterConfig = delimiter) {
+
+  invariant(reduxStore,
     'Plugin must be initialized with a Redux store.'
   );
 
@@ -46,9 +71,10 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
        * to accept plugin initialization.
        * @param  {Object} editor The editor
        */
-      init(editor) {
-        const mentionPlugin = new MentionPlugin(editor, store, delimiter);
-        const resolveInit = () => resolve(editor, mentionPlugin);
+      init(ed) {
+        editor = ed;
+        store = reduxStore;
+        delimiter = delimiterConfig;
 
         // Check if we're using a promise the dataSource or a
         // raw array.  If promise, wait for it to resolve before
@@ -56,9 +82,9 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
         if (typeof dataSource.then === 'function') {
 
           // TODO: Implement promise-based lookup
-          resolveInit();
+          resolve(editor);
         } else {
-          resolveInit();
+          resolve(editor);
         }
 
         // Add persistent top-level listener for delegating events related
@@ -69,19 +95,19 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
 
           // User has typed `@`; begin tracking
           if (delimiterIndex > -1 && prevCharIsSpace(editor)) {
-            if (!mentionPlugin.isFocused) {
-              mentionPlugin.initialize();
+            if (!isFocused) {
+              startListeningForInput();
             }
 
           // User has exited mentions, stop tracking
           } else if (prevCharIsSpace(editor) || character === ' ') {
-            if (mentionPlugin.isFocused) {
-              mentionPlugin.cleanup();
+            if (isFocused) {
+              cleanup();
             }
           }
         });
 
-        editor.on('keyup', mentionPlugin.handleBackspaceKey.bind(mentionPlugin));
+        editor.on('keyup', handleBackspaceKey);
       }
     });
 
@@ -89,170 +115,142 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
   });
 }
 
-class MentionPlugin {
 
-  /**
-   * Checks if we're currently focused on @mention lookup.
-   * @type {Boolean}
-   */
-  isFocued = false;
-
-  /**
-   * The Redux store for handling lookups, mentions and tracking.
-   * @type {Object}
-   */
-  store = null;
-
-  /**
-   * Reference to the TinyMCE editor.
-   * @type {Object}
-   */
-  editor = null;
-
-  /**
-   * The delimiter we're using to trigger @mentions. Defaults to @.
-   * @type {String}
-   */
-  delimiter = '@';
-
-
-  constructor(editor, store, delimiter) {
-
-    invariant(editor,
-      'Error initializing MentionPlugin: `editor` cannot be undefined.'
-    );
-
-    invariant(store,
-      'Error initializing MentionPlugin: `store` cannot be undefined.'
-    );
-
-    this.isFocused = false;
-    this.store = store;
-    this.editor = editor;
-    this.delimiter = delimiter;
-
-    // FIXME: Remove helper refs
-    window.editor = editor;
-    window.$ = $;
-    window.mentionPlugin = this;
-
-    return this;
+/**
+ * Initializes the MentionPlugin once a user has typed the delimiter.
+ *
+ * @return {MentionPlugin}
+ */
+function startListeningForInput() {
+  if (toggleFocus()) {
+    addEventListeners();
   }
+}
 
-  /**
-   * Initializes the MentionPlugin once a user has typed the delimiter.
-   *
-   * @return {MentionPlugin}
-   */
-  initialize() {
-    if (!this.isFocued) {
-      this.isFocused = true;
-      this.addEventListeners();
+/**
+ * Cleans up all event listeners and de-initializes plugin. Triggered
+ * when outer listener detects a literal ' ' in entry, signifying
+ * that we've exited the @mention lookup.
+ */
+function cleanup() {
+  if (!toggleFocus()) {
+    store.dispatch(resetQuery());
+    removeEventListeners();
+  }
+}
+
+function addEventListeners() {
+  editor.on('keydown', handleKeyPress);
+}
+
+function removeEventListeners() {
+  editor.off('keydown', handleKeyPress);
+}
+
+function toggleFocus() {
+  return isFocused = !isFocused;
+}
+
+function performIntermediateActions(keyCode, event) {
+
+  // Override default behavior if we're using anything from our keyset.
+  Object.keys(keyMap).forEach(key => {
+    const keyValue = keyMap[key];
+    if (keyCode === keyValue && keyValue !== keyMap.BACKSPACE) {
+      event.preventDefault();
     }
-  }
+  });
 
-  /**
-   * Cleans up all event listeners and de-initializes plugin. Triggered
-   * when outer listener detects a literal ' ' in entry, signifying
-   * that we've exited the @mention lookup.
-   */
-  cleanup() {
-    if (this.isFocused) {
-      this.isFocused = false;
-      this.store.dispatch(resetQuery());
-      this.removeEventListeners();
+  return shouldSelectOrMove(keyCode);
+}
+
+function shouldSelectOrMove(keyCode) {
+  switch(keyCode) {
+  case keyMap.TAB:
+    return store.dispatch(select());
+  case keyMap.ENTER:
+    return store.dispatch(select());
+  case keyMap.DOWN:
+    return store.dispatch(moveDown());
+  case keyMap.UP:
+    return store.dispatch(moveUp());
+  default:
+    return false;
+  }
+}
+
+// Only matches @ if cursor is inside or around; e.g. "hello @jim and [@chri|s]".
+function isNearMention(content) {
+  const re = /@\w+\b(?! *.)/;
+  return re.exec(content);
+}
+
+function getKeyCode(event) {
+  return event.which || event.keyCode;
+}
+
+function removeMention(mentionNode) {
+  const mention = mentionNode
+    .innerText
+    .replace(/(?:@|_)/g, ' ')
+    .trim();
+
+  store.dispatch(remove(mention));
+
+  // Remove @mention node from editor
+  removeNode(mentionNode);
+
+  return mentionNode;
+}
+
+function getEditorContent(format = 'text') {
+  return editor.getContent({
+    format
+  });
+}
+
+/**
+ * Handler for internal key-presses. Parses the input and dispatches
+ * queries back to the store for list view and selection.
+ *
+ * @param  {jQuery.Event}
+ */
+function handleKeyPress(event) {
+  const keyCode = getKeyCode(event);
+
+  if (performIntermediateActions(keyCode, event)) {
+    return false;
+  };
+
+  setTimeout(() => {
+    const content = getEditorContent();
+
+    if (isNearMention(content)) {
+      const mention = last(twitter.extractMentionsWithIndices(content));
+
+      if (mention && isFocused) {
+        store.dispatch(query(mention.screenName));
+      }
     }
-  }
+  }, 0);
+}
 
-  addEventListeners() {
-    this.editor.on('keydown', this.keyPressProxy = this.handleKeyPress.bind(this));
-  }
+/**
+ * Handler for backspace presses. Dispatches back to store with request
+ * to reset the current query and matches.
+ *
+ * @param  {jQuery.Event}
+ */
+function handleBackspaceKey(event) {
+  const keyCode = event.which || event.keyCode;
 
-  removeEventListeners() {
-    this.editor.off('keydown', this.keyPressProxy);
-  }
+  if (keyCode === keyMap.BACKSPACE) {
+    const foundMentionNode = closest(editor.selection.getNode(), '.mention');
 
-  /**
-   * Handler for internal key-presses. Parses the input and dispatches
-   * queries back to the store for list view and selection.
-   *
-   * @param  {jQuery.Event}
-   */
-  handleKeyPress(event) {
-    const keyCode = event.which || event.keyCode;
-
-    // Override default behavior if we're using anything from our keyset.
-    Object.keys(keyMap).forEach(key => {
-      const keyValue = keyMap[key];
-      if (keyCode === keyValue
-          && keyValue !== keyMap.BACKSPACE) {
-        event.preventDefault();
-      }
-    });
-
-    switch(keyCode) {
-    case keyMap.TAB:
-      return this.store.dispatch(select());
-    case keyMap.ENTER:
-      return this.store.dispatch(select());
-    case keyMap.DOWN:
-      return this.store.dispatch(moveDown());
-    case keyMap.UP:
-      return this.store.dispatch(moveUp());
-    }
-
-    setTimeout(() => {
-      const content = this.editor.getContent({
-        format: 'text'
-      });
-
-      // Only matches @ if cursor is inside or around; e.g. "hello @jim and [@chri|s]".
-      const re = /@\w+\b(?! *.)/;
-      const match = re.exec(content);
-
-      if (match) {
-        const mention = last(twitter.extractMentionsWithIndices(content));
-
-        if (mention && this.isFocused) {
-          this.store.dispatch(query(mention.screenName));
-        }
-      }
-    }, 0);
-  }
-
-  /**
-   * Handler for backspace presses. Dispatches back to store with request
-   * to reset the current query and matches.
-   *
-   * @param  {jQuery.Event}
-   */
-  handleBackspaceKey(event) {
-    const keyCode = event.which || event.keyCode;
-
-    if (keyCode === keyMap.BACKSPACE) {
-
-      // Check to see if the surrounding area contains an @ and remove.
-      const mentionNode = closest(this.editor.selection.getNode(), '.mention');
-
-      if (mentionNode) {
-        const mention = mentionNode
-          .innerText
-          .replace(/(?:@|_)/g, ' ')
-          .trim();
-
-        this.store.dispatch(remove(mention));
-
-        // Remove @mention node from editor
-        removeNode(mentionNode);
-
-      // Check to see if we've erased all content
-      } else {
-        const content = this.editor.getContent({ format: 'text' }).trim();
-
-        if (!content.length) {
-          this.store.dispatch(resetMentions());
-        }
-      }
+    if (foundMentionNode) {
+      removeMention(foundMentionNode);
+    } else if (!getEditorContent().trim().length) {
+      store.dispatch(resetMentions());
     }
   }
 }

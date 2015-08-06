@@ -1,7 +1,8 @@
-import _ from 'lodash-node';
+import isEqual from 'lodash.isequal';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { findMentions, removeMention } from 'mention/utils/tinyMCEUtils';
+import last from 'mention/utils/last';
 import renderComponent from 'mention/utils/renderComponent';
 import EditorMention from 'mention/components/EditorMention';
 
@@ -17,8 +18,8 @@ export default class TinyMCEDelegate extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !_.isEqual(nextProps.editor, this.props.editor)
-        || !_.isEqual(nextProps.mentions, this.props.mentions);
+    return !isEqual(nextProps.editor, this.props.editor)
+        || !isEqual(nextProps.mentions, this.props.mentions);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,8 +34,9 @@ export default class TinyMCEDelegate extends Component {
   componentDidUpdate() {
     const { shouldRender } = this.state;
     const { editor, mentions } = this.props;
+    const mentionsValid = mentions && mentions.length;
 
-    if (editor && !_.isEmpty(mentions) && shouldRender) {
+    if (editor && mentionsValid && shouldRender) {
       this._clearUnfinishedMention();
       this._renderMentionIntoEditor();
     }
@@ -57,7 +59,7 @@ export default class TinyMCEDelegate extends Component {
 
   _renderMentionIntoEditor() {
     const { editor, mentions } = this.props;
-    const mention = _.last(mentions);
+    const mention = last(mentions);
 
     const markup = renderComponent(
       <EditorMention mention={mention} />

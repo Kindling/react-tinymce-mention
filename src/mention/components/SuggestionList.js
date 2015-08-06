@@ -1,4 +1,4 @@
-import _ from 'lodash-node';
+import isEqual from 'lodash.isequal';
 import React from 'react';
 import { connect } from 'react-redux';
 import SuggestionListItem from 'mention/components/SuggestionListItem.js';
@@ -12,7 +12,7 @@ import { moveDown, moveUp, select } from 'mention/actions/mentionActions';
 export default class SuggestionList {
 
   shouldComponentUpdate(nextProps) {
-    return !_.isEqual(nextProps.matchedSources, this.props.matchedSources);
+    return !isEqual(nextProps.matchedSources, this.props.matchedSources);
   }
 
   render() {

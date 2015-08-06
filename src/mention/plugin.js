@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import invariant from 'invariant';
 import twitter from 'twitter-text';
+import last from 'mention/utils/last';
 import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
 
 import {
@@ -209,7 +210,7 @@ class MentionPlugin {
       const match = re.exec(content);
 
       if (match) {
-        const mention = twitter.extractMentionsWithIndices(content).slice(-1)[0];
+        const mention = last(twitter.extractMentionsWithIndices(content));
 
         if (mention && this.isFocused) {
           this.store.dispatch(query(mention.screenName));

@@ -1,5 +1,8 @@
-import _ from 'lodash-node';
+import without from 'lodash.without';
+import cloneDeep from 'lodash.clonedeep';
+import camelCase from 'lodash.camelcase';
 import invariant from 'invariant';
+import last from 'mention/utils/last';
 
 export const initialState = {
   dataSource: [],
@@ -70,7 +73,7 @@ const actionsMap = {
     const newQuery = (len > 1 || len === 0 ? query : prevQuery + query).toLowerCase();
 
     const matchedSources = state.dataSource.filter(source => {
-      if(!_.isEmpty(query)) {
+      if(query.length) {
         return source.includes(newQuery);
       } else {
         return false;
@@ -87,12 +90,12 @@ const actionsMap = {
     const mentions = state.mentions;
     const mention = action.payload.mention;
 
-    if (!mentions || _.isEmpty(mentions)) {
+    if (!mentions || mentions === []) {
       return {};
     }
 
-    const foundMention = _.last(filterMentions(state, mention));
-    const updatedMentions = _.without(mentions, foundMention);
+    const foundMention = last(filterMentions(state, mention));
+    const updatedMentions = without(mentions, foundMention);
 
     return {
       matchedSources: [],
@@ -118,13 +121,12 @@ const actionsMap = {
   select(state) {
     const { mentions, matchedSources, highlightIndex } = state;
 
-    if (!matchedSources || _.isEmpty(matchedSources)) {
+    if (!matchedSources || matchedSources === []) {
       return {};
     }
 
     const selectedItem = matchedSources[highlightIndex];
-    const updatedMentions = _.cloneDeep(mentions);
-    updatedMentions.push(selectedItem);
+    const updatedMentions = cloneDeep(mentions).concat([selectedItem]);
 
     return {
       highlightIndex: 0,
@@ -136,7 +138,7 @@ const actionsMap = {
 };
 
 export default function mentionReducer(state = initialState, action) {
-  const reduceFn = actionsMap[_.camelCase(action.type)];
+  const reduceFn = actionsMap[camelCase(action.type)];
 
   if (!reduceFn) {
     return state;

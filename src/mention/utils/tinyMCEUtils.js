@@ -1,6 +1,6 @@
-import _ from 'lodash-node';
 import invariant from 'invariant';
 import twitter from 'twitter-text';
+import last from 'mention/utils/last';
 
 // tinyMCE.activeEditor.selection.select(tinyMCE.activeEditor.dom.select('p')[0]);
 
@@ -65,7 +65,7 @@ export function removeMention(editor, startPos) {
 export function findMentions(editor) {
   const content = editor.getContent();
   const mentions = twitter.extractMentionsWithIndices(content);
-  const lastMention = _.last(mentions);
+  const lastMention = last(mentions);
   const { screenName, indices: [startPos, endPos] } = lastMention;
 
   return {

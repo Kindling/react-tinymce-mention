@@ -1,5 +1,5 @@
-import _ from 'lodash-node';
 import React, { PropTypes } from 'react';
+import uid from 'mention/utils/uid';
 
 export default class EditorMention {
 
@@ -14,7 +14,7 @@ export default class EditorMention {
 
   render() {
     const { mention } = this.props;
-    const uid = _.uniqueId('mention-');
+    const u = uid('mention-');
 
     return (
       <strong className={`mention`}>

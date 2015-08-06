@@ -1,7 +1,6 @@
 import _ from 'lodash-node';
 import React from 'react';
 import { connect } from 'react-redux';
-import key from 'keymaster';
 import SuggestionListItem from 'mention/components/SuggestionListItem.js';
 import { moveDown, moveUp, select } from 'mention/actions/mentionActions';
 
@@ -12,37 +11,8 @@ import { moveDown, moveUp, select } from 'mention/actions/mentionActions';
 }))
 export default class SuggestionList {
 
-  componentDidMount() {
-    this.dispatch = this.props.dispatch;
-    this.setupKeyHandlers();
-  }
-
   shouldComponentUpdate(nextProps) {
     return !_.isEqual(nextProps.matchedSources, this.props.matchedSources);
-  }
-
-  componentWillUnmount() {
-    key.unbind('down');
-    key.unbind('up');
-    key.unbind('enter');
-  }
-
-  setupKeyHandlers() {
-    key('down', ::this.handleDownKey);
-    key('up', ::this.handleUpKey);
-    key('enter', ::this.handleEnterKey);
-  }
-
-  handleDownKey() {
-    this.dispatch(moveDown());
-  }
-
-  handleUpKey() {
-    this.dispatch(moveUp());
-  }
-
-  handleEnterKey() {
-    this.dispatch(select());
   }
 
   render() {

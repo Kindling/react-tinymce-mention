@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 @connect(state => ({
   mentions: state.mention.mentions
 }))
-export default class Mentions {
+export default class MentionsDebugger {
   render() {
     const { mentions } = this.props;
 

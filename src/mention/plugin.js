@@ -89,7 +89,7 @@ export function initializePlugin(store, dataSource, delimiter = '@') {
   });
 }
 
-export class MentionPlugin {
+class MentionPlugin {
 
   /**
    * Checks if we're currently focused on @mention lookup.

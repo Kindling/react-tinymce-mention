@@ -116,7 +116,7 @@ function handleTopLevelEditorInput(event) {
 
   // User has exited mentions, stop tracking
   } else if (prevCharIsSpace(editor) || character === ' ') {
-    isFocused && cleanup();
+    isFocused && stopListeningAndCleanup();
   }
 }
 
@@ -126,7 +126,7 @@ function startListeningForInput() {
   }
 }
 
-function cleanup() {
+function stopListeningAndCleanup() {
   if (!toggleFocus()) {
     store.dispatch(resetQuery());
     editor.off('keydown', handleKeyPress);

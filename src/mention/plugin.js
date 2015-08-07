@@ -145,7 +145,7 @@ function performIntermediateActions(keyCode, event) {
   Object.keys(keyMap).forEach(key => {
     const keyValue = keyMap[key];
 
-    // Override default behavior if we're using anything from our keyset.
+    // Override default behavior if we're using anything from our keyMap.
     if (keyCode === keyValue && keyValue !== keyMap.BACKSPACE) {
       event.preventDefault();
     }
@@ -214,7 +214,7 @@ function handleKeyPress(event) {
  * to reset the current query and matches.
  */
 function handleEditorBackspace(event) {
-  const keyCode = event.which || event.keyCode;
+  const keyCode = getKeyCode(event);
 
   if (keyCode === keyMap.BACKSPACE) {
     const foundMentionNode = closest(editor.selection.getNode(), '.mention');

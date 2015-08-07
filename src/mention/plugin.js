@@ -81,9 +81,8 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
         store = Object.freeze(reduxStore);
         delimiter = Object.freeze(delimiterConfig);
 
-        // Check if we're using a promise the dataSource or a
-        // raw array.  If promise, wait for it to resolve before
-        // resolving the outer promise and initializing the app.
+        // If promise, wait for it to resolve before resolving the
+        // outer promise and initializing the app.
         if (typeof dataSource.then === 'function') {
 
           dataSource.then(response => {
@@ -248,11 +247,16 @@ function toggleFocus() {
   return isFocused = !isFocused;
 }
 
+function testFunction() {
+  return true;
+}
+
 // Export methods for testing
-export default {
+export const testExports = {
   _performIntermediateActions: performIntermediateActions,
   _isNearMention: isNearMention,
   _removeMentionFromEditor: removeMentionFromEditor,
   _handleKeyPress: handleKeyPress,
-  _handleEditorBackspace: handleEditorBackspace
-}
+  _handleEditorBackspace: handleEditorBackspace,
+  _testFunction: testFunction
+};

@@ -30,13 +30,13 @@ export default class Mention {
     const { dataSource, delimiter } = this.props;
 
     initializePlugin(store, dataSource, delimiter)
-      .then(::this._finalizeSetup)
+      .then(::this._transformAndDispatch)
       .catch((error, errorMsg) => {
         console.error(error);
       });
   }
 
-  _finalizeSetup({ editor, resolvedDataSource }) {
+  _transformAndDispatch({ editor, resolvedDataSource }) {
     const dataSource = this._transformResponse(resolvedDataSource);
     store.dispatch(finalizeSetup(editor, dataSource));
   }

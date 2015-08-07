@@ -64,9 +64,7 @@ export default function initializeEditor() {
             ]
           }
         }}
-        onChange={() => {
-          //this.handleEditorChange()
-        }}
+
       />
       <Mention
         dataSource={dataSourceStatic}
@@ -74,4 +72,6 @@ export default function initializeEditor() {
       />
     </div>
   , domNode);
+
+  return window.tinymce;
 }

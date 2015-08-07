@@ -32,25 +32,25 @@ const keyMap = {
  * Reference to the TinyMCE editor.
  * @type {Object}
  */
-var editor = null;
+let editor = null;
 
 /**
  * The delimiter we're using to trigger @mentions. Defaults to @.
  * @type {String}
  */
-var delimiter = '@';
+let delimiter = '@';
 
 /**
  * Checks if we're currently focused on @mention lookup with bound event handlers.
  * @type {Boolean}
  */
-var isFocused = false;
+let isFocused = false;
 
 /**
  * The Redux store for handling lookups, mentions and tracking.
  * @type {Object}
  */
-var store = null;
+let store = null;
 
 
 export function initializePlugin(reduxStore, dataSource, delimiterConfig = delimiter) {

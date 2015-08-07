@@ -49,7 +49,6 @@ React.render(
     />
 
     <Mention
-      dataSourceT={dataSourceStatic}
       dataSource={axios.get('http://localhost:3000/public/api/data.json')}
       delimiter={'@'}
     />

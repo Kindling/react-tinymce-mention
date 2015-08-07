@@ -3,7 +3,12 @@ import twitter from 'twitter-text';
 import closest from 'dom-closest';
 import removeNode from 'dom-remove';
 import last from 'mention/utils/last';
-import { prevCharIsSpace } from 'mention/utils/tinyMCEUtils';
+
+import {
+  getKeyCode,
+  getEditorContent,
+  prevCharIsSpace
+} from 'mention/utils/tinyMCEUtils';
 
 import {
   moveDown,
@@ -115,30 +120,17 @@ function handleTopLevelEditorInput(event) {
   }
 }
 
-/**
- * Initializes the MentionPlugin once a user has typed the delimiter.
- *
- */
 function startListeningForInput() {
   if (toggleFocus()) {
     editor.on('keydown', handleKeyPress);
   }
 }
 
-/**
- * Cleans up all event listeners and cleans up Mentions. Triggered
- * when outer listener detects a literal ' ' in entry, signifying
- * that we've exited the @mention lookup.
- */
 function cleanup() {
   if (!toggleFocus()) {
     store.dispatch(resetQuery());
     editor.off('keydown', handleKeyPress);
   }
-}
-
-function toggleFocus() {
-  return isFocused = !isFocused;
 }
 
 /**
@@ -150,10 +142,10 @@ function toggleFocus() {
  * @return {Function}
  */
 function performIntermediateActions(keyCode, event) {
-
-  // Override default behavior if we're using anything from our keyset.
   Object.keys(keyMap).forEach(key => {
     const keyValue = keyMap[key];
+
+    // Override default behavior if we're using anything from our keyset.
     if (keyCode === keyValue && keyValue !== keyMap.BACKSPACE) {
       event.preventDefault();
     }
@@ -177,41 +169,24 @@ function shouldSelectOrMove(keyCode) {
   }
 }
 
-// Only matches @ if cursor is inside or around; e.g. "hello @jim and [@chri|s]".
 function isNearMention(content) {
   const re = /@\w+\b(?! *.)/;
   return re.exec(content);
 }
 
-function getKeyCode(event) {
-  return event.which || event.keyCode;
-}
-
-function removeMention(mentionNode) {
+function removeMentionFromEditor(mentionNode) {
   const mention = mentionNode
     .innerText
     .replace(/(?:@|_)/g, ' ')
     .trim();
 
   store.dispatch(remove(mention));
-
-  // Remove @mention node from editor
-  removeNode(mentionNode);
-
-  return mentionNode;
-}
-
-function getEditorContent(format = 'text') {
-  return editor.getContent({
-    format
-  });
+  return removeNode(mentionNode);
 }
 
 /**
  * Handler for internal key-presses. Parses the input and dispatches
  * queries back to the store for list view and selection.
- *
- * @param  {jQuery.Event}
  */
 function handleKeyPress(event) {
   const keyCode = getKeyCode(event);
@@ -221,7 +196,7 @@ function handleKeyPress(event) {
   };
 
   setTimeout(() => {
-    const content = getEditorContent();
+    const content = getEditorContent(editor);
 
     if (isNearMention(content)) {
       const mention = last(twitter.extractMentionsWithIndices(content));
@@ -236,8 +211,6 @@ function handleKeyPress(event) {
 /**
  * Handler for backspace presses. Dispatches back to store with request
  * to reset the current query and matches.
- *
- * @param  {jQuery.Event}
  */
 function handleEditorBackspace(event) {
   const keyCode = event.which || event.keyCode;
@@ -246,9 +219,13 @@ function handleEditorBackspace(event) {
     const foundMentionNode = closest(editor.selection.getNode(), '.mention');
 
     if (foundMentionNode) {
-      removeMention(foundMentionNode);
-    } else if (!getEditorContent().trim().length) {
+      removeMentionFromEditor(foundMentionNode);
+    } else if (!getEditorContent(editor).trim().length) {
       store.dispatch(resetMentions());
     }
   }
+}
+
+function toggleFocus() {
+  return isFocused = !isFocused;
 }

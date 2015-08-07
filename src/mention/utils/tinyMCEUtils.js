@@ -2,52 +2,18 @@ import invariant from 'invariant';
 import twitter from 'twitter-text';
 import last from 'mention/utils/last';
 
-// tinyMCE.activeEditor.selection.select(tinyMCE.activeEditor.dom.select('p')[0]);
-
-/**
- * Helper function for returning the current content
- *
- * @param  {Editor} editor
- * @return {Object} returns the `start` and `text`.
- */
-function getContent(editor) {
-  invariant(editor,
-    'Error getting content: `editor` is undefined.'
-  );
-
-  const start = editor.selection.getRng(true).startOffset;
-  const text = editor.selection.getRng(true).startContainer.data || '';
-
-  return {
-    start, text
-  };
-}
-
-/**
- * Detects if the previous character in the editor is an empty space.
- *
- * @param  {Object} editor
- * @return {Boolean}
- */
 export function prevCharIsSpace(editor) {
   invariant(editor,
     'Error detecting previous char: `editor` is undefined.'
   );
 
-  const { start, text } = getContent(editor);
+  const start = editor.selection.getRng(true).startOffset;
+  const text = editor.selection.getRng(true).startContainer.data || '';
   const character = text.substr(start - 1, 1);
 
   return !!character.trim().length ? false : true;
 }
 
-/**
- * Removes a mention from the editor.
- *
- * @param  {Editor} editor
- * @param  {Number} startPos Start position to begin removal
- * @param  {Number} endPos   End position to remove to
- * @return {String} the updated content without mentions
- */
 export function removeMention(editor, startPos) {
   invariant(editor,
     'Error removing mention: `editor` is undefined.'
@@ -56,13 +22,11 @@ export function removeMention(editor, startPos) {
   return editor.getContent().slice(0, startPos - 1) + '&nbsp;';
 }
 
-/**
- * Finds mentions within the current editor window.
- *
- * @param  {Editor} editor
- * @return {Object} Returns an object containing the current mentions
- */
 export function findMentions(editor) {
+  invariant(editor,
+    'Error finding Mentions: `editor` is undefined.'
+  );
+
   const content = editor.getContent();
   const mentions = twitter.extractMentionsWithIndices(content);
   const lastMention = last(mentions);
@@ -76,4 +40,20 @@ export function findMentions(editor) {
       endPos
     }
   };
+}
+
+export function getKeyCode(event) {
+  invariant(event,
+    'Error returning keyCode: `editor` is undefined.'
+  );
+
+  return event.which || event.keyCode;
+}
+
+export function getEditorContent(editor, format = 'text') {
+  invariant(editor,
+    'Error returning editor content: `editor` is undefined.'
+  );
+
+  return editor.getContent({ format });
 }

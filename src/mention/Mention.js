@@ -16,7 +16,11 @@ const store = initializeRedux({
 export default class Mention {
 
   static propTypes = {
-    dataSource: PropTypes.oneOfType([PropTypes.array, PropTypes.func]),
+    dataSource: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.func,
+      PropTypes.object
+    ]),
     delimiter: PropTypes.string,
     specialTags: PropTypes.array
   }
@@ -24,9 +28,13 @@ export default class Mention {
   componentDidMount() {
     const { dataSource, delimiter } = this.props;
 
-    initializePlugin(store, dataSource, delimiter).then((editor) => {
-      store.dispatch(finalizeSetup(editor, dataSource));
-    });
+    initializePlugin(store, dataSource, delimiter)
+      .then(({ editor, resolvedDataSource }) => {
+        store.dispatch(finalizeSetup(editor, resolvedDataSource));
+      })
+      .catch(error => {
+        throw new Error(error)
+      });
   }
 
   render() {
@@ -35,22 +43,8 @@ export default class Mention {
     return (
       <div>
         <SuggestionList />
-        <MentionsDebugger />
         <TinyMCEDelegate />
-        <div>
-          <h2>
-            Available users
-          </h2>
-          <ul>
-            { dataSource.map((source, index) => {
-              return (
-                <li key={`source-${index}`}>
-                  {source}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+        <MentionsDebugger />
       </div>
     );
   }

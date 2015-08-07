@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/damassi/react-tinymce-mentions",
   "devDependencies": {
+    "axios": "git://github.com/mzabriskie/axios.git",
     "babel": "^5.8.20",
     "babel-core": "^5.8.20",
     "babel-eslint": "^4.0.5",

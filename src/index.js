@@ -2,6 +2,7 @@ import 'babel/polyfill';
 import React from 'react';
 import TinyMCE from 'react-tinymce';
 import Mention from 'mention/Mention';
+import axios from 'axios';
 import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 
 export default Mention;
@@ -48,7 +49,8 @@ React.render(
     />
 
     <Mention
-      dataSource={dataSourceStatic}
+      dataSourceT={dataSourceStatic}
+      dataSource={axios.get('http://localhost:3000/public/api/data.json')}
       delimiter={'@'}
     />
 

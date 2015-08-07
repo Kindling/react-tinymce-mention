@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 @connect(state => ({
+  dataSource: state.mention.dataSource,
   mentions: state.mention.mentions
 }))
 export default class MentionsDebugger {
   render() {
-    const { mentions } = this.props;
+    const { mentions, dataSource } = this.props;
 
     return (
       <div>
@@ -18,6 +19,21 @@ export default class MentionsDebugger {
             </li>
           )}
         </ul>
+
+        <div>
+          <h2>
+            Available users
+          </h2>
+          <ul>
+            { dataSource instanceof Array && dataSource.map((source, index) => {
+              return (
+                <li key={`source-${index}`}>
+                  {source}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     );
   }

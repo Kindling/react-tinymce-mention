@@ -86,19 +86,34 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
         // resolving the outer promise and initializing the app.
         if (typeof dataSource.then === 'function') {
 
-          // TODO: Implement promise-based lookup
-          resolve(editor);
-        } else {
-          resolve(editor);
-        }
+          dataSource.then(response => {
+            resolve({
+              editor,
+              resolvedDataSource: response.data
+            });
 
-        editor.on('keypress', handleTopLevelEditorInput);
-        editor.on('keyup', handleEditorBackspace);
+            start();
+          }).catch(error => {
+            throw new Error(error);
+          });
+
+        } else {
+          resolve({
+            editor,
+            resolvedDataSource: dataSource
+          });
+          start();
+        }
       }
     });
 
     window.tinymce.PluginManager.add('mention', window.tinymce.plugins.Mention);
   });
+}
+
+function start() {
+  editor.on('keypress', handleTopLevelEditorInput);
+  editor.on('keyup', handleEditorBackspace);
 }
 
 /**

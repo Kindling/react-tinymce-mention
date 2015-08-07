@@ -51,6 +51,9 @@ React.render(
     <Mention
       dataSource={axios.get('http://localhost:3000/public/api/data.json')}
       delimiter={'@'}
+      sortFn={arr => {
+        return arr.sort().reverse();
+      }}
     />
 
   </div>

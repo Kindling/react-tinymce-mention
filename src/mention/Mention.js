@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import invariant from 'invariant';
 import { provide } from 'react-redux';
 import { initializePlugin } from 'mention/plugin';
 import { finalizeSetup } from 'mention/actions/mentionActions';
@@ -20,21 +21,39 @@ export default class Mention {
       PropTypes.array,
       PropTypes.func,
       PropTypes.object
-    ]),
+    ]).isRequired,
     delimiter: PropTypes.string,
-    specialTags: PropTypes.array
+    sortFn: PropTypes.func
   }
 
   componentDidMount() {
     const { dataSource, delimiter } = this.props;
 
     initializePlugin(store, dataSource, delimiter)
-      .then(({ editor, resolvedDataSource }) => {
-        store.dispatch(finalizeSetup(editor, resolvedDataSource));
-      })
+      .then(::this._finalizeSetup)
       .catch(error => {
         throw new Error(error)
       });
+  }
+
+  _finalizeSetup({ editor, resolvedDataSource }) {
+    const dataSource = this._applySort(resolvedDataSource);
+    store.dispatch(finalizeSetup(editor, dataSource));
+  }
+
+  _applySort(resolvedDataSource) {
+    const { sortFn } = this.props;
+    const isFunc = typeof sortFn === 'function';
+
+    invariant(isFunc || typeof sortFn === 'undefined',
+      'Error initializing plugin: `sortFn` must be a function.'
+    );
+
+    const dataSource = isFunc
+      ? sortFn(resolvedDataSource)
+      : resolvedDataSource;
+
+    return dataSource;
   }
 
   render() {

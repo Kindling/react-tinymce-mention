@@ -87,27 +87,8 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
           resolve(editor);
         }
 
-        // Add persistent top-level listener for delegating events related
-        // to binding and unbinding events related to the UI / querying.
-        editor.on('keypress', function(event) {
-          const character = String.fromCharCode(event.which || event.keyCode);
-          const delimiterIndex = delimiter.indexOf(character);
-
-          // User has typed `@`; begin tracking
-          if (delimiterIndex > -1 && prevCharIsSpace(editor)) {
-            if (!isFocused) {
-              startListeningForInput();
-            }
-
-          // User has exited mentions, stop tracking
-          } else if (prevCharIsSpace(editor) || character === ' ') {
-            if (isFocused) {
-              cleanup();
-            }
-          }
-        });
-
-        editor.on('keyup', handleBackspaceKey);
+        editor.on('keypress', handleTopLevelEditorInput);
+        editor.on('keyup', handleEditorBackspace);
       }
     });
 
@@ -115,42 +96,59 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
   });
 }
 
-
 /**
- * Initializes the MentionPlugin once a user has typed the delimiter.
- *
- * @return {MentionPlugin}
+ * Add persistent top-level listener for delegating handlers for
+ * binding and unbinding events related to UI interaction / querying.
+ * @param  {jQuery.Event} event
  */
-function startListeningForInput() {
-  if (toggleFocus()) {
-    addEventListeners();
+function handleTopLevelEditorInput(event) {
+  const character = String.fromCharCode(event.which || event.keyCode);
+  const delimiterIndex = delimiter.indexOf(character);
+
+  // User has typed `@`; begin tracking
+  if (delimiterIndex > -1 && prevCharIsSpace(editor)) {
+    !isFocused && startListeningForInput();
+
+  // User has exited mentions, stop tracking
+  } else if (prevCharIsSpace(editor) || character === ' ') {
+    isFocused && cleanup();
   }
 }
 
 /**
- * Cleans up all event listeners and de-initializes plugin. Triggered
+ * Initializes the MentionPlugin once a user has typed the delimiter.
+ *
+ */
+function startListeningForInput() {
+  if (toggleFocus()) {
+    editor.on('keydown', handleKeyPress);
+  }
+}
+
+/**
+ * Cleans up all event listeners and cleans up Mentions. Triggered
  * when outer listener detects a literal ' ' in entry, signifying
  * that we've exited the @mention lookup.
  */
 function cleanup() {
   if (!toggleFocus()) {
     store.dispatch(resetQuery());
-    removeEventListeners();
+    editor.off('keydown', handleKeyPress);
   }
-}
-
-function addEventListeners() {
-  editor.on('keydown', handleKeyPress);
-}
-
-function removeEventListeners() {
-  editor.off('keydown', handleKeyPress);
 }
 
 function toggleFocus() {
   return isFocused = !isFocused;
 }
 
+/**
+ * Validates input and checks to see if any intermediate actions should
+ * be performed.
+ *
+ * @param  {Number} keyCode The current key being pressed
+ * @param  {jQuery.Event} event
+ * @return {Function}
+ */
 function performIntermediateActions(keyCode, event) {
 
   // Override default behavior if we're using anything from our keyset.
@@ -241,7 +239,7 @@ function handleKeyPress(event) {
  *
  * @param  {jQuery.Event}
  */
-function handleBackspaceKey(event) {
+function handleEditorBackspace(event) {
   const keyCode = event.which || event.keyCode;
 
   if (keyCode === keyMap.BACKSPACE) {

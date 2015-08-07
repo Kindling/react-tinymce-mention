@@ -107,7 +107,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
  * @param  {jQuery.Event} event
  */
 function handleTopLevelEditorInput(event) {
-  const character = String.fromCharCode(event.which || event.keyCode);
+  const character = String.fromCharCode(getKeyCode(event));
   const delimiterIndex = delimiter.indexOf(character);
 
   // User has typed `@`; begin tracking

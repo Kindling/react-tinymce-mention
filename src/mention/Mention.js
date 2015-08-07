@@ -49,10 +49,6 @@ export default class Mention {
       'Error initializing plugin: `transformFn` must be a function.'
     );
 
-    invariant(resolvedDataSource instanceof Array,
-      'Error applying sort: `transformFn` must return an array.'
-    );
-
     const transformedDataSource = isFunc
       ? transformFn(resolvedDataSource)
       : resolvedDataSource;

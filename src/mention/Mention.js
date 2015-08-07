@@ -23,7 +23,7 @@ export default class Mention {
       PropTypes.object
     ]).isRequired,
     delimiter: PropTypes.string,
-    sortFn: PropTypes.func
+    transformFn: PropTypes.func
   }
 
   componentDidMount() {
@@ -31,29 +31,37 @@ export default class Mention {
 
     initializePlugin(store, dataSource, delimiter)
       .then(::this._finalizeSetup)
-      .catch(error => {
-        throw new Error(error)
+      .catch((error, errorMsg) => {
+        console.error(error);
       });
   }
 
   _finalizeSetup({ editor, resolvedDataSource }) {
-    const dataSource = this._applySort(resolvedDataSource);
+    const dataSource = this._transformResponse(resolvedDataSource);
     store.dispatch(finalizeSetup(editor, dataSource));
   }
 
-  _applySort(resolvedDataSource) {
-    const { sortFn } = this.props;
-    const isFunc = typeof sortFn === 'function';
+  _transformResponse(resolvedDataSource) {
+    const { transformFn } = this.props;
+    const isFunc = typeof transformFn === 'function';
 
-    invariant(isFunc || typeof sortFn === 'undefined',
-      'Error initializing plugin: `sortFn` must be a function.'
+    invariant(isFunc || typeof transformFn === 'undefined',
+      'Error initializing plugin: `transformFn` must be a function.'
     );
 
-    const dataSource = isFunc
-      ? sortFn(resolvedDataSource)
+    invariant(resolvedDataSource instanceof Array,
+      'Error applying sort: `transformFn` must return an array.'
+    );
+
+    const transformedDataSource = isFunc
+      ? transformFn(resolvedDataSource)
       : resolvedDataSource;
 
-    return dataSource;
+    invariant(transformedDataSource instanceof Array,
+      'Error transforming response: `transformedDataSource` must be an array.'
+    );
+
+    return transformedDataSource;
   }
 
   render() {

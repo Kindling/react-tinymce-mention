@@ -4,6 +4,8 @@ import TinyMCE from 'react-tinymce';
 import Mention from 'mention/Mention';
 import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 
+export default Mention;
+
 var plugins = [
   'autolink',
   'autoresize',

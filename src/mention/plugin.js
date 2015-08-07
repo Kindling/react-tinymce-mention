@@ -41,7 +41,7 @@ var editor = null;
 var delimiter = '@';
 
 /**
- * Checks if we're currently focused on @mention lookup.
+ * Checks if we're currently focused on @mention lookup with bound event handlers.
  * @type {Boolean}
  */
 var isFocused = false;
@@ -78,8 +78,8 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
        */
       init(ed) {
         editor = ed;
-        store = reduxStore;
-        delimiter = delimiterConfig;
+        store = Object.freeze(reduxStore);
+        delimiter = Object.freeze(delimiterConfig);
 
         // Check if we're using a promise the dataSource or a
         // raw array.  If promise, wait for it to resolve before
@@ -228,4 +228,13 @@ function handleEditorBackspace(event) {
 
 function toggleFocus() {
   return isFocused = !isFocused;
+}
+
+// Export methods for testing
+export default {
+  _performIntermediateActions: performIntermediateActions,
+  _isNearMention: isNearMention,
+  _removeMentionFromEditor: removeMentionFromEditor,
+  _handleKeyPress: handleKeyPress,
+  _handleEditorBackspace: handleEditorBackspace
 }

@@ -180,8 +180,9 @@ function removeMentionFromEditor(mentionNode) {
     .replace(/(?:@|_)/g, ' ')
     .trim();
 
-  store.dispatch(remove(mention));
-  return removeNode(mentionNode);
+  removeNode(mentionNode);
+
+  return mention;
 }
 
 /**
@@ -219,7 +220,8 @@ function handleEditorBackspace(event) {
     const foundMentionNode = closest(editor.selection.getNode(), '.mention');
 
     if (foundMentionNode) {
-      removeMentionFromEditor(foundMentionNode);
+      const mention = removeMentionFromEditor(foundMentionNode)
+      store.dispatch(remove(mention));
     } else if (!getEditorContent(editor).trim().length) {
       store.dispatch(resetMentions());
     }

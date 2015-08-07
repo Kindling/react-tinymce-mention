@@ -76,8 +76,8 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
        * to accept plugin initialization.
        * @param  {Object} editor The editor
        */
-      init(ed) {
-        editor = ed;
+      init(activeEditor) {
+        editor = activeEditor;
         store = Object.freeze(reduxStore);
         delimiter = Object.freeze(delimiterConfig);
 
@@ -102,6 +102,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
             editor,
             resolvedDataSource: dataSource
           });
+
           start();
         }
       }

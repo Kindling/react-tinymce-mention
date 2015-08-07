@@ -1,6 +1,6 @@
 import invariant from 'invariant';
 
-export function getKeyCode(event) {
+export default function getKeyCode(event) {
   invariant(event,
     'Error returning keyCode: `event` is undefined.'
   );

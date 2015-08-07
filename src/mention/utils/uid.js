@@ -1,5 +1,5 @@
-var id = 0;
+let id = 0;
 
 export default function uid(prefix = '') {
-  return prefix + id++;
+  return String(prefix + id++);
 };

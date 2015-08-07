@@ -3,9 +3,9 @@ import twitter from 'twitter-text';
 import closest from 'dom-closest';
 import removeNode from 'dom-remove';
 import last from 'mention/utils/last';
+import getKeyCode from 'mention/utils/getKeyCode';
 
 import {
-  getKeyCode,
   getEditorContent,
   prevCharIsSpace
 } from 'mention/utils/tinyMCEUtils';

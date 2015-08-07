@@ -42,14 +42,6 @@ export function findMentions(editor) {
   };
 }
 
-export function getKeyCode(event) {
-  invariant(event,
-    'Error returning keyCode: `editor` is undefined.'
-  );
-
-  return event.which || event.keyCode;
-}
-
 export function getEditorContent(editor, format = 'text') {
   invariant(editor,
     'Error returning editor content: `editor` is undefined.'

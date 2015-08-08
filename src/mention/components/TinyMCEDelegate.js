@@ -14,7 +14,8 @@ export default class TinyMCEDelegate extends Component {
 
   static propTypes = {
     editor: PropTypes.object,
-    mentions: PropTypes.array
+    mentions: PropTypes.array,
+    onAdd: PropTypes.func
   }
 
   shouldComponentUpdate(nextProps) {
@@ -58,7 +59,7 @@ export default class TinyMCEDelegate extends Component {
   }
 
   _renderMentionIntoEditor() {
-    const { editor, mentions } = this.props;
+    const { editor, mentions, onAdd } = this.props;
     const mention = last(mentions);
 
     const markup = renderComponent(
@@ -69,6 +70,10 @@ export default class TinyMCEDelegate extends Component {
     editor.execCommand('mceInsertContent', false,
       markup + '&nbsp;'
     );
+
+    if (onAdd) {
+      onAdd(mention);
+    }
   }
 
   render() {

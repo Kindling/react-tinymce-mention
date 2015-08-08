@@ -22,9 +22,10 @@ export default class Mention {
       PropTypes.func,
       PropTypes.object
     ]).isRequired,
-    customRenderer: React.PropTypes.func,
     delimiter: PropTypes.string,
-    transformFn: PropTypes.func
+    transformFn: PropTypes.func,
+    customRenderer: React.PropTypes.func,
+    onAdd: React.PropTypes.func
   }
 
   componentDidMount() {
@@ -62,14 +63,16 @@ export default class Mention {
   }
 
   render() {
-    const { customRenderer } = this.props;
+    const { customRenderer, onAdd } = this.props;
 
     return (
       <div>
         <SuggestionRenderer
           customRenderer={customRenderer}
         />
-        <TinyMCEDelegate />
+        <TinyMCEDelegate
+          onAdd={onAdd}
+        />
         <MentionsDebugger />
       </div>
     );

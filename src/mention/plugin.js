@@ -203,6 +203,7 @@ function removeMentionFromEditor(mentionNode) {
 /**
  * Handler for internal key-presses. Parses the input and dispatches
  * queries back to the store for list view and selection.
+ * @param  {jQuery.Event} event
  */
 function handleKeyPress(event) {
   const keyCode = getKeyCode(event);
@@ -227,6 +228,7 @@ function handleKeyPress(event) {
 /**
  * Handler for backspace presses. Dispatches back to store with request
  * to reset the current query and matches.
+ * @param  {jQuery.Event} event
  */
 function handleEditorBackspace(event) {
   const keyCode = getKeyCode(event);
@@ -247,10 +249,6 @@ function toggleFocus() {
   return isFocused = !isFocused;
 }
 
-function testFunction() {
-  return true;
-}
-
 // Export methods for testing
 export const testExports = {
   _performIntermediateActions: performIntermediateActions,
@@ -258,5 +256,4 @@ export const testExports = {
   _removeMentionFromEditor: removeMentionFromEditor,
   _handleKeyPress: handleKeyPress,
   _handleEditorBackspace: handleEditorBackspace,
-  _testFunction: testFunction
 };

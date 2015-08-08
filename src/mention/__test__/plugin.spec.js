@@ -16,7 +16,6 @@ const {
   _removeMentionFromEditor,
   _handleKeyPress,
   _handleEditorBackspace,
-  _testFunction
 } = testExports;
 
 fdescribe('TinyMCE Plugin', () => {
@@ -50,7 +49,6 @@ fdescribe('TinyMCE Plugin', () => {
 
   it('should be tested', () => {
     expect(getState().dataSource[0]).toEqual('alex gray');
-    expect(_testFunction()).toBe(true);
   });
 
   it('should be near mention', () => {

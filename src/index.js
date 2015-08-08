@@ -51,11 +51,11 @@ React.render(
     <Mention
       dataSource={axios.get('http://localhost:3000/public/api/data.json')}
       delimiter={'@'}
-      onAdd={mention => {
-        console.log(mention, ' added');
-      }}
       transformFn={dataSource => {
         return dataSource.sort().reverse();
+      }}
+      onAdd={mention => {
+        console.log(mention, ' added');
       }}
       customRenderer={({ highlightIndex, matchedSources, clickFn }) => {
         return (

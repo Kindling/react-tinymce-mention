@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 import classNames from 'classnames';
 
 export default class TestListItem {
@@ -10,7 +9,7 @@ export default class TestListItem {
   }
 
   handleClick() {
-    this.props.dispatch(select());
+    this.props.onClick();
   }
 
   render() {

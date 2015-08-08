@@ -1,4 +1,3 @@
-import isEqual from 'lodash.isequal';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { select } from 'mention/actions/mentionActions';
@@ -17,17 +16,20 @@ export default class SuggestionRenderer {
     customRenderer: PropTypes.func
   }
 
-  shouldComponentUpdate(nextProps) {
-    return !isEqual(nextProps.matchedSources, this.props.matchedSources);
-  }
-
   _renderCustomComponents() {
-    const { customRenderer, highlightIndex, matchedSources } = this.props;
+    const {
+      customRenderer,
+      highlightIndex,
+      matchedSources,
+      dispatch
+    } = this.props;
+
+    const onClick = () => dispatch(select());
 
     return customRenderer({
       highlightIndex,
       matchedSources,
-      clickFn: select
+      clickFn: onClick
     })
   }
 

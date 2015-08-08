@@ -17,8 +17,9 @@ export default class TestList {
           return (
             <TestListItem
               onClick={onClick}
-              match={match}
+              highlightIndex={highlightIndex}
               index={index}
+              match={match}
               key={`match-${index}`}
             />
           );

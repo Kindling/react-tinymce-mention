@@ -1,12 +1,12 @@
 import isEqual from 'lodash.isequal';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import SuggestionListItem from 'mention/components/SuggestionListItem.js';
+import DefaultListItem from 'mention/components/DefaultListItem.js';
 
 @connect(state => ({
   matchedSources: state.mention.matchedSources
 }))
-export default class SuggestionList {
+export default class DefaultList {
 
   static propTypes = {
     matchedSources: PropTypes.array.isRequired,
@@ -22,10 +22,10 @@ export default class SuggestionList {
     return (
       <div>
         <h2>List popup</h2>
-        <ul id='list' ref='list'>
+        <ul className='mention-list'>
           { matchedSources && matchedSources.map((match, index) => {
             return (
-              <SuggestionListItem
+              <DefaultListItem
                 match={match}
                 index={index}
                 key={`match-${index}`}

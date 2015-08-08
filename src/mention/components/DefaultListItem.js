@@ -6,9 +6,10 @@ import { select } from 'mention/actions/mentionActions';
 @connect(state => ({
   highlightIndex: state.mention.highlightIndex
 }))
-export default class SuggestionListItem {
+export default class DefaultListItem {
 
   static propTypes = {
+    highlightIndex: PropTypes.number.isRequired,
     index: PropTypes.number.isRequired,
     match: PropTypes.string.isRequired
   }
@@ -21,7 +22,8 @@ export default class SuggestionListItem {
     const { index, highlightIndex, match } = this.props;
 
     const classes = classNames({
-      'selected': highlightIndex === index
+      'selected': highlightIndex === index,
+      'mention-list-item': true
     });
 
     return (

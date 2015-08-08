@@ -22,10 +22,10 @@ export default class Mention {
       PropTypes.func,
       PropTypes.object
     ]).isRequired,
-    delimiter: PropTypes.string,
-    transformFn: PropTypes.func,
     customRenderer: React.PropTypes.func,
-    onAdd: React.PropTypes.func
+    delimiter: PropTypes.string,
+    onAdd: React.PropTypes.func,
+    transformFn: PropTypes.func
   }
 
   componentDidMount() {
@@ -33,7 +33,7 @@ export default class Mention {
 
     initializePlugin(store, dataSource, delimiter)
       .then(::this._transformAndDispatch)
-      .catch((error) => {
+      .catch(error => {
         console.error(error);
       });
   }

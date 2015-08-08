@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { select } from 'mention/actions/mentionActions';
-import SuggestionList from 'mention/components/SuggestionList.js';
+import DefaultList from 'mention/components/DefaultList.js';
 
 @connect(state => ({
   editor: state.mention.editor,
@@ -39,7 +39,7 @@ export default class SuggestionRenderer {
     return (
       customRenderer
         ? this._renderCustomComponents()
-        : <SuggestionList />
+        : <DefaultList />
     );
   }
 }

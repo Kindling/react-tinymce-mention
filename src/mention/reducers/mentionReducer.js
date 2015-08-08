@@ -1,7 +1,6 @@
 import without from 'lodash.without';
 import cloneDeep from 'lodash.clonedeep';
 import camelCase from 'lodash.camelcase';
-import invariant from 'invariant';
 import last from 'mention/utils/last';
 
 export const initialState = {
@@ -49,7 +48,7 @@ const actionsMap = {
 
   moveUp(state) {
     const { highlightIndex, matchedSources } = state;
-    const len = matchedSources && matchedSources.length;
+    const len = matchedSources.length;
     var newIndex;
 
     if (highlightIndex > 0) {

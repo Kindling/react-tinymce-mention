@@ -3,21 +3,16 @@ import uid from 'mention/utils/uid';
 
 export default class EditorMention {
 
-  // TODO: Wire up type handlers
   static propTypes = {
-    mention: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func,
-      PropTypes.element
-    ])
+    mention: PropTypes.string.isRequired
   }
 
   render() {
     const { mention } = this.props;
-    const u = uid('mention-');
+    const uuid = uid('mention-');
 
     return (
-      <strong className={`mention`}>
+      <strong id={uuid} className='mention'>
         @{mention}
       </strong>
     );

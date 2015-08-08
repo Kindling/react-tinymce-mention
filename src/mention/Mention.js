@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
-import { provide } from 'react-redux';
+import { connect, provide } from 'react-redux';
 import { initializePlugin } from 'mention/plugin';
 import { finalizeSetup } from 'mention/actions/mentionActions';
 import initializeRedux from 'mention/utils/initializeRedux';
@@ -22,6 +22,7 @@ export default class Mention {
       PropTypes.func,
       PropTypes.object
     ]).isRequired,
+    customRenderer: React.PropTypes.func,
     delimiter: PropTypes.string,
     transformFn: PropTypes.func
   }
@@ -61,11 +62,11 @@ export default class Mention {
   }
 
   render() {
-    const { dataSource } = this.props;
+    const { dataSource, customRenderer, matchedSources } = this.props;
 
     return (
       <div>
-        <SuggestionList />
+        <SuggestionList customRenderer={customRenderer} />
         <TinyMCEDelegate />
         <MentionsDebugger />
       </div>

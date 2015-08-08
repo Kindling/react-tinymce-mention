@@ -38,11 +38,6 @@ export default class Mention {
       });
   }
 
-  _transformAndDispatch({ editor, resolvedDataSource }) {
-    const dataSource = this._transformResponse(resolvedDataSource);
-    store.dispatch(finalizeSetup(editor, dataSource));
-  }
-
   _transformResponse(resolvedDataSource) {
     const { transformFn } = this.props;
     const isFunc = typeof transformFn === 'function';
@@ -60,6 +55,11 @@ export default class Mention {
     );
 
     return transformedDataSource;
+  }
+
+  _transformAndDispatch({ editor, resolvedDataSource }) {
+    const dataSource = this._transformResponse(resolvedDataSource);
+    store.dispatch(finalizeSetup(editor, dataSource));
   }
 
   render() {

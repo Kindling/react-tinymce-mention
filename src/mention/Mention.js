@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
-import { connect, provide } from 'react-redux';
+import { provide } from 'react-redux';
 import { initializePlugin } from 'mention/plugin';
 import { finalizeSetup } from 'mention/actions/mentionActions';
 import initializeRedux from 'mention/utils/initializeRedux';
 import mentionReducer from 'mention/reducers/mentionReducer';
 import TinyMCEDelegate from 'mention/components/TinyMCEDelegate';
-import SuggestionList from 'mention/components/SuggestionList';
+import SuggestionRenderer from 'mention/components/SuggestionRenderer';
 import MentionsDebugger from 'mention/components/MentionsDebugger';
 
 const store = initializeRedux({
@@ -32,7 +32,7 @@ export default class Mention {
 
     initializePlugin(store, dataSource, delimiter)
       .then(::this._transformAndDispatch)
-      .catch((error, errorMsg) => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -62,11 +62,13 @@ export default class Mention {
   }
 
   render() {
-    const { dataSource, customRenderer, matchedSources } = this.props;
+    const { customRenderer } = this.props;
 
     return (
       <div>
-        <SuggestionList customRenderer={customRenderer} />
+        <SuggestionRenderer
+          customRenderer={customRenderer}
+        />
         <TinyMCEDelegate />
         <MentionsDebugger />
       </div>

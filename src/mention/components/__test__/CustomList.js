@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
-import TestListItem from 'mention/components/__test__/TestListItem';
+import CustomListItem from 'mention/components/__test__/CustomListItem';
 
-export default class TestList {
+export default class CustomList {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     highlightIndex: PropTypes.number.isRequired,
@@ -15,7 +15,7 @@ export default class TestList {
       <ul id='list' ref='list'>
         { matchedSources && matchedSources.map((match, index) => {
           return (
-            <TestListItem
+            <CustomListItem
               onClick={onClick}
               highlightIndex={highlightIndex}
               index={index}

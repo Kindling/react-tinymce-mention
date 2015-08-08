@@ -3,7 +3,7 @@ import React from 'react';
 import TinyMCE from 'react-tinymce';
 import Mention from 'mention/Mention';
 import axios from 'axios';
-import TestList from 'mention/components/__test__/TestList';
+import CustomList from 'mention/components/__test__/CustomList';
 
 export default Mention;
 
@@ -51,12 +51,12 @@ React.render(
     <Mention
       dataSource={axios.get('http://localhost:3000/public/api/data.json')}
       delimiter={'@'}
-      transformFn={arr => {
-        return arr.sort().reverse();
+      transformFn={dataSource => {
+        return dataSource.sort().reverse();
       }}
       customRenderer={({ highlightIndex, matchedSources, clickFn }) => {
         return (
-          <TestList
+          <CustomList
             highlightIndex={highlightIndex}
             matchedSources={matchedSources}
             onClick={clickFn}

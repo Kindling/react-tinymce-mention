@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
-export default class TestListItem {
+export default class CustomListItem {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,

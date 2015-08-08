@@ -3,9 +3,7 @@ import React from 'react';
 import TinyMCE from 'react-tinymce';
 import Mention from 'mention/Mention';
 import axios from 'axios';
-import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
 import TestList from 'mention/components/__test__/TestList';
-import TestListItem from 'mention/components/__test__/TestListItem';
 
 export default Mention;
 
@@ -64,7 +62,8 @@ React.render(
             onClick={clickFn}
           />
         )
-      }} />
+      }}
+    />
 
   </div>
 , document.getElementById('root'));

@@ -1,4 +1,3 @@
-export const FETCH = 'FETCH';
 export const FINALIZE_SETUP = 'FINALIZE_SETUP';
 export const MOVE_DOWN = 'MOVE_DOWN';
 export const MOVE_UP = 'MOVE_UP';

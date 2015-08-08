@@ -1,11 +1,5 @@
 import * as Types from 'mention/constants/MentionActionTypes';
 
-export function fetch() {
-  return {
-    type: Types.FETCH
-  };
-}
-
 export function finalizeSetup(editor, dataSource) {
   return {
     type: Types.FINALIZE_SETUP,

@@ -1,5 +1,5 @@
 {
-  "name": "react-tinymce-mentions",
+  "name": "react-tinymce-mention",
   "version": "0.1.0",
   "description": "@Mention functionality for TinyMCE, built with React and Redux.",
   "main": "lib/index",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/damassi/react-tinymce-mentions.git"
+    "url": "https://github.com/damassi/react-tinymce-mention.git"
   },
   "keywords": [
     "tinymce",
@@ -29,9 +29,9 @@
   "author": "Christopher Pappas <damassi.pappas@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/damassi/react-tinymce-mentions/issues"
+    "url": "https://github.com/damassi/react-tinymce-mention/issues"
   },
-  "homepage": "https://github.com/damassi/react-tinymce-mentions",
+  "homepage": "https://github.com/damassi/react-tinymce-mention",
   "devDependencies": {
     "axios": "git://github.com/mzabriskie/axios.git",
     "babel": "^5.8.20",

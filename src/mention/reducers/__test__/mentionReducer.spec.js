@@ -88,7 +88,6 @@ describe('mentionReducer', () => {
       'katherine curtis',
       'katy curtis'
     ]);
-    console.log(getState().highlightIndex);
 
     store.dispatch(moveDown());
     expect(getState().highlightIndex).toBe(1);

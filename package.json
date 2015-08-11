@@ -5,7 +5,8 @@
   "main": "lib/index",
   "scripts": {
     "start": "node server.js",
-    "test": "node test/index.js",
+    "test": "node test/index.js --single-run",
+    "test-watch": "node test/index.js",
     "build": "sh scripts/build",
     "prepublish": "npm run build",
     "gh-pages": "sh scripts/gh-pages",
@@ -59,7 +60,8 @@
     "react-tools": "^0.13.3",
     "webpack": "^1.10.5",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-dev-server": "^1.10.1"
+    "webpack-dev-server": "^1.10.1",
+    "yargs": "^3.18.0"
   },
   "dependencies": {
     "classnames": "^2.1.3",

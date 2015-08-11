@@ -7,9 +7,9 @@
     "start": "node server.js",
     "test": "node test/index.js --single-run",
     "test-watch": "node test/index.js",
-    "build": "sh scripts/build",
-    "prepublish": "npm run build",
-    "gh-pages": "sh scripts/gh-pages",
+    "build": "sh scripts/build.sh",
+    "prepublish": "npm run build.sh",
+    "gh-pages": "sh scripts/gh-pages.sh",
     "bump-patch": "mversion patch -m",
     "bump-minor": "mversion minor -m",
     "bump-major": "mversion major -m"

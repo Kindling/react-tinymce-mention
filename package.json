@@ -1,6 +1,6 @@
 {
   "name": "react-tinymce-mention",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "@Mention functionality for TinyMCE, built with React and Redux.",
   "main": "lib/index",
   "scripts": {
@@ -8,7 +8,7 @@
     "test": "node test/index.js --single-run",
     "test-watch": "node test/index.js",
     "build": "sh scripts/build.sh",
-    "prepublish": "npm run build.sh",
+    "prepublish": "npm run build",
     "gh-pages": "sh scripts/gh-pages.sh",
     "bump-patch": "mversion patch -m",
     "bump-minor": "mversion minor -m",

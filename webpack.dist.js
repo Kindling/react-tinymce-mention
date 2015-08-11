@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var config = require('./webpack.config');
 
 config.devtool = false;
+config.entry = './src/index';
 
 config.output = {
   path: path.resolve(__dirname, 'lib'),

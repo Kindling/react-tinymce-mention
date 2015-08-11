@@ -2,11 +2,12 @@
   "name": "react-tinymce-mentions",
   "version": "0.1.0",
   "description": "@Mention functionality for TinyMCE, built with React and Redux.",
+  "main": "lib/index",
   "scripts": {
     "start": "node server.js",
     "test": "node test/index.js",
     "build": "sh scripts/build",
-    "dist": "sh scripts/dist",
+    "prepublish": "npm run build",
     "gh-pages": "sh scripts/gh-pages",
     "bump-patch": "mversion patch -m",
     "bump-minor": "mversion minor -m",
@@ -22,7 +23,8 @@
     "@mention",
     "@mention",
     "react",
-    "reactjs"
+    "reactjs",
+    "redux"
   ],
   "author": "Christopher Pappas <damassi.pappas@gmail.com",
   "license": "MIT",

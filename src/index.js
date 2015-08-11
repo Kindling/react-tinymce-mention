@@ -48,7 +48,7 @@ React.render(
     />
 
     <Mention
-      dataSource={axios.get('http://localhost:3000/public/api/data.json')}
+      dataSource={axios.get('http://localhost:3000/examples/shared/api/data.json')}
       delimiter={'@'}
       transformFn={dataSource => {
         return dataSource.sort().reverse();

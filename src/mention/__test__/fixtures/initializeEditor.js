@@ -53,16 +53,6 @@ export default function initializeEditor() {
           target_list: false,
           theme: 'kindling',
           toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code',
-
-          mention: {
-            delimiter: '@',
-            source: [
-              { name: 'Tyra Porcelli' },
-              { name: 'Brigid Reddish' },
-              { name: 'Ashely Buckler' },
-              { name: 'Teddy Whelan' }
-            ]
-          }
         }}
 
       />

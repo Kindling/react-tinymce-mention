@@ -1,4 +1,3 @@
-import 'babel/polyfill';
 import React from 'react';
 import TinyMCE from 'react-tinymce';
 import Mention from 'mention/Mention';

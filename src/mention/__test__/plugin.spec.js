@@ -6,8 +6,6 @@ import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStati
 import initializeEditor from './fixtures/initializeEditor';
 import { query, resetQuery, select, finalizeSetup } from 'mention/actions/mentionActions';
 import { removeMention } from 'mention/utils/tinyMCEUtils';
-
-
 import { testExports } from 'mention/plugin';
 
 const {

@@ -12,7 +12,7 @@ export default class CustomList {
     const { onClick, highlightIndex, matchedSources } = this.props;
 
     return (
-      <ul id='list' ref='list'>
+      <ul>
         { matchedSources && matchedSources.map((match, index) => {
           return (
             <CustomListItem

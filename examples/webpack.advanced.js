@@ -25,8 +25,7 @@ module.exports = {
       test: /\.jsx?$/,
       loaders: ['react-hot', 'babel'],
       include: [
-        path.join(__dirname, 'advanced/src'),
-        path.join(__dirname, '../src')
+        path.join(__dirname, 'advanced/src')
       ]
     }]
   }

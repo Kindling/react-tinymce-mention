@@ -15,7 +15,7 @@ export default class MentionsDebugger {
         <ul>
           { mentions && mentions.map((mention, index) =>
             <li key={`mention-${index}`}>
-              {mention}
+              {mention.label}
             </li>
           )}
         </ul>

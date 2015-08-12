@@ -2,6 +2,7 @@ import without from 'lodash.without';
 import cloneDeep from 'lodash.clonedeep';
 import camelCase from 'lodash.camelcase';
 import last from '../utils/last';
+import uid from '../utils/uid';
 
 export const initialState = {
   dataSource: [],
@@ -13,7 +14,8 @@ export const initialState = {
 
 function filterMentions(state, mention) {
   const foundMentions = state.mentions.filter(source => {
-    return source && source.includes(mention);
+    const { label } = source;
+    return label && label.includes(mention);
   });
 
   return foundMentions;
@@ -124,14 +126,17 @@ const actionsMap = {
       return {};
     }
 
-    const selectedItem = matchedSources[highlightIndex];
+    const selectedItem = {
+      id: uid('mention-'),
+      label: matchedSources[highlightIndex]
+    };
+
     const updatedMentions = cloneDeep(mentions).concat([selectedItem]);
 
     return {
       highlightIndex: 0,
       matchedSources: [],
-      mentions: updatedMentions,
-      selectedItem
+      mentions: updatedMentions
     };
   }
 };

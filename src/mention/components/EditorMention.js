@@ -1,19 +1,18 @@
 import React, { PropTypes } from 'react';
-import uid from '../utils/uid';
 
 export default class EditorMention {
 
   static propTypes = {
-    mention: PropTypes.string.isRequired
+    id: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired
   }
 
   render() {
-    const { mention } = this.props;
-    const uuid = uid('mention-');
+    const { id, label } = this.props;
 
     return (
-      <strong id={uuid} className='mention'>
-        @{mention}
+      <strong id={id} className='mention'>
+        @{label}
       </strong>
     );
   }

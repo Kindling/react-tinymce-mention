@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { exitSelection, findMentions, removeMention } from '../utils/tinyMCEUtils';
 import last from '../utils/last';
+import uid from '../utils/uid';
 import renderComponent from '../utils/renderComponent';
 import EditorMention from '../components/EditorMention';
 
@@ -74,12 +75,16 @@ export default class TinyMCEDelegate extends Component {
   _renderMentionIntoEditor() {
     const { editor, mentions, onAdd } = this.props;
     const mention = last(mentions);
+    const { label, id } = mention;
     const text = editor.getBody().innerText;
     const insertLeadingSpace = text.trim().length !== 0;
-    const uid = window.tinymce.DOM.uniqueId();
+    const spaceUid = uid('space-');
 
     const markup = renderComponent(
-      <EditorMention mention={mention} />
+      <EditorMention
+        label={label}
+        id={id}
+      />
     );
 
     const formattedMarkup = insertLeadingSpace
@@ -88,7 +93,7 @@ export default class TinyMCEDelegate extends Component {
 
     // Insert new link and exit styling via
     editor.execCommand('mceInsertRawHTML', false,
-      `${formattedMarkup}<span id="${uid}"> \u200C</span>`
+      `${formattedMarkup}<span id="${spaceUid}"> \u200C</span>`
     );
 
     exitSelection(editor);

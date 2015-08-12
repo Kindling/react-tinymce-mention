@@ -1,7 +1,7 @@
 import isEqual from 'lodash.isequal';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { findMentions, removeMention } from '../utils/tinyMCEUtils';
+import { exitSelection, findMentions, removeMention } from '../utils/tinyMCEUtils';
 import last from '../utils/last';
 import renderComponent from '../utils/renderComponent';
 import EditorMention from '../components/EditorMention';
@@ -76,19 +76,22 @@ export default class TinyMCEDelegate extends Component {
     const mention = last(mentions);
     const text = editor.getBody().innerText;
     const insertLeadingSpace = text.trim().length !== 0;
+    const uid = window.tinymce.DOM.uniqueId();
 
     const markup = renderComponent(
       <EditorMention mention={mention} />
     );
 
     const formattedMarkup = insertLeadingSpace
-      ? ` ${markup}&nbsp;`
-      :  `${markup}&nbsp;`;
+      ? ` ${markup}`
+      :  `${markup}`;
 
-    // Insert new link and exit styling via `&nbsp;`
-    editor.execCommand('mceInsertContent', false,
-      formattedMarkup
+    // Insert new link and exit styling via
+    editor.execCommand('mceInsertRawHTML', false,
+      `${formattedMarkup}<span id="${uid}"> \u200C</span>`
     );
+
+    exitSelection(editor);
 
     if (onAdd) {
       onAdd(mention);

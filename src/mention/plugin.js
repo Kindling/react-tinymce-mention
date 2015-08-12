@@ -112,6 +112,10 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
 }
 
 function start() {
+
+  // FIXME: Remove auto focus
+  window.tinymce.activeEditor.focus();
+
   editor.on('keypress', handleTopLevelEditorInput);
   editor.on('keyup', handleEditorBackspace);
 }

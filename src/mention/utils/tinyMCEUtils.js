@@ -49,3 +49,14 @@ export function getEditorContent(editor, format = 'text') {
 
   return editor.getContent({ format });
 }
+
+export function exitSelection(editor) {
+  // const endId = window.tinymce.DOM.uniqueId();
+  // editor.dom.add(editor.getBody(), 'span', { 'id': endId }, ' ');
+  // const newNode = editor.dom.select('span#' + endId);
+  // editor.selection.select(newNode[0]);
+  // editor.selection.collapse(false);
+  // editor.execCommand('mceCleanup');
+  editor.selection.select(editor.getBody(), true);
+  editor.selection.collapse(false);
+}

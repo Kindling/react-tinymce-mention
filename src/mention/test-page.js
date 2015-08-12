@@ -23,6 +23,7 @@ React.render(
         browser_spellcheck: true,
         document_base_url: window.location.origin + '/',
         extended_valid_elements: 'blockquote[dir|style|cite|class|dir<ltr?rtl],iframe[src|frameborder|style|scrolling|class|width|height|name|align],pre',
+        forced_root_block : '',
         ie7_compat: false,
         image_description: false,
         image_dimensions: false,

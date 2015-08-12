@@ -19,7 +19,7 @@ export function removeMention(editor, startPos) {
     'Error removing mention: `editor` is undefined.'
   );
 
-  return editor.getContent().slice(0, startPos - 1) + '&nbsp;';
+  return editor.getContent().slice(0, startPos);
 }
 
 export function findMentions(editor) {

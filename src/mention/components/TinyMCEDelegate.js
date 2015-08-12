@@ -56,22 +56,38 @@ export default class TinyMCEDelegate extends Component {
     const { lastMention } = findMentions(editor);
     const { startPos } = lastMention;
 
+    // First remove the mention
     editor.setContent(removeMention(editor, startPos));
     editor.selection.select(editor.getBody(), true);
     editor.selection.collapse(false);
+
+    // The clean the body if we're at the beginning; tinMCE weirdly
+    // inserts invalid markup.
+    const text = editor.getBody()
+    const tinymceWeirdMatch = '<p>&nbsp;<br></p>';
+
+    if (text.innerHTML === tinymceWeirdMatch) {
+      editor.setContent('');
+    }
   }
 
   _renderMentionIntoEditor() {
     const { editor, mentions, onAdd } = this.props;
     const mention = last(mentions);
+    const text = editor.getBody().innerText;
+    const insertLeadingSpace = text.trim().length !== 0;
 
     const markup = renderComponent(
       <EditorMention mention={mention} />
     );
 
-    // Insert new link and exit styling
+    const formattedMarkup = insertLeadingSpace
+      ? ` ${markup}&nbsp;`
+      :  `${markup}&nbsp;`;
+
+    // Insert new link and exit styling via `&nbsp;`
     editor.execCommand('mceInsertContent', false,
-      markup + '&nbsp;'
+      formattedMarkup
     );
 
     if (onAdd) {

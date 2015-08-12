@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server.js --advanced",
+    "simple": "node server.js --simple",
+    "advanced": "node server.js --advanced",
     "lint": "eslint src"
   },
   "repository": {
@@ -35,7 +37,7 @@
     "eslint-plugin-react": "^2.3.0",
     "history": "^1.1.0",
     "react-hot-loader": "^1.2.7",
-    "react-tinymce-mention": "^0.1.5",
+    "react-tinymce-mention": "^0.1.6",
     "webpack": "^1.9.6",
     "webpack-dev-server": "^1.8.2"
   },

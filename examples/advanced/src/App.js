@@ -7,7 +7,7 @@ export default class App {
   render() {
     return (
       <Mention
-        dataSource={axios.get('http://localhost:3000/examples/shared/api/data.json')}
+        dataSource={axios.get('http://localhost:3000/shared/api/data.json')}
         delimiter={'@'}
         transformFn={dataSource => {
           return dataSource.sort().reverse();

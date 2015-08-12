@@ -6,7 +6,7 @@ build_dir=lib
 
 git clean -f $build_dir
 
-$babel ./src -d $build_dir --ignore "__tests__"
+$babel ./src -d $build_dir --ignore "__tests__" --stage 0
 
 $webpack --config webpack.config.js
 $webpack --config webpack.dist.js

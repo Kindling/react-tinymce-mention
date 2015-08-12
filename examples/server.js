@@ -3,8 +3,8 @@ var WebpackDevServer = require('webpack-dev-server');
 var simple = require('./webpack.simple');
 var advanced = require('./webpack.advanced');
 var argv = require('yargs').argv;
+
 var config = argv.simple ? simple : advanced;
-console.log(config);
 
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,

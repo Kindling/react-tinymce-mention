@@ -37,7 +37,7 @@
     "eslint-plugin-react": "^2.3.0",
     "history": "^1.1.0",
     "react-hot-loader": "^1.2.7",
-    "react-tinymce-mention": "^0.1.6",
+    "react-tinymce-mention": "^0.1.7",
     "webpack": "^1.9.6",
     "webpack-dev-server": "^1.8.2"
   },

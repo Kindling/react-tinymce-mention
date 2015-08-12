@@ -9,10 +9,7 @@
     "test-watch": "node test/index.js",
     "build": "sh scripts/build.sh",
     "prepublish": "npm run build",
-    "gh-pages": "sh scripts/gh-pages.sh",
-    "bump-patch": "mversion patch -m",
-    "bump-minor": "mversion minor -m",
-    "bump-major": "mversion major -m"
+    "gh-pages": "sh scripts/gh-pages.sh"
   },
   "repository": {
     "type": "git",

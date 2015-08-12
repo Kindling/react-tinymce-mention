@@ -1,7 +1,7 @@
 import isEqual from 'lodash.isequal';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import DefaultListItem from 'mention/components/DefaultListItem.js';
+import DefaultListItem from './DefaultListItem.js';
 
 @connect(state => ({
   matchedSources: state.mention.matchedSources

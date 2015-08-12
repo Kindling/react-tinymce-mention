@@ -1,6 +1,6 @@
 import invariant from 'invariant';
 import twitter from 'twitter-text';
-import last from 'mention/utils/last';
+import last from './last';
 
 export function prevCharIsSpace(editor) {
   invariant(editor,

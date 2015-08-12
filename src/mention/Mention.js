@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 import { provide } from 'react-redux';
-import { initializePlugin } from 'mention/plugin';
-import { finalizeSetup } from 'mention/actions/mentionActions';
-import initializeRedux from 'mention/utils/initializeRedux';
-import mentionReducer from 'mention/reducers/mentionReducer';
-import TinyMCEDelegate from 'mention/components/TinyMCEDelegate';
-import SuggestionRenderer from 'mention/components/SuggestionRenderer';
-import MentionsDebugger from 'mention/components/MentionsDebugger';
+import { initializePlugin } from './plugin';
+import { finalizeSetup } from './actions/mentionActions';
+import initializeRedux from './utils/initializeRedux';
+import mentionReducer from './reducers/mentionReducer';
+import TinyMCEDelegate from './components/TinyMCEDelegate';
+import SuggestionRenderer from './components/SuggestionRenderer';
+import MentionsDebugger from './components/MentionsDebugger';
 
 const store = initializeRedux({
   mention: mentionReducer

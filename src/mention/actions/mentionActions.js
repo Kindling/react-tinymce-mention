@@ -1,4 +1,4 @@
-import * as Types from 'mention/constants/MentionActionTypes';
+import * as Types from '../constants/MentionActionTypes';
 
 export function finalizeSetup(editor, dataSource) {
   return {

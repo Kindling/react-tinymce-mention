@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { select } from 'mention/actions/mentionActions';
-import DefaultList from 'mention/components/DefaultList.js';
+import { select } from '../actions/mentionActions';
+import DefaultList from '../components/DefaultList.js';
 
 @connect(state => ({
   editor: state.mention.editor,

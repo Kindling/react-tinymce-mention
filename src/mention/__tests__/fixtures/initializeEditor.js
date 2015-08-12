@@ -1,8 +1,8 @@
 import 'babel/polyfill';
 import React from 'react';
 import TinyMCE from 'react-tinymce';
-import Mention from 'mention/Mention';
-import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
+import Mention from '../../Mention';
+import dataSourceStatic from '../../reducers/__tests__/fixtures/dataSourceStatic';
 
 var plugins = [
   'autolink',

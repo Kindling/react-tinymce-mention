@@ -1,8 +1,8 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
-import Mention from 'mention/Mention';
+import Mention from './mention/Mention';
 import axios from 'axios';
-import CustomList from 'mention/components/__test__/CustomList';
+import CustomList from './mention/components/__tests__/CustomList';
 
 export default Mention;
 

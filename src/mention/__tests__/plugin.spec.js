@@ -1,12 +1,12 @@
-import { initializePlugin } from 'mention/plugin';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import mentionReducer from 'mention/reducers/mentionReducer';
-import dataSourceStatic from 'mention/reducers/__test__/fixtures/dataSourceStatic';
+import { initializePlugin } from '../plugin';
+import mentionReducer from '../reducers/mentionReducer';
+import dataSourceStatic from '../reducers/__tests__/fixtures/dataSourceStatic';
 import initializeEditor from './fixtures/initializeEditor';
-import { query, resetQuery, select, finalizeSetup } from 'mention/actions/mentionActions';
-import { removeMention } from 'mention/utils/tinyMCEUtils';
-import { testExports } from 'mention/plugin';
+import { query, resetQuery, select, finalizeSetup } from '../actions/mentionActions';
+import { removeMention } from '../utils/tinyMCEUtils';
+import { testExports } from '../plugin';
 
 const {
   _performIntermediateActions,

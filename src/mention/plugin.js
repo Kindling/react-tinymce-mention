@@ -2,8 +2,8 @@ import invariant from 'invariant';
 import twitter from 'twitter-text';
 import closest from 'dom-closest';
 import removeNode from 'dom-remove';
-import last from 'mention/utils/last';
-import getKeyCode from 'mention/utils/getKeyCode';
+import last from './utils/last';
+import getKeyCode from './utils/getKeyCode';
 
 import {
   getEditorContent,

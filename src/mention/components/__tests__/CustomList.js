@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import CustomListItem from 'mention/components/__test__/CustomListItem';
+import CustomListItem from './CustomListItem';
 
 export default class CustomList {
   static propTypes = {

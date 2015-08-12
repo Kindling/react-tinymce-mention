@@ -1,10 +1,10 @@
 import isEqual from 'lodash.isequal';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { findMentions, removeMention } from 'mention/utils/tinyMCEUtils';
-import last from 'mention/utils/last';
-import renderComponent from 'mention/utils/renderComponent';
-import EditorMention from 'mention/components/EditorMention';
+import { findMentions, removeMention } from '../utils/tinyMCEUtils';
+import last from '../utils/last';
+import renderComponent from '../utils/renderComponent';
+import EditorMention from '../components/EditorMention';
 
 @connect(state => ({
   editor: state.mention.editor,

@@ -1,7 +1,7 @@
 import without from 'lodash.without';
 import cloneDeep from 'lodash.clonedeep';
 import camelCase from 'lodash.camelcase';
-import last from 'mention/utils/last';
+import last from '../utils/last';
 
 export const initialState = {
   dataSource: [],

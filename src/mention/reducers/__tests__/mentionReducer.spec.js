@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import mentionReducer from 'mention/reducers/mentionReducer';
+import mentionReducer from '../reducers/mentionReducer';
 import dataSourceStatic from './fixtures/dataSourceStatic';
 
 import {

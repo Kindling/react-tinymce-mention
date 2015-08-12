@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import uid from 'mention/utils/uid';
+import uid from '../utils/uid';
 
 export default class EditorMention {
 

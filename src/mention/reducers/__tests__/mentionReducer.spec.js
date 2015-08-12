@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import mentionReducer from '../reducers/mentionReducer';
+import mentionReducer from '../mentionReducer';
 import dataSourceStatic from './fixtures/dataSourceStatic';
 
 import {
@@ -11,7 +11,7 @@ import {
   resetMentions,
   resetQuery,
   select,
-} from 'mention/actions/mentionActions';
+} from '../../actions/mentionActions';
 
 describe('mentionReducer', () => {
   var store;

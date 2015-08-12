@@ -8,7 +8,7 @@ import getKeyCode from './utils/getKeyCode';
 import {
   getEditorContent,
   prevCharIsSpace
-} from 'mention/utils/tinyMCEUtils';
+} from './utils/tinyMCEUtils';
 
 import {
   moveDown,
@@ -18,7 +18,7 @@ import {
   resetMentions,
   resetQuery,
   select
-} from 'mention/actions/mentionActions';
+} from './actions/mentionActions';
 
 const keyMap = {
   BACKSPACE: 8,

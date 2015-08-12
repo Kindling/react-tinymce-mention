@@ -39,7 +39,7 @@
     "react": "^0.13.3",
     "react-hot-loader": "^1.2.7",
     "react-tinymce": "^0.2.3",
-    "react-tinymce-mention": "^0.1.10",
+    "react-tinymce-mention": "^0.1.11",
     "webpack": "^1.9.6",
     "webpack-dev-server": "^1.8.2"
   }

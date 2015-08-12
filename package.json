@@ -42,6 +42,7 @@
     "babel-plugin-rewire": "^0.1.12",
     "eslint": "^1.0.0",
     "eslint-plugin-react": "^3.1.0",
+    "gzip": "^0.1.0",
     "jasmine-core": "^2.3.4",
     "jasmine-expect": "^2.0.0-beta1",
     "karma": "^0.13.3",

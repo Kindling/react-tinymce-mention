@@ -57,3 +57,12 @@ export function select() {
     type: Types.SELECT
   };
 }
+
+export function syncEditorState(mentionIds) {
+  return {
+    type: Types.SYNC_EDITOR_STATE,
+    payload: {
+      mentionIds
+    }
+  };
+}

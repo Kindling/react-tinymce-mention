@@ -1,12 +1,7 @@
-import invariant from 'invariant';
 import twitter from 'twitter-text';
 import last from './last';
 
 export function prevCharIsSpace(editor) {
-  invariant(editor,
-    'Error detecting previous char: `editor` is undefined.'
-  );
-
   const start = editor.selection.getRng(true).startOffset;
   const text = editor.selection.getRng(true).startContainer.data || '';
   const character = text.substr(start - 1, 1);
@@ -15,18 +10,10 @@ export function prevCharIsSpace(editor) {
 }
 
 export function removeMention(editor, startPos) {
-  invariant(editor,
-    'Error removing mention: `editor` is undefined.'
-  );
-
   return editor.getContent().slice(0, startPos);
 }
 
 export function findMentions(editor) {
-  invariant(editor,
-    'Error finding Mentions: `editor` is undefined.'
-  );
-
   const content = editor.getContent();
   const mentions = twitter.extractMentionsWithIndices(content);
   const lastMention = last(mentions);
@@ -43,14 +30,20 @@ export function findMentions(editor) {
 }
 
 export function getEditorContent(editor, format = 'text') {
-  invariant(editor,
-    'Error returning editor content: `editor` is undefined.'
-  );
-
   return editor.getContent({ format });
 }
 
 export function exitSelection(editor) {
   editor.selection.select(editor.getBody(), true);
   editor.selection.collapse(false);
+}
+
+export function collectMentionIds(editor, mentionClassName) {
+  const mentions = editor.dom
+    .select(mentionClassName)
+    .map((mentionNode) => {
+      return Number(mentionNode.id.replace(/mention-/, ''));
+    })
+
+  return mentions;
 }

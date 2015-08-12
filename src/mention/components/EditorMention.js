@@ -11,7 +11,7 @@ export default class EditorMention {
     const { id, label } = this.props;
 
     return (
-      <strong id={id} className='mention'>
+      <strong id={id} className='tinymce-mention'>
         @{label}
       </strong>
     );

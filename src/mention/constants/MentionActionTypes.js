@@ -7,3 +7,4 @@ export const RESET_MENTIONS = 'RESET_MENTIONS';
 export const RESET_QUERY = 'RESET_QUERY';
 export const SELECT = 'SELECT';
 export const SHOW_LIST = 'SHOW_LIST';
+export const SYNC_EDITOR_STATE = 'SYNC_EDITOR_STATE';

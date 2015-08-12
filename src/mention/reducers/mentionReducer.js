@@ -138,6 +138,13 @@ const actionsMap = {
       matchedSources: [],
       mentions: updatedMentions
     };
+  },
+
+  syncEditorState(state, action) {
+    console.log(action.payload.mentionIds);
+    return {
+
+    };
   }
 };
 

@@ -6,6 +6,7 @@ import last from './utils/last';
 import getKeyCode from './utils/getKeyCode';
 
 import {
+  collectMentionIds,
   getEditorContent,
   prevCharIsSpace
 } from './utils/tinyMCEUtils';
@@ -17,7 +18,8 @@ import {
   remove,
   resetMentions,
   resetQuery,
-  select
+  select,
+  syncEditorState
 } from './actions/mentionActions';
 
 const keyMap = {
@@ -236,15 +238,24 @@ function handleKeyPress(event) {
  */
 function handleEditorBackspace(event) {
   const keyCode = getKeyCode(event);
+  const mentionClassName = '.tinymce-mention';
 
   if (keyCode === keyMap.BACKSPACE) {
-    const foundMentionNode = closest(editor.selection.getNode(), '.mention');
+    const foundMentionNode = closest(editor.selection.getNode(), mentionClassName);
 
+    // Remove individual mention
     if (foundMentionNode) {
       const mention = removeMentionFromEditor(foundMentionNode)
       store.dispatch(remove(mention));
+
+    // Remove all mentions
     } else if (!getEditorContent(editor).trim().length) {
       store.dispatch(resetMentions());
+
+    // Default, validate internal mention state
+    } else {
+      const mentionIds = collectMentionIds(editor, mentionClassName);
+      store.dispatch(syncEditorState(mentionIds));
     }
   }
 }

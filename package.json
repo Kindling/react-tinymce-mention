@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/damassi/react-tinymce-mention.git"
+    "url": "https://github.com/Kindling/react-tinymce-mention.git"
   },
   "keywords": [
     "tinymce",
@@ -27,12 +27,12 @@
     "reactjs",
     "redux"
   ],
-  "author": "Christopher Pappas <damassi.pappas@gmail.com",
+  "author": "Christopher Pappas <damassi.pappas@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/damassi/react-tinymce-mention/issues"
+    "url": "https://github.com/Kindling/react-tinymce-mention/issues"
   },
-  "homepage": "https://github.com/damassi/react-tinymce-mention",
+  "homepage": "https://github.com/Kindling/react-tinymce-mention",
   "devDependencies": {
     "axios": "git://github.com/mzabriskie/axios.git",
     "babel": "^5.8.20",

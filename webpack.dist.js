@@ -7,7 +7,7 @@ config.entry = './src/index';
 
 config.output = {
   path: path.resolve(__dirname, 'lib'),
-  filename: 'react-tinymce-mentions.min.js',
+  filename: 'react-tinymce-mention.min.js',
   libraryTarget: 'umd',
   library: 'reactMentions',
   publicPath: '/static/'

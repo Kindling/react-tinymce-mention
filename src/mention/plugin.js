@@ -252,7 +252,9 @@ function handleEditorBackspace(event) {
     } else if (!getEditorContent(editor).trim().length) {
       store.dispatch(resetMentions());
 
-    // Default, validate internal mention state
+    // Default, validate internal mention state and sync if necessary. Use-case:
+    // if the user highlights an @mention and then deletes, we can no longer check
+    // the proximity of the cursor via regex and thus need to collect ids and sync.
     } else {
       const mentionIds = collectMentionIds(editor, mentionClassName);
       store.dispatch(syncEditorState(mentionIds));

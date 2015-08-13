@@ -89,7 +89,7 @@ const actionsMap = {
       return {};
     }
 
-    const foundMention = last(state.mentions.filter(source => {
+    const foundMention = last(mentions.filter(source => {
       const { label } = source;
       return label && label
         .toLowerCase()
@@ -126,12 +126,10 @@ const actionsMap = {
       return {};
     }
 
-    const selectedItem = {
+    const updatedMentions = cloneDeep(mentions).concat([{
       id: uid('mention-'),
       label: matchedSources[highlightIndex]
-    };
-
-    const updatedMentions = cloneDeep(mentions).concat([selectedItem]);
+    }]);
 
     return {
       highlightIndex: 0,

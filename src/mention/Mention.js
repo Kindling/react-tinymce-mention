@@ -2,8 +2,9 @@ import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 import { provide } from 'react-redux';
 import { initializePlugin } from './plugin';
-import { finalizeSetup } from './actions/mentionActions';
 import initializeRedux from './utils/initializeRedux';
+import validateDataSource from './utils/validateDataSource';
+import { finalizeSetup } from './actions/mentionActions';
 import mentionReducer from './reducers/mentionReducer';
 import TinyMCEDelegate from './components/TinyMCEDelegate';
 import SuggestionRenderer from './components/SuggestionRenderer';
@@ -50,11 +51,7 @@ export default class Mention {
       ? transformFn(resolvedDataSource)
       : resolvedDataSource;
 
-    invariant(transformedDataSource instanceof Array,
-      'Error transforming response: `transformedDataSource` must be an array.'
-    );
-
-    return transformedDataSource;
+    return validateDataSource(transformedDataSource);
   }
 
   _transformAndDispatch({ editor, resolvedDataSource }) {

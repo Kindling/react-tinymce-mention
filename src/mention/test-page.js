@@ -1,7 +1,6 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
 import axios from 'axios';
-import pluck from 'lodash.pluck';
 import Mention from './Mention';
 import CustomList from './components/CustomList';
 
@@ -52,12 +51,21 @@ React.render(
       delimiter={'@'}
       transformFn={dataSource => {
         const { results } = dataSource;
-        return pluck(results, 'fullName').sort().reverse();
+
+        const searchableDataSource = results.map(result => {
+          const { fullName } = result;
+          return {
+            searchKey: fullName
+          };
+        })
+
+        return searchableDataSource;
       }}
       onAdd={mention => {
         console.log(mention, ' added');
       }}
       customRenderer={({ highlightIndex, matchedSources, clickFn }) => {
+        console.log(matchedSources);
         return (
           <CustomList
             highlightIndex={highlightIndex}

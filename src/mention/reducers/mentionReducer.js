@@ -122,7 +122,7 @@ const actionsMap = {
   select(state) {
     const { mentions, matchedSources, highlightIndex } = state;
 
-    if (!matchedSources || matchedSources === []) {
+    if (!matchedSources || !matchedSources.length) {
       return {};
     }
 

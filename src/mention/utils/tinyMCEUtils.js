@@ -17,6 +17,11 @@ export function findMentions(editor) {
   const content = editor.getContent();
   const mentions = twitter.extractMentionsWithIndices(content);
   const lastMention = last(mentions);
+
+  if (!lastMention) {
+    return false;
+  }
+
   const { screenName, indices: [startPos, endPos] } = lastMention;
 
   return {

@@ -28,7 +28,7 @@ class App {
   }
 }
 
-React.render(<App />, document.getElementById('id'));
+React.render(<App />, document.getElementById('root'));
 ```
 
 In the simplest case, only `dataSource` and a `delimiter` is required; the list containing `@mention` matches is rendered with a default set of components that you can hijack via stylesheet classes. See `examples/simple` for a working example.
@@ -66,8 +66,10 @@ class App {
   }
 }
 
+React.render(<App />, document.getElementById('root'));
 ```
-In the advanced use-case you can define a `dataSource` that returns a promise, as well as a `transformFn` that will transform the resolved dataSource once it comes back.  If you would like greater control over the look and feel of the suggestion list, you can define a `cusomRenderer` function that will return an array of matched items that you can do what you'd like with. See `examples/advanced` for a working example.
+
+In the advanced use-case you can define a `dataSource` that returns a promise, as well as a `transformFn` that will transform the resolved dataSource once it comes back.  If you would like greater control over the look and feel of the suggestion list, you can define a `cusomRenderer` function that will return an array of matched items. See `examples/advanced` for a working example.
 
 ## Development
 

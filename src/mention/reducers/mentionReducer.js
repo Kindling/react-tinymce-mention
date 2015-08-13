@@ -5,6 +5,7 @@ import last from '../utils/last';
 import uid from '../utils/uid';
 
 export const initialState = {
+  hasComplexDataSource: false,
   dataSource: [],
   highlightIndex: 0,
   matchedSources: [],
@@ -15,11 +16,12 @@ export const initialState = {
 const actionsMap = {
 
   finalizeSetup(state, action) {
-    const { editor, dataSource } = action.payload;
+    const { editor, dataSource, isComplex } = action.payload;
 
     return {
       editor,
-      dataSource
+      dataSource,
+      hasComplexDataSource: isComplex
     };
   },
 
@@ -57,6 +59,7 @@ const actionsMap = {
 
   query(state, action) {
     const prevQuery = state.query;
+    const hasComplexDataSource = state.hasComplexDataSource;
     const { query } = action.payload;
     const len = query.length;
 
@@ -65,11 +68,12 @@ const actionsMap = {
     const newQuery = (len > 1 || len === 0 ? query : prevQuery + query).toLowerCase();
 
     const matchedSources = state.dataSource.filter(source => {
-      if(query.length) {
-        return source
-          .toLowerCase()
-          .includes(newQuery);
+      if (query.length) {
+        const searchKey = hasComplexDataSource
+          ? source.searchKey
+          : source;
 
+        return searchKey.toLowerCase().includes(newQuery);
       } else {
         return false;
       }
@@ -89,6 +93,7 @@ const actionsMap = {
       return {};
     }
 
+    // Remove mention from internal collection of current mentions
     const foundMention = last(mentions.filter(source => {
       const { label } = source;
       return label && label
@@ -126,9 +131,13 @@ const actionsMap = {
       return {};
     }
 
+    // FIXME:
+    // Introducing a level of indirection by rendering a custom
+    // datastructure here that is seperate from the `dataSource` structure
+    // being passed in. We should normalize it across complex and simple.
     const updatedMentions = cloneDeep(mentions).concat([{
       id: uid('mention-'),
-      label: matchedSources[highlightIndex]
+      displayLabel: matchedSources[highlightIndex]
     }]);
 
     return {

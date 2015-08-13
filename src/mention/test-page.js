@@ -55,7 +55,8 @@ React.render(
         const searchableDataSource = results.map(result => {
           const { fullName } = result;
           return {
-            searchKey: fullName
+            searchKey: fullName,
+            displayLabel: fullName
           };
         })
 

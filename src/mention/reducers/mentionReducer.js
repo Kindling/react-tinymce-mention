@@ -141,10 +141,15 @@ const actionsMap = {
   },
 
   syncEditorState(state, action) {
-    console.log(action.payload.mentionIds);
-    return {
+    const editorMentionIds = action.payload.mentionIds;
 
-    };
+    const filteredMentions = state.mentions.filter(mention => {
+      return editorMentionIds.some(id => id === mention.id);
+    })
+
+    return filteredMentions.length
+      ? { mentions: filteredMentions }
+      : {};
   }
 };
 

@@ -41,9 +41,7 @@ export function exitSelection(editor) {
 export function collectMentionIds(editor, mentionClassName) {
   const mentions = editor.dom
     .select(mentionClassName)
-    .map((mentionNode) => {
-      return Number(mentionNode.id.replace(/mention-/, ''));
-    })
+    .map(mentionNode => mentionNode.id);
 
   return mentions;
 }

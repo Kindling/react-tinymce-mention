@@ -5,6 +5,10 @@ module.exports = {
   devtool: 'inline-source-map',
   cache: true,
 
+  devServer: {
+    headers: { "Access-Control-Allow-Origin": "*" }
+  },
+
   entry: [
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',

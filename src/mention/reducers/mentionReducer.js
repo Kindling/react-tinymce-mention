@@ -12,15 +12,6 @@ export const initialState = {
   query: ''
 };
 
-function filterMentions(state, mention) {
-  const foundMentions = state.mentions.filter(source => {
-    const { label } = source;
-    return label && label.includes(mention);
-  });
-
-  return foundMentions;
-}
-
 const actionsMap = {
 
   finalizeSetup(state, action) {
@@ -75,7 +66,10 @@ const actionsMap = {
 
     const matchedSources = state.dataSource.filter(source => {
       if(query.length) {
-        return source.includes(newQuery);
+        return source
+          .toLowerCase()
+          .includes(newQuery);
+
       } else {
         return false;
       }
@@ -95,7 +89,13 @@ const actionsMap = {
       return {};
     }
 
-    const foundMention = last(filterMentions(state, mention));
+    const foundMention = last(state.mentions.filter(source => {
+      const { label } = source;
+      return label && label
+        .toLowerCase()
+        .includes(mention.toLowerCase());
+    }));
+
     const updatedMentions = without(mentions, foundMention);
 
     return {

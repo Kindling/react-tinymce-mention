@@ -1,6 +1,7 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
 import axios from 'axios';
+import pluck from 'lodash.pluck';
 import Mention from './Mention';
 import CustomList from './components/CustomList';
 
@@ -47,10 +48,11 @@ React.render(
     />
 
     <Mention
-      dataSource={axios.get('examples/shared/api/data.json')}
+      dataSource={axios.get('examples/shared/api/complex.json')}
       delimiter={'@'}
       transformFn={dataSource => {
-        return dataSource.sort().reverse();
+        const { results } = dataSource;
+        return pluck(results, 'fullName').sort().reverse();
       }}
       onAdd={mention => {
         console.log(mention, ' added');

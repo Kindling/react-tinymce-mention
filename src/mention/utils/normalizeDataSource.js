@@ -20,9 +20,15 @@ export default function validateDataSource(dataSource) {
     };
 
   } else if (containsConsistantType(dataSource, 'string')) {
+    const normalizedDataSource = dataSource.map(source => {
+      return {
+        searchKey: source,
+        displayLabel: source
+      }
+    })
     return {
       isComplex: false,
-      dataSource
+      dataSource: normalizedDataSource
     };
   } else {
     throw new Error(

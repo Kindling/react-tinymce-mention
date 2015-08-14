@@ -75,15 +75,13 @@ export default class TinyMCEDelegate extends Component {
   _renderMentionIntoEditor() {
     const { editor, mentions, onAdd } = this.props;
     const mention = last(mentions);
-    const { label, id } = mention;
     const text = editor.getBody().innerText;
     const insertLeadingSpace = text.trim().length !== 0;
     const spaceUid = uid('space-');
 
     const markup = renderComponent(
       <EditorMention
-        label={label}
-        id={id}
+        {...mention}
       />
     );
 

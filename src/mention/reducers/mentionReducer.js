@@ -131,13 +131,9 @@ const actionsMap = {
       return {};
     }
 
-    // FIXME:
-    // Introducing a level of indirection by rendering a custom
-    // datastructure here that is seperate from the `dataSource` structure
-    // being passed in. We should normalize it across complex and simple.
     const updatedMentions = cloneDeep(mentions).concat([{
-      id: uid('mention-'),
-      displayLabel: matchedSources[highlightIndex]
+      ...matchedSources[highlightIndex],
+      tinymceID: uid('mention-'),
     }]);
 
     return {

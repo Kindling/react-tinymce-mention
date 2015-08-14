@@ -3,7 +3,7 @@ import invariant from 'invariant';
 import { provide } from 'react-redux';
 import { initializePlugin } from './plugin';
 import initializeRedux from './utils/initializeRedux';
-import validateDataSource from './utils/validateDataSource';
+import normalizeDataSource from './utils/normalizeDataSource';
 import { finalizeSetup } from './actions/mentionActions';
 import mentionReducer from './reducers/mentionReducer';
 import TinyMCEDelegate from './components/TinyMCEDelegate';
@@ -51,7 +51,7 @@ export default class Mention {
       ? transformFn(resolvedDataSource)
       : resolvedDataSource;
 
-    return validateDataSource(transformedDataSource);
+    return normalizeDataSource(transformedDataSource);
   }
 
   _transformAndDispatch({ editor, resolvedDataSource }) {

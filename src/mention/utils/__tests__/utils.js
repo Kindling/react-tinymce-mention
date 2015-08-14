@@ -2,7 +2,7 @@ import containsConsistantType from './containsConsistantType';
 import getKeyCode from './getKeyCode';
 import last from './last';
 import uid from './uid';
-import validateDataSource from './validateDataSource';
+import normalizeDataSource from './normalizeDataSource';
 
 describe('Utils', () => {
   it('should ensure that each array item contains a specific type', () => {

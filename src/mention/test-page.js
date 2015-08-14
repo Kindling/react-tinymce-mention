@@ -49,10 +49,9 @@ React.render(
     <Mention
       dataSource={axios.get('examples/shared/api/complex.json')}
       delimiter={'@'}
-      transformFn={dataSource => {
-        const { results } = dataSource;
 
-        const searchableDataSource = results.map(result => {
+      transformFn={dataSource => {
+        const complexDataSource = dataSource.map(result => {
           const { fullName } = result;
           return {
             searchKey: fullName,
@@ -60,11 +59,13 @@ React.render(
           };
         })
 
-        return searchableDataSource;
+        return complexDataSource;
       }}
+
       onAdd={mention => {
         console.log(mention, ' added');
       }}
+
       customRenderer={({ highlightIndex, matchedSources, clickFn }) => {
         console.log(matchedSources);
         return (

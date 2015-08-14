@@ -1,4 +1,4 @@
-import containsType from './containsType';
+import containsConsistantType from './containsConsistantType';
 import getKeyCode from './getKeyCode';
 import last from './last';
 import uid from './uid';

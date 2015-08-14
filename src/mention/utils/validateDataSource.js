@@ -1,5 +1,5 @@
 import invariant from 'invariant';
-import containsType from './containsType';
+import containsConsistantType from './containsConsistantType';
 
 export default function validateDataSource(dataSource) {
   invariant(dataSource instanceof Array,
@@ -7,7 +7,7 @@ export default function validateDataSource(dataSource) {
   );
 
   // Array of ojects with a `searchKey`
-  if (containsType(dataSource, 'object')) {
+  if (containsConsistantType(dataSource, 'object')) {
 
     // Validate that each object has `searchKey`
     invariant(dataSource.every(s => s.hasOwnProperty('searchKey') && typeof s.searchKey === 'string'),
@@ -19,7 +19,7 @@ export default function validateDataSource(dataSource) {
       dataSource
     };
 
-  } else if (containsType(dataSource, 'string')) {
+  } else if (containsConsistantType(dataSource, 'string')) {
     return {
       isComplex: false,
       dataSource

@@ -133,7 +133,7 @@ const actionsMap = {
 
     const updatedMentions = cloneDeep(mentions).concat([{
       ...matchedSources[highlightIndex],
-      tinymceID: uid('mention-'),
+      tinymceId: uid('mention-'),
     }]);
 
     return {

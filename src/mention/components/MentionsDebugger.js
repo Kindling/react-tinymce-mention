@@ -13,11 +13,11 @@ export default class MentionsDebugger {
       <div>
         <h2>Current Mentions</h2>
         <ul>
-          { mentions && mentions.map((mention, index) =>
+          { mentions && mentions.map((mention, index) => {
             <li key={`mention-${index}`}>
-              {mention}
+              {mention.displayLabel}
             </li>
-          )}
+          })}
         </ul>
 
         <div>
@@ -28,7 +28,7 @@ export default class MentionsDebugger {
             { dataSource instanceof Array && dataSource.map((source, index) => {
               return (
                 <li key={`source-${index}`}>
-                  {source}
+                  {source.displayLabel}
                 </li>
               );
             })}

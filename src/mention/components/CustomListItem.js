@@ -5,7 +5,7 @@ export default class CustomListItem {
   static propTypes = {
     onClick: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
-    match: PropTypes.string.isRequired
+    displayLabel: PropTypes.string.isRequired
   }
 
   handleClick() {
@@ -13,7 +13,7 @@ export default class CustomListItem {
   }
 
   render() {
-    const { index, highlightIndex, match } = this.props;
+    const { index, highlightIndex, displayLabel } = this.props;
 
     const classes = classNames({
       'selected': highlightIndex === index
@@ -21,7 +21,7 @@ export default class CustomListItem {
 
     return (
       <li className={classes} onClick={::this.handleClick}>
-        {match}
+        {displayLabel}
       </li>
     );
   }

@@ -67,7 +67,6 @@ React.render(
       }}
 
       customRenderer={({ highlightIndex, matchedSources, clickFn }) => {
-        console.log(matchedSources);
         return (
           <CustomList
             highlightIndex={highlightIndex}

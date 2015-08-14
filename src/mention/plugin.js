@@ -195,15 +195,11 @@ function isNearMention(content) {
   return re.exec(content);
 }
 
-function removeMentionFromEditor(mentionNode) {
-  const mention = mentionNode
+function extractMentionFromNode(mentionNode) {
+  return mentionNode
     .innerText
     .replace(/(?:@|_)/g, ' ')
     .trim();
-
-  removeNode(mentionNode);
-
-  return mention;
 }
 
 /**
@@ -243,10 +239,9 @@ function handleEditorBackspace(event) {
   if (keyCode === keyMap.BACKSPACE) {
     const foundMentionNode = closest(editor.selection.getNode(), mentionClassName);
 
-    // Remove individual mention
+    // Begin query process if still in mention
     if (foundMentionNode) {
-      const mention = removeMentionFromEditor(foundMentionNode)
-      store.dispatch(remove(mention));
+      store.dispatch(query(extractMentionFromNode(foundMentionNode)));
 
     // Remove all mentions
     } else if (!getEditorContent(editor).trim().length) {
@@ -270,7 +265,6 @@ function toggleFocus() {
 export const testExports = {
   _performIntermediateActions: performIntermediateActions,
   _isNearMention: isNearMention,
-  _removeMentionFromEditor: removeMentionFromEditor,
   _handleKeyPress: handleKeyPress,
   _handleEditorBackspace: handleEditorBackspace,
 };

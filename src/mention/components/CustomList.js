@@ -13,14 +13,14 @@ export default class CustomList {
 
     return (
       <ul>
-        { matchedSources && matchedSources.map((match, index) => {
+        { matchedSources && matchedSources.map((source, index) => {
           return (
             <CustomListItem
-              onClick={onClick}
-              highlightIndex={highlightIndex}
+              {...source}
               index={index}
-              match={match}
-              key={`match-${index}`}
+              highlightIndex={highlightIndex}
+              onClick={onClick}
+              key={`item-${index}`}
             />
           );
         })}

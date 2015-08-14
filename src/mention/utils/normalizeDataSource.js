@@ -10,8 +10,13 @@ export default function validateDataSource(dataSource) {
   if (containsConsistantType(dataSource, 'object')) {
 
     // Validate that each object has `searchKey`
-    invariant(dataSource.every(s => s.hasOwnProperty('searchKey') && typeof s.searchKey === 'string'),
-      'Each object in the `transformedDataSource` should contain a `searchKey`'
+    const isValid = dataSource.every(s => {
+      return s.hasOwnProperty('searchKey') && typeof s.searchKey === 'string';
+    });
+
+    invariant(isValid,
+      'Each object in the `transformedDataSource` should contain a `searchKey` ' +
+      'property that is a string.'
     );
 
     return {
@@ -28,6 +33,7 @@ export default function validateDataSource(dataSource) {
     return {
       dataSource: normalizedDataSource
     };
+
   } else {
     throw new Error(
       'Validation Error: `transformedDataSource` must be an array of strings ' +

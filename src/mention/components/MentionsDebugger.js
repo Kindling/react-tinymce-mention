@@ -14,9 +14,11 @@ export default class MentionsDebugger {
         <h2>Current Mentions</h2>
         <ul>
           { mentions && mentions.map((mention, index) => {
-            <li key={`mention-${index}`}>
-              {mention.displayLabel}
-            </li>
+            return (
+              <li key={`mention-${index}`}>
+                {mention.displayLabel}
+              </li>
+            );
           })}
         </ul>
 

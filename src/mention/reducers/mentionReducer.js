@@ -129,6 +129,8 @@ const actionsMap = {
       tinymceId: uid('mention-'),
     }]);
 
+    console.log(updatedMentions);
+
     return {
       highlightIndex: 0,
       matchedSources: [],

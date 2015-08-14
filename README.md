@@ -1,6 +1,6 @@
 # React TinyMCE @Mentions
 
-# WIP
+# WIP STAY AWAY!
 
 Provides a simple interface for adding `@mention` functionality into the TinyMCE rich text editor, built with [React.js](http://facebook.github.io/react/) and [Redux](https://github.com/gaearon/redux). Works best with [react-tinymce](https://github.com/mzabriskie/react-tinymce/tree/master), but will work in any environment where `window.tinymce` is available.  
 

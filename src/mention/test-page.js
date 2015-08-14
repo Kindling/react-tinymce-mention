@@ -62,8 +62,12 @@ React.render(
         return complexDataSource;
       }}
 
-      onAdd={mention => {
-        console.log(mention, ' added');
+      onAdd={({ mentions, changed }) => {
+        console.log('ADDED: ', mentions, 'changed: ', changed);
+      }}
+
+      onRemove={({ mentions, changed }) => {
+        console.log('REMOVED: ', mentions, 'changed: ', changed);
       }}
 
       customRenderer={({ highlightIndex, matchedSources, clickFn }) => {

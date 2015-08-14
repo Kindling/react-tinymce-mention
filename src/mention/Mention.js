@@ -26,6 +26,7 @@ export default class Mention {
     customRenderer: React.PropTypes.func,
     delimiter: PropTypes.string,
     onAdd: React.PropTypes.func,
+    onRemove: React.PropTypes.func,
     transformFn: PropTypes.func
   }
 
@@ -60,7 +61,7 @@ export default class Mention {
   }
 
   render() {
-    const { customRenderer, onAdd } = this.props;
+    const { customRenderer, onAdd, onRemove } = this.props;
 
     return (
       <div>
@@ -69,6 +70,7 @@ export default class Mention {
         />
         <TinyMCEDelegate
           onAdd={onAdd}
+          onRemove={onRemove}
         />
         <MentionsDebugger />
       </div>

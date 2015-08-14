@@ -1,4 +1,5 @@
 import isEqual from 'lodash.isequal';
+import difference from 'lodash.difference';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { exitSelection, findMentions, removeMention } from '../utils/tinyMCEUtils';
@@ -16,7 +17,8 @@ export default class TinyMCEDelegate extends Component {
   static propTypes = {
     editor: PropTypes.object,
     mentions: PropTypes.array,
-    onAdd: PropTypes.func
+    onAdd: PropTypes.func,
+    onRemove: PropTypes.func
   }
 
   shouldComponentUpdate(nextProps) {
@@ -24,15 +26,35 @@ export default class TinyMCEDelegate extends Component {
     const editorId = this.props.editor && this.props.editor.id;
 
     return nextEditorId !== editorId
-        || !isEqual(nextProps.mentions, this.props.mentions);
+      || !isEqual(nextProps.mentions, this.props.mentions);
   }
 
   componentWillReceiveProps(nextProps) {
-    const currLength = this.props.mentions.length;
-    const nextLength = nextProps.mentions.length;
+    const { mentions, onAdd, onRemove } = this.props;
+    const nextMentions = nextProps.mentions;
+    const currLength = mentions.length;
+    const nextLength = nextMentions.length;
+    const shouldRender = currLength < nextLength;
+    const shouldDispatchRemove = currLength > nextLength;
+
+    if (shouldDispatchRemove) {
+      const diff = difference(mentions, nextMentions);
+
+      onRemove({
+        mentions: nextMentions,
+        changed: diff.length > 1 ? diff : diff[0]
+      });
+    }
+
+    if (shouldRender) {
+      onAdd({
+        mentions: nextMentions,
+        changed: last(nextMentions)
+      });
+    }
 
     this.setState({
-      shouldRender: currLength <= nextLength
+      shouldRender
     });
   }
 
@@ -73,7 +95,7 @@ export default class TinyMCEDelegate extends Component {
   }
 
   _renderMentionIntoEditor() {
-    const { editor, mentions, onAdd } = this.props;
+    const { editor, mentions } = this.props;
     const mention = last(mentions);
     const text = editor.getBody().innerText;
     const insertLeadingSpace = text.trim().length !== 0;
@@ -96,9 +118,6 @@ export default class TinyMCEDelegate extends Component {
 
     exitSelection(editor);
 
-    if (onAdd) {
-      onAdd(mention);
-    }
   }
 
   render() {

@@ -72,6 +72,7 @@
     "invariant": "^2.1.0",
     "lodash.camelcase": "^3.0.1",
     "lodash.clonedeep": "^3.0.2",
+    "lodash.difference": "^3.2.2",
     "lodash.isequal": "^3.0.4",
     "lodash.without": "^3.2.1",
     "react-redux": "^0.2.2",

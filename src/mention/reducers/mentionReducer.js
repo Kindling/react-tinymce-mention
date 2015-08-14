@@ -5,7 +5,6 @@ import last from '../utils/last';
 import uid from '../utils/uid';
 
 export const initialState = {
-  hasComplexDataSource: false,
   dataSource: [],
   highlightIndex: 0,
   matchedSources: [],
@@ -16,12 +15,11 @@ export const initialState = {
 const actionsMap = {
 
   finalizeSetup(state, action) {
-    const { editor, dataSource, isComplex } = action.payload;
+    const { editor, dataSource } = action.payload;
 
     return {
       editor,
       dataSource,
-      hasComplexDataSource: isComplex
     };
   },
 
@@ -59,7 +57,6 @@ const actionsMap = {
 
   query(state, action) {
     const prevQuery = state.query;
-    const hasComplexDataSource = state.hasComplexDataSource;
     const { query } = action.payload;
     const len = query.length;
 
@@ -69,11 +66,7 @@ const actionsMap = {
 
     const matchedSources = state.dataSource.filter(source => {
       if (query.length) {
-        const searchKey = hasComplexDataSource
-          ? source.searchKey
-          : source;
-
-        return searchKey.toLowerCase().includes(newQuery);
+        return source.searchKey.toLowerCase().includes(newQuery);
       } else {
         return false;
       }

@@ -55,8 +55,8 @@ export default class Mention {
   }
 
   _transformAndDispatch({ editor, resolvedDataSource }) {
-    const { isComplex, dataSource } = this._transformResponse(resolvedDataSource);
-    store.dispatch(finalizeSetup(editor, dataSource, isComplex));
+    const { dataSource } = this._transformResponse(resolvedDataSource);
+    store.dispatch(finalizeSetup(editor, dataSource));
   }
 
   render() {

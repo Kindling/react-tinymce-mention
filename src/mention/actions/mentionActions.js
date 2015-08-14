@@ -1,12 +1,11 @@
 import * as Types from '../constants/MentionActionTypes';
 
-export function finalizeSetup(editor, dataSource, isComplex) {
+export function finalizeSetup(editor, dataSource) {
   return {
     type: Types.FINALIZE_SETUP,
     payload: {
       editor,
-      dataSource,
-      isComplex
+      dataSource
     }
   };
 }

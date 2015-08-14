@@ -15,7 +15,6 @@ export default function validateDataSource(dataSource) {
     );
 
     return {
-      isComplex: true,
       dataSource
     };
 
@@ -27,7 +26,6 @@ export default function validateDataSource(dataSource) {
       }
     })
     return {
-      isComplex: false,
       dataSource: normalizedDataSource
     };
   } else {

@@ -27,7 +27,7 @@ export default function validateDataSource(dataSource) {
     const normalizedDataSource = dataSource.map(source => ({
       searchKey: source,
       displayLabel: source
-    });
+    }));
 
     return {
       dataSource: normalizedDataSource

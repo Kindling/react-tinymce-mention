@@ -24,12 +24,11 @@ export default function validateDataSource(dataSource) {
     };
 
   } else if (containsConsistantType(dataSource, 'string')) {
-    const normalizedDataSource = dataSource.map(source => {
-      return {
-        searchKey: source,
-        displayLabel: source
-      }
-    })
+    const normalizedDataSource = dataSource.map(source => ({
+      searchKey: source,
+      displayLabel: source
+    });
+
     return {
       dataSource: normalizedDataSource
     };

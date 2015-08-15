@@ -31,9 +31,9 @@ export default class Mention {
   }
 
   componentDidMount() {
-    const { dataSource, delimiter } = this.props;
+    const { dataSource, delimiter, onRemove } = this.props;
 
-    initializePlugin(store, dataSource, delimiter)
+    initializePlugin(store, dataSource, delimiter, onRemove)
       .then(::this._transformAndDispatch)
       .catch(error => {
         console.error(error);

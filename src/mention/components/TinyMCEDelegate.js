@@ -1,8 +1,8 @@
 import isEqual from 'lodash.isequal';
-import difference from 'lodash.difference';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { exitSelection, findMentions, removeMention } from '../utils/tinyMCEUtils';
+import diffMentionState from '../utils/diffMentionState';
 import last from '../utils/last';
 import uid from '../utils/uid';
 import renderComponent from '../utils/renderComponent';
@@ -38,12 +38,7 @@ export default class TinyMCEDelegate extends Component {
     const shouldDispatchRemove = currLength > nextLength;
 
     if (shouldDispatchRemove) {
-      const diff = difference(mentions, nextMentions);
-
-      onRemove({
-        mentions: nextMentions,
-        changed: diff.length > 1 ? diff : diff[0]
-      });
+      onRemove(diffMentionState(mentions, nextMentions));
     }
 
     if (shouldRender) {
@@ -84,6 +79,7 @@ export default class TinyMCEDelegate extends Component {
     editor.selection.select(editor.getBody(), true);
     editor.selection.collapse(false);
 
+    // TODO: Why is this happening?
     // The clean the body if we're at the beginning; tinMCE weirdly
     // inserts invalid markup.
     const text = editor.getBody()
@@ -111,13 +107,13 @@ export default class TinyMCEDelegate extends Component {
       ? ` ${markup}`
       :  `${markup}`;
 
+    // FIXME: The invisible character fucks things up...
     // Insert new link and exit styling via
     editor.execCommand('mceInsertRawHTML', false,
       `${formattedMarkup}<span id="${spaceUid}"> \u200C</span>`
     );
 
     exitSelection(editor);
-
   }
 
   render() {

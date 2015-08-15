@@ -2,8 +2,9 @@ import invariant from 'invariant';
 import twitter from 'twitter-text';
 import closest from 'dom-closest';
 import removeNode from 'dom-remove';
-import last from './utils/last';
+import diffMentionState from './utils/diffMentionState';
 import getKeyCode from './utils/getKeyCode';
+import last from './utils/last';
 
 import {
   collectMentionIds,
@@ -54,8 +55,14 @@ let isFocused = false;
  */
 let store = null;
 
+/**
+ * Optional onRemove callback
+ * @type {Function}
+ */
+let onRemove = null;
 
-export function initializePlugin(reduxStore, dataSource, delimiterConfig = delimiter) {
+
+export function initializePlugin(reduxStore, dataSource, delimiterConfig = delimiter, onRemoveCallback = () => {}) {
 
   invariant(reduxStore,
     'Plugin must be initialized with a Redux store.'
@@ -82,6 +89,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
         editor = activeEditor;
         store = Object.freeze(reduxStore);
         delimiter = Object.freeze(delimiterConfig);
+        onRemove = Object.freeze(onRemoveCallback);
 
         // If promise, wait for it to resolve before resolving the
         // outer promise and initializing the app.
@@ -251,8 +259,20 @@ function handleEditorBackspace(event) {
     // if the user highlights an @mention and then deletes, we can no longer check
     // the proximity of the cursor via regex and thus need to collect ids and sync.
     } else {
-      const mentionIds = collectMentionIds(editor, mentionClassName);
-      store.dispatch(syncEditorState(mentionIds));
+      const getMentions = () => store.getState().mentions;
+      const editorMentionIds = collectMentionIds(editor, mentionClassName);
+      const mentions = getMentions();
+
+      // FIXME: Too tired...
+      if (mentions && editorMentionIds.length < mentions.length) {
+        store.dispatch(syncEditorState(editorMentionIds));
+
+        const nextMentions = getMentions();
+
+        if (mentions && nextMentions.length < mentions.length) {
+          onRemove(diffMentionState(mentions, nextMentions))
+        }
+      }
     }
   }
 }

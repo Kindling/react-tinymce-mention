@@ -1,4 +1,7 @@
+
 # React TinyMCE @Mentions
+
+[![Build Status](https://travis-ci.org/Kindling/react-tinymce-mention.svg?branch=master)](https://travis-ci.org/Kindling/react-tinymce-mention)
 
 # WIP STAY AWAY!
 

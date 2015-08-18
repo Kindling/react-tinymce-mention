@@ -1,7 +1,6 @@
 module.exports = function (config) {
 
   config.set({
-    basePath: process.cwd(),
     browsers: ['PhantomJS'],
 
     frameworks: [
@@ -13,11 +12,11 @@ module.exports = function (config) {
 
     files: [
       'examples/shared/scripts/vendor/tinymce/tinymce.full.js',
-      'test/tests.webpack.js'
+      'tests.webpack.js'
     ],
 
     preprocessors: {
-      'test/tests.webpack.js': [
+      'tests.webpack.js': [
         'webpack',
         'sourcemap'
       ]
@@ -40,5 +39,5 @@ module.exports = function (config) {
     webpackServer: {
       noInfo: true
     }
-  });
-};
+  })
+}

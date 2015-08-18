@@ -1,12 +1,11 @@
-import isEqual from 'lodash.isequal';
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { exitSelection, findMentions, removeMention } from '../utils/tinyMCEUtils';
-import diffMentionState from '../utils/diffMentionState';
-import last from '../utils/last';
-import uid from '../utils/uid';
-import renderComponent from '../utils/renderComponent';
-import EditorMention from '../components/EditorMention';
+import isEqual from 'lodash.isequal'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { exitSelection, findMentions, removeMention } from '../utils/tinyMCEUtils'
+import diffMentionState from '../utils/diffMentionState'
+import last from '../utils/last'
+import renderComponent from '../utils/renderComponent'
+import EditorMention from '../components/EditorMention'
 
 @connect(state => ({
   editor: state.mention.editor,
@@ -22,45 +21,45 @@ export default class TinyMCEDelegate extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const nextEditorId = nextProps.editor && nextProps.editor.id;
-    const editorId = this.props.editor && this.props.editor.id;
+    const nextEditorId = nextProps.editor && nextProps.editor.id
+    const editorId = this.props.editor && this.props.editor.id
 
     return nextEditorId !== editorId
-      || !isEqual(nextProps.mentions, this.props.mentions);
+      || !isEqual(nextProps.mentions, this.props.mentions)
   }
 
   componentWillReceiveProps(nextProps) {
-    const { mentions, onAdd, onRemove } = this.props;
-    const nextMentions = nextProps.mentions;
-    const currLength = mentions.length;
-    const nextLength = nextMentions.length;
-    const shouldAdd = currLength < nextLength;
-    const shouldRemove = currLength > nextLength;
+    const { mentions, onAdd, onRemove } = this.props
+    const nextMentions = nextProps.mentions
+    const currLength = mentions.length
+    const nextLength = nextMentions.length
+    const shouldAdd = currLength < nextLength
+    const shouldRemove = currLength > nextLength
 
     if (shouldAdd) {
       onAdd({
         mentions: nextMentions,
         changed: [last(nextMentions)]
-      });
+      })
     }
 
     if (shouldRemove) {
-      onRemove(diffMentionState(mentions, nextMentions));
+      onRemove(diffMentionState(mentions, nextMentions))
     }
 
     this.setState({
       shouldRender: shouldAdd
-    });
+    })
   }
 
   componentDidUpdate() {
-    const { shouldRender } = this.state;
-    const { editor, mentions } = this.props;
-    const mentionsValid = mentions && mentions.length;
+    const { shouldRender } = this.state
+    const { editor, mentions } = this.props
+    const mentionsValid = mentions && mentions.length
 
     if (editor && mentionsValid && shouldRender) {
-      this._clearUnfinishedMention();
-      this._renderMentionIntoEditor();
+      this._clearUnfinishedMention()
+      this._renderMentionIntoEditor()
     }
   }
 
@@ -70,34 +69,34 @@ export default class TinyMCEDelegate extends Component {
    * component.
    */
   _clearUnfinishedMention() {
-    const { editor } = this.props;
-    const { lastMention } = findMentions(editor);
-    const { startPos } = lastMention;
+    const { editor } = this.props
+    const { lastMention } = findMentions(editor)
+    const { startPos } = lastMention
 
     // First remove the mention
-    editor.setContent(removeMention(editor, startPos));
-    exitSelection(editor);
+    editor.setContent(removeMention(editor, startPos))
+    exitSelection(editor)
   }
 
   _renderMentionIntoEditor() {
-    const { editor, mentions } = this.props;
+    const { editor, mentions } = this.props
 
     let markup = renderComponent(
       <EditorMention
         {...last(mentions)}
       />
-    );
+    )
 
-    editor.execCommand('mceInsertRawHTML', false, '\u00a0' + markup);
-    exitSelection(editor);
+    editor.execCommand('mceInsertRawHTML', false, '\u00a0' + markup)
+    exitSelection(editor)
 
     setTimeout(() => {
-      // editor.insertContent('<span>&nbsp;</span>')
-      // editor.execCommand('mceNonBreaking');
-    });
+      // editor.insertContent('<span>&nbsp</span>')
+      // editor.execCommand('mceNonBreaking')
+    })
   }
 
   render() {
-    return null;
+    return null
   }
 }

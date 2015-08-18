@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react';
-import CustomListItem from './CustomListItem';
+import React, { PropTypes } from 'react'
+import CustomListItem from './CustomListItem'
 
 export default class CustomList {
   static propTypes = {
@@ -9,7 +9,7 @@ export default class CustomList {
   }
 
   render() {
-    const { onClick, highlightIndex, matchedSources } = this.props;
+    const { onClick, highlightIndex, matchedSources } = this.props
 
     return (
       <ul>
@@ -22,9 +22,9 @@ export default class CustomList {
               onClick={onClick}
               key={`item-${index}`}
             />
-          );
+          )
         })}
       </ul>
-    );
+    )
   }
 }

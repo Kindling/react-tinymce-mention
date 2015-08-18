@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
 export default class EditorMention {
 
@@ -8,12 +8,12 @@ export default class EditorMention {
   }
 
   render() {
-    const { tinymceId, displayLabel } = this.props;
+    const { tinymceId, displayLabel } = this.props
 
     return (
       <a href='#' id={tinymceId} className='tinymce-mention'>
         @{displayLabel}
       </a>
-    );
+    )
   }
 }

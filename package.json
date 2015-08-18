@@ -5,8 +5,8 @@
   "main": "lib/index",
   "scripts": {
     "start": "node server.js",
-    "test": "node test/index.js --single-run",
-    "test-watch": "node test/index.js",
+    "test": "node karma.server.js --single-run",
+    "test-watch": "node karma.server.js",
     "build": "sh scripts/build.sh",
     "prepublish": "npm run build",
     "gh-pages": "sh scripts/gh-pages.sh"

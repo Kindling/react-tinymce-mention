@@ -1,5 +1,5 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from 'react'
+import { connect } from 'react-redux'
 
 @connect(state => ({
   dataSource: state.mention.dataSource,
@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 }))
 export default class MentionsDebugger {
   render() {
-    const { mentions, dataSource } = this.props;
+    const { mentions, dataSource } = this.props
 
     return (
       <div>
@@ -18,7 +18,7 @@ export default class MentionsDebugger {
               <li key={`mention-${index}`}>
                 {mention.displayLabel}
               </li>
-            );
+            )
           })}
         </ul>
 
@@ -32,11 +32,11 @@ export default class MentionsDebugger {
                 <li key={`source-${index}`}>
                   {source.displayLabel}
                 </li>
-              );
+              )
             })}
           </ul>
         </div>
       </div>
-    );
+    )
   }
 }

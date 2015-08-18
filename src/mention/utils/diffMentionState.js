@@ -1,10 +1,10 @@
-import difference from 'lodash.difference';
+import difference from 'lodash.difference'
 
 export default function diffMentionState(mentions, nextMentions) {
-  const diff = difference(mentions, nextMentions);
+  const diff = difference(mentions, nextMentions)
 
   return {
     mentions: nextMentions,
     changed: diff.length > 1 ? diff : diff
-  };
+  }
 }

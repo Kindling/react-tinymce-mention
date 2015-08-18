@@ -11,4 +11,4 @@ $babel ./src -d $build_dir --ignore "__tests__" --stage 0
 $webpack --config webpack.config.js
 $webpack --config webpack.dist.js
 
-echo "gzipped, the global build is `gzip -c $build_dir/umd/react-tinymce-mention.min.js | wc -c | sed -e 's/^[[:space:]]*//'` bytes"
+echo "gzipped, the global build is `gzip -c $build_dir/umd/plugin/react-tinymce-mention.min.js | wc -c | sed -e 's/^[[:space:]]*//'` bytes"

@@ -6,7 +6,7 @@ config.devtool = false;
 config.entry = './src/index';
 
 config.output = {
-  path: path.resolve(__dirname, 'lib/umd'),
+  path: path.resolve(__dirname, 'lib/umd/plugin'),
   filename: 'react-tinymce-mention.min.js',
   libraryTarget: 'umd',
   library: 'reactMentions',

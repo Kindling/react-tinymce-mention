@@ -6,7 +6,7 @@ module.exports = {
   cache: true,
 
   devServer: {
-    headers: { "Access-Control-Allow-Origin": "*" }
+    headers: { 'Access-Control-Allow-Origin': '*' }
   },
 
   entry: [
@@ -16,7 +16,7 @@ module.exports = {
   ],
 
   output: {
-    path: path.join(__dirname, 'lib/umd'),
+    path: path.join(__dirname, 'lib/umd/plugin'),
     filename: 'react-tinymce-mention.js',
     publicPath: '/static/'
   },

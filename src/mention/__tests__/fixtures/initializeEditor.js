@@ -29,7 +29,7 @@ export default function initializeEditor() {
   React.render(
     <div>
       <TinyMCE
-        content=''
+        content='heyyy'
         config={{
           browser_spellcheck: true,
           document_base_url: window.location.origin + '/',
@@ -57,7 +57,7 @@ export default function initializeEditor() {
 
       />
       <Mention
-        dataSource={dataSourceStatic}
+        dataSource={simpleDataSource}
         delimiter={'@'}
       />
     </div>

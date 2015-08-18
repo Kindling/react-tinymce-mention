@@ -15,7 +15,7 @@ import {
   select,
 } from '../../actions/mentionActions'
 
-fdescribe('mentionReducer', () => {
+describe('mentionReducer', () => {
   var store
 
   const dataSource = simpleDataSource.sort().map(source => {

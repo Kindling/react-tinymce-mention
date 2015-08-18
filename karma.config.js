@@ -2,6 +2,7 @@ module.exports = function (config) {
 
   config.set({
     browsers: ['PhantomJS'],
+    // browsers: ['Chrome'],
 
     frameworks: [
       'jasmine',
@@ -11,12 +12,15 @@ module.exports = function (config) {
     reporters: ['progress', 'beep'],
 
     files: [
+      'https://code.jquery.com/jquery-2.1.4.js',
+      'examples/shared/scripts/vendor/tinymce/skins/kinding/skin.min.css',
+      'examples/shared/scripts/vendor/tinymce/skins/kinding/content.min.css',
       'examples/shared/scripts/vendor/tinymce/tinymce.full.js',
-      'tests.webpack.js'
+      'karma.tests.webpack.js'
     ],
 
     preprocessors: {
-      'tests.webpack.js': [
+      'karma.tests.webpack.js': [
         'webpack',
         'sourcemap'
       ]

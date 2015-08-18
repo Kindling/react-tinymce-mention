@@ -116,7 +116,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
 function start() {
 
   // FIXME: Remove auto focus
-  window.tinymce.activeEditor.focus()
+  // window.tinymce.activeEditor.focus()
 
   editor.on('keypress', handleTopLevelEditorInput)
   editor.on('keyup', handleEditorBackspace)
@@ -274,4 +274,6 @@ export const testExports = {
   _isNearMention: isNearMention,
   _handleKeyPress: handleKeyPress,
   _handleEditorBackspace: handleEditorBackspace,
+  _removeMentionFromEditor: removeMentionFromEditor,
+  _extractMentionFromNode: extractMentionFromNode
 }

@@ -10,11 +10,12 @@ export function prevCharIsSpace(editor) {
 }
 
 export function removeMention(editor, startPos) {
-  return editor.getContent().slice(0, startPos);
+  return editor.getContent({format : 'html'}).slice(0, startPos);
 }
 
 export function findMentions(editor) {
-  const content = editor.getContent();
+  const content = editor.getContent({ format: 'html' });
+  console.log(content);
   const mentions = twitter.extractMentionsWithIndices(content);
   const lastMention = last(mentions);
 

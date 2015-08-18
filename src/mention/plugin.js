@@ -210,6 +210,12 @@ function extractMentionFromNode(mentionNode) {
     .trim();
 }
 
+function removeMentionFromEditor(mentionNode) {
+  removeNode(mentionNode);
+  return extractMentionFromNode(mentionNode);
+}
+
+
 /**
  * Handler for internal key-presses. Parses the input and dispatches
  * queries back to the store for list view and selection.
@@ -249,7 +255,8 @@ function handleEditorBackspace(event) {
 
     // Begin query process if still in mention
     if (foundMentionNode) {
-      store.dispatch(query(extractMentionFromNode(foundMentionNode)));
+      const mention = removeMentionFromEditor(foundMentionNode)
+      store.dispatch(remove(mention));
 
     // Remove all mentions
     } else if (!getEditorContent(editor).trim().length) {
@@ -259,20 +266,25 @@ function handleEditorBackspace(event) {
     // if the user highlights an @mention and then deletes, we can no longer check
     // the proximity of the cursor via regex and thus need to collect ids and sync.
     } else {
-      const getMentions = () => store.getState().mentions;
-      const editorMentionIds = collectMentionIds(editor, mentionClassName);
-      const mentions = getMentions();
+      const mentionIds = collectMentionIds(editor, mentionClassName);
+      store.dispatch(syncEditorState(mentionIds));
 
-      // FIXME: Too tired...
-      if (mentions && editorMentionIds.length < mentions.length) {
-        store.dispatch(syncEditorState(editorMentionIds));
-
-        const nextMentions = getMentions();
-
-        if (mentions && nextMentions.length < mentions.length) {
-          onRemove(diffMentionState(mentions, nextMentions))
-        }
-      }
+      // const getMentions = () => store.getState().mentions;
+      // const editorMentionIds = collectMentionIds(editor, mentionClassName);
+      // const mentions = getMentions();
+      //
+      // console.log(mentions.length, editorMentionIds.length);
+      //
+      // // FIXME: Too tired...
+      // if (mentions && editorMentionIds.length < mentions.length) {
+      //   store.dispatch(syncEditorState(editorMentionIds));
+      //
+      //   const nextMentions = getMentions();
+      //
+      //   if (mentions && nextMentions.length < mentions.length) {
+      //     onRemove(diffMentionState(mentions, nextMentions))
+      //   }
+      // }
     }
   }
 }

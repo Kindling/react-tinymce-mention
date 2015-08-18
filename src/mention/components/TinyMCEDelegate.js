@@ -76,43 +76,20 @@ export default class TinyMCEDelegate extends Component {
 
     // First remove the mention
     editor.setContent(removeMention(editor, startPos));
-    editor.selection.select(editor.getBody(), true);
-    editor.selection.collapse(false);
-
-    // TODO: Why is this happening?
-    // The clean the body if we're at the beginning; tinMCE weirdly
-    // inserts invalid markup.
-    const text = editor.getBody()
-    const tinymceWeirdMatch = '<p>&nbsp;<br></p>';
-
-    if (text.innerHTML === tinymceWeirdMatch) {
-      editor.setContent('');
-    }
+    exitSelection(editor);
   }
 
   _renderMentionIntoEditor() {
     const { editor, mentions } = this.props;
-    const mention = last(mentions);
-    const text = editor.getBody().innerText;
-    const insertLeadingSpace = text.trim().length !== 0;
-    const spaceUid = uid('space-');
 
     const markup = renderComponent(
       <EditorMention
-        {...mention}
+        link={true}
+        {...last(mentions)}
       />
     );
 
-    const formattedMarkup = insertLeadingSpace
-      ? ` ${markup}`
-      :  `${markup}`;
-
-    // FIXME: The invisible character fucks things up...
-    // Insert new link and exit styling via
-    editor.execCommand('mceInsertRawHTML', false,
-      `${formattedMarkup}<span id="${spaceUid}"> \u200C</span>`
-    );
-
+    editor.execCommand('mceInsertRawHTML', false, '\u00a0' + markup);
     exitSelection(editor);
   }
 

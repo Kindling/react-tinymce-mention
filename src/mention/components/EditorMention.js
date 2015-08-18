@@ -4,16 +4,17 @@ export default class EditorMention {
 
   static propTypes = {
     tinymceId: PropTypes.string.isRequired,
-    displayLabel: PropTypes.string.isRequired
+    displayLabel: PropTypes.string.isRequired,
+    link: PropTypes.bool
   }
 
   render() {
     const { tinymceId, displayLabel } = this.props;
 
     return (
-      <strong id={tinymceId} className='tinymce-mention'>
+      <a href='#' id={tinymceId} className='tinymce-mention'>
         @{displayLabel}
-      </strong>
+      </a>
     );
   }
 }

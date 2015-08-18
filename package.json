@@ -4,7 +4,7 @@
   "description": "@Mention functionality for TinyMCE, built with React and Redux.",
   "main": "lib/index",
   "scripts": {
-    "start": "node server.js",
+    "start": "node webpack.server.js",
     "test": "node karma.server.js --single-run",
     "test-watch": "node karma.server.js",
     "build": "sh scripts/build.sh",

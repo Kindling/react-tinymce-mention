@@ -267,24 +267,8 @@ function handleEditorBackspace(event) {
     // the proximity of the cursor via regex and thus need to collect ids and sync.
     } else {
       const mentionIds = collectMentionIds(editor, mentionClassName);
+      console.log(mentionIds);
       store.dispatch(syncEditorState(mentionIds));
-
-      // const getMentions = () => store.getState().mentions;
-      // const editorMentionIds = collectMentionIds(editor, mentionClassName);
-      // const mentions = getMentions();
-      //
-      // console.log(mentions.length, editorMentionIds.length);
-      //
-      // // FIXME: Too tired...
-      // if (mentions && editorMentionIds.length < mentions.length) {
-      //   store.dispatch(syncEditorState(editorMentionIds));
-      //
-      //   const nextMentions = getMentions();
-      //
-      //   if (mentions && nextMentions.length < mentions.length) {
-      //     onRemove(diffMentionState(mentions, nextMentions))
-      //   }
-      // }
     }
   }
 }

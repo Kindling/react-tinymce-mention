@@ -88,8 +88,8 @@ const actionsMap = {
 
     // Remove mention from internal collection of current mentions
     const foundMention = last(mentions.filter(source => {
-      const { label } = source;
-      return label && label
+      const { displayLabel } = source;
+      return displayLabel && displayLabel
         .toLowerCase()
         .includes(mention.toLowerCase());
     }));
@@ -142,7 +142,7 @@ const actionsMap = {
     const editorMentionIds = action.payload.mentionIds;
 
     const filteredMentions = state.mentions.filter(mention => {
-      return editorMentionIds.some(id => id === mention.id);
+      return editorMentionIds.some(id => id === mention.tinymceId);
     })
 
     return filteredMentions.length

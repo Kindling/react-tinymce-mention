@@ -44,7 +44,7 @@ export default class TinyMCEDelegate extends Component {
     if (shouldRender) {
       onAdd({
         mentions: nextMentions,
-        changed: last(nextMentions)
+        changed: [last(nextMentions)]
       });
     }
 
@@ -82,15 +82,19 @@ export default class TinyMCEDelegate extends Component {
   _renderMentionIntoEditor() {
     const { editor, mentions } = this.props;
 
-    const markup = renderComponent(
+    let markup = renderComponent(
       <EditorMention
-        link={true}
         {...last(mentions)}
       />
     );
 
     editor.execCommand('mceInsertRawHTML', false, '\u00a0' + markup);
     exitSelection(editor);
+
+    setTimeout(() => {
+      // editor.insertContent('<span>&nbsp;</span>')
+      // editor.execCommand('mceNonBreaking');
+    });
   }
 
   render() {

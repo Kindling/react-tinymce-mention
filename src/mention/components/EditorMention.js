@@ -4,8 +4,7 @@ export default class EditorMention {
 
   static propTypes = {
     tinymceId: PropTypes.string.isRequired,
-    displayLabel: PropTypes.string.isRequired,
-    link: PropTypes.bool
+    displayLabel: PropTypes.string.isRequired
   }
 
   render() {

@@ -16,7 +16,7 @@ module.exports = {
   ],
 
   output: {
-    path: path.join(__dirname, 'lib/umd/plugin'),
+    path: path.join(__dirname, 'lib/umd/plugins/mention'),
     filename: 'react-tinymce-mention.js',
     publicPath: '/static/'
   },

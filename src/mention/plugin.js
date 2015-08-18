@@ -1,15 +1,15 @@
-import invariant from 'invariant'
-import twitter from 'twitter-text'
-import closest from 'dom-closest'
-import removeNode from 'dom-remove'
-import getKeyCode from './utils/getKeyCode'
-import last from './utils/last'
+import invariant from 'invariant';
+import twitter from 'twitter-text';
+import closest from 'dom-closest';
+import removeNode from 'dom-remove';
+import getKeyCode from './utils/getKeyCode';
+import last from './utils/last';
 
 import {
   collectMentionIds,
   getEditorContent,
   prevCharIsSpace
-} from './utils/tinyMCEUtils'
+} from './utils/tinyMCEUtils';
 
 import {
   moveDown,
@@ -20,7 +20,7 @@ import {
   resetQuery,
   select,
   syncEditorState
-} from './actions/mentionActions'
+} from './actions/mentionActions';
 
 const keyMap = {
   BACKSPACE: 8,
@@ -28,47 +28,47 @@ const keyMap = {
   ENTER: 13,
   TAB: 9,
   UP: 38
-}
+};
 
 /**
  * Reference to the TinyMCE editor.
  * @type {Object}
  */
-let editor = null
+let editor = null;
 
 /**
  * The delimiter we're using to trigger @mentions. Defaults to @.
  * @type {String}
  */
-let delimiter = '@'
+let delimiter = '@';
 
 /**
  * Checks if we're currently focused on @mention lookup with bound event handlers.
  * @type {Boolean}
  */
-let isFocused = false
+let isFocused = false;
 
 /**
  * The Redux store for handling lookups, mentions and tracking.
  * @type {Object}
  */
-let store = null
+let store = null;
 
 
 export function initializePlugin(reduxStore, dataSource, delimiterConfig = delimiter) {
 
   invariant(reduxStore,
     'Plugin must be initialized with a Redux store.'
-  )
+  );
 
   invariant(dataSource,
     'Plugin must be initialized with a dataSource.  Datasource can be an array or promise.'
-  )
+  );
 
   return new Promise((resolve, reject) => {
 
     if (typeof window.tinymce === 'undefined') {
-      return reject('Error initializing Mention plugin: `tinymce` is undefined.')
+      return reject('Error initializing Mention plugin: `tinymce` is undefined.');
     }
 
     window.tinymce.create('tinymce.plugins.Mention', {
@@ -79,9 +79,9 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
        * @param  {Object} editor The editor
        */
       init(activeEditor) {
-        editor = activeEditor
-        store = Object.freeze(reduxStore)
-        delimiter = Object.freeze(delimiterConfig)
+        editor = activeEditor;
+        store = Object.freeze(reduxStore);
+        delimiter = Object.freeze(delimiterConfig);
 
         // If promise, wait for it to resolve before resolving the
         // outer promise and initializing the app.
@@ -91,26 +91,26 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
             resolve({
               editor,
               resolvedDataSource: response.data
-            })
+            });
 
-            start()
+            start();
           }).catch(error => {
-            throw new Error(error)
-          })
+            throw new Error(error);
+          });
 
         } else {
           resolve({
             editor,
             resolvedDataSource: dataSource
-          })
+          });
 
-          start()
+          start();
         }
       }
     })
 
-    window.tinymce.PluginManager.add('mention', window.tinymce.plugins.Mention)
-  })
+    window.tinymce.PluginManager.add('mention', window.tinymce.plugins.Mention);
+  });
 }
 
 function start() {
@@ -118,8 +118,8 @@ function start() {
   // FIXME: Remove auto focus
   // window.tinymce.activeEditor.focus()
 
-  editor.on('keypress', handleTopLevelEditorInput)
-  editor.on('keyup', handleEditorBackspace)
+  editor.on('keypress', handleTopLevelEditorInput);
+  editor.on('keyup', handleEditorBackspace);
 }
 
 /**
@@ -128,29 +128,29 @@ function start() {
  * @param  {jQuery.Event} event
  */
 function handleTopLevelEditorInput(event) {
-  const character = String.fromCharCode(getKeyCode(event))
-  const delimiterIndex = delimiter.indexOf(character)
+  const character = String.fromCharCode(getKeyCode(event));
+  const delimiterIndex = delimiter.indexOf(character);
 
   // User has typed `@` begin tracking
   if (delimiterIndex > -1 && prevCharIsSpace(editor)) {
-    !isFocused && startListeningForInput()
+    !isFocused && startListeningForInput();
 
   // User has exited mentions, stop tracking
   } else if (prevCharIsSpace(editor) || character === ' ') {
-    isFocused && stopListeningAndCleanup()
+    isFocused && stopListeningAndCleanup();
   }
 }
 
 function startListeningForInput() {
   if (toggleFocus()) {
-    editor.on('keydown', handleKeyPress)
+    editor.on('keydown', handleKeyPress);
   }
 }
 
 function stopListeningAndCleanup() {
   if (!toggleFocus()) {
-    store.dispatch(resetQuery())
-    editor.off('keydown', handleKeyPress)
+    store.dispatch(resetQuery());
+    editor.off('keydown', handleKeyPress);
   }
 }
 
@@ -164,47 +164,47 @@ function stopListeningAndCleanup() {
  */
 function performIntermediateActions(keyCode, event) {
   Object.keys(keyMap).forEach(key => {
-    const keyValue = keyMap[key]
+    const keyValue = keyMap[key];
 
     // Override default behavior if we're using anything from our keyMap.
     if (keyCode === keyValue && keyValue !== keyMap.BACKSPACE) {
-      event.preventDefault()
+      event.preventDefault();
     }
-  })
+  });
 
-  return shouldSelectOrMove(keyCode)
+  return shouldSelectOrMove(keyCode);
 }
 
 function shouldSelectOrMove(keyCode) {
   switch(keyCode) {
   case keyMap.TAB:
-    return store.dispatch(select())
+    return store.dispatch(select());
   case keyMap.ENTER:
-    return store.dispatch(select())
+    return store.dispatch(select());
   case keyMap.DOWN:
-    return store.dispatch(moveDown())
+    return store.dispatch(moveDown());
   case keyMap.UP:
-    return store.dispatch(moveUp())
+    return store.dispatch(moveUp());
   default:
-    return false
+    return false;
   }
 }
 
 function isNearMention(content) {
-  const re = /@\w+\b(?! *.)/
-  return re.exec(content)
+  const re = /@\w+\b(?! *.)/;
+  return re.exec(content);
 }
 
 function extractMentionFromNode(mentionNode) {
   return mentionNode
     .innerText
     .replace(/(?:@|_)/g, ' ')
-    .trim()
+    .trim();
 }
 
 function removeMentionFromEditor(mentionNode) {
-  removeNode(mentionNode)
-  return extractMentionFromNode(mentionNode)
+  removeNode(mentionNode);
+  return extractMentionFromNode(mentionNode);
 }
 
 
@@ -214,23 +214,23 @@ function removeMentionFromEditor(mentionNode) {
  * @param  {jQuery.Event} event
  */
 function handleKeyPress(event) {
-  const keyCode = getKeyCode(event)
+  const keyCode = getKeyCode(event);
 
   if (performIntermediateActions(keyCode, event)) {
-    return false
+    return false;
   }
 
   setTimeout(() => {
-    const content = getEditorContent(editor)
+    const content = getEditorContent(editor);
 
     if (isNearMention(content)) {
-      const mention = last(twitter.extractMentionsWithIndices(content))
+      const mention = last(twitter.extractMentionsWithIndices(content));
 
       if (mention && isFocused) {
-        store.dispatch(query(mention.screenName))
+        store.dispatch(query(mention.screenName));
       }
     }
-  }, 0)
+  }, 0);
 }
 
 /**
@@ -239,33 +239,33 @@ function handleKeyPress(event) {
  * @param  {jQuery.Event} event
  */
 function handleEditorBackspace(event) {
-  const keyCode = getKeyCode(event)
-  const mentionClassName = '.tinymce-mention'
+  const keyCode = getKeyCode(event);
+  const mentionClassName = '.tinymce-mention';
 
   if (keyCode === keyMap.BACKSPACE) {
-    const foundMentionNode = closest(editor.selection.getNode(), mentionClassName)
+    const foundMentionNode = closest(editor.selection.getNode(), mentionClassName);
 
     // Begin query process if still in mention
     if (foundMentionNode) {
-      const mention = removeMentionFromEditor(foundMentionNode)
-      store.dispatch(remove(mention))
+      const mention = removeMentionFromEditor(foundMentionNode);
+      store.dispatch(remove(mention));
 
     // Remove all mentions
     } else if (!getEditorContent(editor).trim().length) {
-      store.dispatch(resetMentions())
+      store.dispatch(resetMentions());
 
     // Default, validate internal mention state and sync if necessary. Use-case:
     // if the user highlights an @mention and then deletes, we can no longer check
     // the proximity of the cursor via regex and thus need to collect ids and sync.
     } else {
-      const mentionIds = collectMentionIds(editor, mentionClassName)
-      store.dispatch(syncEditorState(mentionIds))
+      const mentionIds = collectMentionIds(editor, mentionClassName);
+      store.dispatch(syncEditorState(mentionIds));
     }
   }
 }
 
 function toggleFocus() {
-  return isFocused = !isFocused
+  return isFocused = !isFocused;
 }
 
 // Export methods for testing
@@ -276,4 +276,4 @@ export const testExports = {
   _handleEditorBackspace: handleEditorBackspace,
   _removeMentionFromEditor: removeMentionFromEditor,
   _extractMentionFromNode: extractMentionFromNode
-}
+};

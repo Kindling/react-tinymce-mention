@@ -1,9 +1,9 @@
-import Mention from './mention/Mention'
+import Mention from './mention/Mention';
 
 try {
   if (__DEV__) {
-    require('./mention/test-page')
+    require('./mention/test-page');
   }
 } catch (error) {}
 
-export default Mention
+export default Mention;

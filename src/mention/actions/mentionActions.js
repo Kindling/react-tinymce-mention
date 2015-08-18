@@ -1,4 +1,4 @@
-import * as Types from '../constants/MentionActionTypes'
+import * as Types from '../constants/MentionActionTypes';
 
 export function finalizeSetup(editor, dataSource) {
   return {
@@ -7,19 +7,19 @@ export function finalizeSetup(editor, dataSource) {
       editor,
       dataSource
     }
-  }
+  };
 }
 
 export function moveDown() {
   return {
     type: Types.MOVE_DOWN
-  }
+  };
 }
 
 export function moveUp() {
   return {
     type: Types.MOVE_UP
-  }
+  };
 }
 
 export function query(input) {
@@ -28,7 +28,7 @@ export function query(input) {
     payload: {
       query: input
     }
-  }
+  };
 }
 
 export function remove(mention) {
@@ -37,25 +37,25 @@ export function remove(mention) {
     payload: {
       mention
     }
-  }
+  };
 }
 
 export function resetMentions() {
   return {
     type: Types.RESET_MENTIONS
-  }
+  };
 }
 
 export function resetQuery() {
   return {
     type: Types.RESET_QUERY
-  }
+  };
 }
 
 export function select() {
   return {
     type: Types.SELECT
-  }
+  };
 }
 
 export function syncEditorState(mentionIds) {
@@ -64,5 +64,5 @@ export function syncEditorState(mentionIds) {
     payload: {
       mentionIds
     }
-  }
+  };
 }

@@ -1,7 +1,7 @@
-import isEqual from 'lodash.isequal'
-import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import DefaultListItem from './DefaultListItem.js'
+import isEqual from 'lodash.isequal';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import DefaultListItem from './DefaultListItem.js';
 
 @connect(state => ({
   matchedSources: state.mention.matchedSources
@@ -13,11 +13,11 @@ export default class DefaultList {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !isEqual(nextProps.matchedSources, this.props.matchedSources)
+    return !isEqual(nextProps.matchedSources, this.props.matchedSources);
   }
 
   render() {
-    const { matchedSources } = this.props
+    const { matchedSources } = this.props;
 
     return (
       <div>
@@ -30,10 +30,10 @@ export default class DefaultList {
                 index={index}
                 key={`match-${index}`}
               />
-            )
+            );
           })}
         </ul>
       </div>
-    )
+    );
   }
 }

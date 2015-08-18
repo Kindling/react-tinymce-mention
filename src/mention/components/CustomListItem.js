@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-import classNames from 'classnames'
+import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 
 export default class CustomListItem {
   static propTypes = {
@@ -9,20 +9,20 @@ export default class CustomListItem {
   }
 
   handleClick() {
-    this.props.onClick()
+    this.props.onClick();
   }
 
   render() {
-    const { index, highlightIndex, displayLabel } = this.props
+    const { index, highlightIndex, displayLabel } = this.props;
 
     const classes = classNames({
       'selected': highlightIndex === index
-    })
+    });
 
     return (
       <li className={classes} onClick={::this.handleClick}>
         {displayLabel}
       </li>
-    )
+    );
   }
 }

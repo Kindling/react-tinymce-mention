@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import classNames from 'classnames'
-import { select } from '../actions/mentionActions'
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import classNames from 'classnames';
+import { select } from '../actions/mentionActions';
 
 @connect(state => ({
   highlightIndex: state.mention.highlightIndex
@@ -15,21 +15,21 @@ export default class DefaultListItem {
   }
 
   handleClick() {
-    this.props.dispatch(select())
+    this.props.dispatch(select());
   }
 
   render() {
-    const { index, highlightIndex, match } = this.props
+    const { index, highlightIndex, match } = this.props;
 
     const classes = classNames({
       'selected': highlightIndex === index,
       'mention-list-item': true
-    })
+    });
 
     return (
       <li className={classes} onClick={::this.handleClick}>
         {match}
       </li>
-    )
+    );
   }
 }

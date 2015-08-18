@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
-import { connect } from 'react-redux'
-import { select } from '../actions/mentionActions'
-import DefaultList from '../components/DefaultList.js'
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { select } from '../actions/mentionActions';
+import DefaultList from '../components/DefaultList.js';
 
 @connect(state => ({
   editor: state.mention.editor,
@@ -22,24 +22,24 @@ export default class SuggestionRenderer {
       highlightIndex,
       matchedSources,
       dispatch
-    } = this.props
+    } = this.props;
 
-    const onClick = () => dispatch(select())
+    const onClick = () => dispatch(select());
 
     return customRenderer({
       highlightIndex,
       matchedSources,
       clickFn: onClick
-    })
+    });
   }
 
   render() {
-    const { customRenderer } = this.props
+    const { customRenderer } = this.props;
 
     return (
       customRenderer
         ? this._renderCustomComponents()
         : <DefaultList />
-    )
+    );
   }
 }

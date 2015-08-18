@@ -267,7 +267,6 @@ function handleEditorBackspace(event) {
     // the proximity of the cursor via regex and thus need to collect ids and sync.
     } else {
       const mentionIds = collectMentionIds(editor, mentionClassName);
-      console.log(mentionIds);
       store.dispatch(syncEditorState(mentionIds));
     }
   }

@@ -1,8 +1,8 @@
-import React from 'react';
-import TinyMCE from 'react-tinymce';
-import axios from 'axios';
-import Mention from './Mention';
-import CustomList from './components/CustomList';
+import React from 'react'
+import TinyMCE from 'react-tinymce'
+import axios from 'axios'
+import Mention from './Mention'
+import CustomList from './components/CustomList'
 
 var plugins = [
   'autolink',
@@ -15,7 +15,7 @@ var plugins = [
   'nonbreaking',
   'tabfocus',
   'visualchars'
-];
+]
 
 React.render(
   <div>
@@ -57,22 +57,22 @@ React.render(
 
       transformFn={dataSource => {
         const complexDataSource = dataSource.map(result => {
-          const { fullName } = result;
+          const { fullName } = result
           return {
             searchKey: fullName,
             displayLabel: fullName
-          };
+          }
         })
 
-        return complexDataSource;
+        return complexDataSource
       }}
 
       onAdd={({ mentions, changed }) => {
-        console.log('ADDED: ', mentions, 'changed: ', changed);
+        console.log('ADDED: ', mentions, 'changed: ', changed)
       }}
 
       onRemove={({ mentions, changed }) => {
-        console.log('REMOVED: ', mentions, 'changed: ', changed);
+        console.log('REMOVED: ', mentions, 'changed: ', changed)
       }}
 
       customRenderer={({ highlightIndex, matchedSources, clickFn }) => {
@@ -85,6 +85,5 @@ React.render(
         )
       }}
     />
-
   </div>
-, document.getElementById('root'));
+, document.getElementById('root'))

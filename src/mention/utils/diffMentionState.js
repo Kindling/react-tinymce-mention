@@ -5,6 +5,6 @@ export default function diffMentionState(mentions, nextMentions) {
 
   return {
     mentions: nextMentions,
-    changed: diff.length > 1 ? diff : [diff]
+    changed: diff.length > 1 ? diff : diff
   };
 }

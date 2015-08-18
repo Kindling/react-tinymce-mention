@@ -1,0 +1,1264 @@
+module.exports = [{
+  'className': 'User',
+  'collection': 'users',
+  'id': 13,
+  'username': 'test+noname@kindlingapp.com',
+  'firstName': '',
+  'lastName': '',
+  'email': 'test+noname@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'test+noname',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/13',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/13',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 15,
+  'username': 'test+categorymoderator@kindlingapp.com',
+  'firstName': '',
+  'lastName': '',
+  'email': 'test+categorymoderator@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'test+categorymoderator',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/15',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/15',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 4,
+  'username': 'test+admin@kindlingapp.com',
+  'firstName': 'Admin',
+  'lastName': 'Awesomesauce',
+  'email': 'test+admin@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Admin Awesomesauce',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/4',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/4',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 93,
+    'thisMonth': 93,
+    'last90Days': 93
+  },
+  'isAnonymous': false,
+  'lastLogin': '2015-08-13T20:06:23+00:00',
+  'lastLoginLocalized': 'August 13, 2015',
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': 'f1c121973bab38de66f1f48b57ec6610',
+  'metaData': {
+    'department': 'Marketing',
+    'location': 'New York East Building',
+    'bio': 'This is my bio. It is scintillating.',
+    'title': 'Awesomesauce Marketer'
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 22,
+  'username': 'test+user6@kindlingapp.com',
+  'firstName': 'Josh',
+  'lastName': 'Bell',
+  'email': 'test+user6@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Josh Bell',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/22',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/22',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 23,
+  'username': 'test+user7@kindlingapp.com',
+  'firstName': 'Susan',
+  'lastName': 'Billiard',
+  'email': 'test+user7@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Susan Billiard',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/23',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/23',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 25,
+  'username': 'test+user9@kindlingapp.com',
+  'firstName': 'Fred',
+  'lastName': 'Bunn',
+  'email': 'test+user9@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Fred Bunn',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/25',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/25',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 6,
+  'username': 'test+user1@kindlingapp.com',
+  'firstName': 'Primo',
+  'lastName': 'Catorce',
+  'email': 'test+user1@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Primo Catorce',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/6',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/6',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 24,
+  'username': 'test+user8@kindlingapp.com',
+  'firstName': 'Johnny',
+  'lastName': 'Dillard',
+  'email': 'test+user8@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Johnny Dillard',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/24',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/24',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 27,
+  'username': 'test+user11@kindlingapp.com',
+  'firstName': 'Jaime',
+  'lastName': 'Dole',
+  'email': 'test+user11@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Jaime Dole',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/27',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/27',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 10,
+  'username': 'test+editor@kindlingapp.com',
+  'firstName': 'Eddie',
+  'lastName': 'Editor',
+  'email': 'test+editor@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Eddie Editor',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/10',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/10',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 29,
+  'username': 'test+user13@kindlingapp.com',
+  'firstName': 'Peter',
+  'lastName': 'Hunt',
+  'email': 'test+user13@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Peter Hunt',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/29',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/29',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 9,
+  'username': 'test+user4@kindlingapp.com',
+  'firstName': 'Charles',
+  'lastName': 'Kuralt',
+  'email': 'test+user4@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Charles Kuralt',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/9',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/9',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 8,
+  'username': 'test+user3@kindlingapp.com',
+  'firstName': 'Trini',
+  'lastName': 'Lopez',
+  'email': 'test+user3@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Trini Lopez',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/8',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/8',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 1,
+  'username': 'test+guest@kindlingapp.com',
+  'firstName': 'Guest',
+  'lastName': 'McGuesterson',
+  'email': 'test+guest@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Guest McGuesterson',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/1',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/1',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 26,
+  'username': 'test+user10@kindlingapp.com',
+  'firstName': 'Lucy',
+  'lastName': 'Mills',
+  'email': 'test+user10@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Lucy Mills',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/26',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/26',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 3,
+  'username': 'test+moderator@kindlingapp.com',
+  'firstName': 'Mister',
+  'lastName': 'Moderator',
+  'email': 'test+moderator@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Mister Moderator',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/3',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/3',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 12,
+  'username': 'test+moderator2@kindlingapp.com',
+  'firstName': 'Missus',
+  'lastName': 'Moderator',
+  'email': 'test+moderator2@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Missus Moderator',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/12',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/12',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 7,
+  'username': 'test+user2@kindlingapp.com',
+  'firstName': 'Gemin ',
+  'lastName': 'Starbuck',
+  'email': 'test+user2@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Gemin Starbuck',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/7',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/7',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 5,
+  'username': 'test+superadmin@kindlingapp.com',
+  'firstName': 'Clark',
+  'lastName': 'Superadmin',
+  'email': 'test+superadmin@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Clark Superadmin',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/5',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/5',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 28,
+  'username': 'test+user12@kindlingapp.com',
+  'firstName': 'Billy',
+  'lastName': 'Thorne',
+  'email': 'test+user12@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'Billy Thorne',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/28',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/28',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}, {
+  'className': 'User',
+  'collection': 'users',
+  'id': 2,
+  'username': 'test+user@kindlingapp.com',
+  'firstName': 'User',
+  'lastName': 'Userberg',
+  'email': 'test+user@kindlingapp.com',
+  'votesTotal': 10,
+  'stateId': 1,
+  'stateName': 'Activated',
+  'resetRequested': null,
+  'resetRequestedLocalized': null,
+  'storNotification': null,
+  'backend': 'local',
+  'currentUserInfo': {
+    'id': 4,
+    'votingData': null,
+    'can': {
+      'view': true,
+      'comment': false,
+      'follow': true,
+      'share': true,
+      'volunteer': false,
+      'edit': true,
+      'revise': true,
+      'export': true,
+      'moderate': true,
+      'remove': true,
+      'editTags': true,
+      'delete': true
+    },
+    'is': {
+      'following': false,
+      'volunteering': false
+    }
+  },
+  'fullName': 'User Userberg',
+  'resourceUri': 'http:\/\/dev.kindlingdev.com\/api\/users\/2',
+  'applicationUri': 'http:\/\/dev.kindlingdev.com\/users\/2',
+  'avatarUri': {
+    '30': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault30.png',
+    '50': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault50.png',
+    '75': '\/\/dev.kindlingdev.com\/assets\/img\/avatarDefault75.png'
+  },
+  'locale': false,
+  'reputation': {
+    'allTime': 0,
+    'thisMonth': 0,
+    'last90Days': 0
+  },
+  'isAnonymous': false,
+  'lastLogin': null,
+  'lastLoginLocalized': null,
+  'dateCreated': '2015-08-06T12:12:55+00:00',
+  'dateCreatedLocalized': 'August  6, 2015',
+  'token': '',
+  'metaData': {
+
+  }
+}]

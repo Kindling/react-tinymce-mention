@@ -1,7 +1,7 @@
-export default [
+module.exports = [
   'sima shimansky',
-  'alex gutierrez',
   'alex gray',
+  'alex gutierrez',
   'alexandra spell',
   'eric kong',
   'timothy meaney',
@@ -18,4 +18,4 @@ export default [
   'all',
   'moderator',
   'moderators'
-].sort();
+]

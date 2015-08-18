@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { initializePlugin } from '../plugin';
 import mentionReducer from '../reducers/mentionReducer';
-import dataSourceStatic from '../reducers/__tests__/fixtures/dataSourceStatic';
+import simpleDataSource from '../reducers/__tests__/fixtures/simple';
 import initializeEditor from './fixtures/initializeEditor';
 import { query, resetQuery, select, finalizeSetup } from '../actions/mentionActions';
 import { removeMention } from '../utils/tinyMCEUtils';

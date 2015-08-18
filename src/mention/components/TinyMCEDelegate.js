@@ -34,22 +34,22 @@ export default class TinyMCEDelegate extends Component {
     const nextMentions = nextProps.mentions;
     const currLength = mentions.length;
     const nextLength = nextMentions.length;
-    const shouldRender = currLength < nextLength;
-    const shouldDispatchRemove = currLength > nextLength;
+    const shouldAdd = currLength < nextLength;
+    const shouldRemove = currLength > nextLength;
 
-    if (shouldDispatchRemove) {
-      onRemove(diffMentionState(mentions, nextMentions));
-    }
-
-    if (shouldRender) {
+    if (shouldAdd) {
       onAdd({
         mentions: nextMentions,
         changed: [last(nextMentions)]
       });
     }
 
+    if (shouldRemove) {
+      onRemove(diffMentionState(mentions, nextMentions));
+    }
+
     this.setState({
-      shouldRender
+      shouldRender: shouldAdd
     });
   }
 

@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import findWhere from 'lodash.findwhere'
+import findWhere from 'lodash.findwhere';
 import { initializePlugin } from '../plugin';
 import mentionReducer from '../reducers/mentionReducer';
 import simpleDataSource from '../reducers/__tests__/fixtures/simple';
@@ -27,16 +27,16 @@ describe('TinyMCE Plugin', () => {
     return {
       searchKey: source,
       displayLabel: source
-    }
-  })
+    };
+  });
 
   const getState = () => {
-    const state = store.getState()
-    state.mentions.forEach(mention => delete mention.tinymceId)
-    return state
-  }
+    const state = store.getState();
+    state.mentions.forEach(mention => delete mention.tinymceId);
+    return state;
+  };
 
-  const find = (name) => findWhere(dataSource, { displayLabel: name })
+  const find = (name) => findWhere(dataSource, { displayLabel: name });
 
   beforeEach((done) => {
     jasmine.addMatchers({
@@ -45,11 +45,11 @@ describe('TinyMCE Plugin', () => {
           compare: function(actual, expected) {
             return {
               pass: isEqual(actual, expected)
-            }
+            };
           }
-        }
+        };
       }
-    })
+    });
 
     const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 

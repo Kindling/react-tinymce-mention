@@ -52,9 +52,12 @@ export function resetQuery() {
   };
 }
 
-export function select() {
+export function select(index) {
   return {
-    type: Types.SELECT
+    type: Types.SELECT,
+    payload: {
+      index
+    }
   };
 }
 

@@ -21,19 +21,21 @@ export default class DefaultList {
 
     return (
       <div>
-        <ul className='tinymce-mention__list'>
-          { matchedSources && matchedSources.map((match, index) => {
-            const { displayLabel } = match;
+        { matchedSources && matchedSources.length ?
+          <ul className='tinymce-mention__list'>
+            { matchedSources.map((match, index) => {
+              const { displayLabel } = match;
 
-            return (
-              <DefaultListItem
-                displayLabel={displayLabel}
-                index={index}
-                key={`match-${index}`}
-              />
-            );
-          })}
-        </ul>
+              return (
+                <DefaultListItem
+                  displayLabel={displayLabel}
+                  index={index}
+                  key={`match-${index}`}
+                />
+              );
+            })}
+          </ul> : null
+        }
       </div>
     );
   }

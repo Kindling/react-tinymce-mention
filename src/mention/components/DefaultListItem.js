@@ -15,14 +15,16 @@ export default class DefaultListItem {
   }
 
   handleClick() {
-    this.props.dispatch(select());
+    const { dispatch, index } = this.props;
+
+    dispatch(select(index));
   }
 
   render() {
     const { index, highlightIndex, displayLabel } = this.props;
 
     const classes = classNames({
-      'selected': highlightIndex === index,
+      'tinymce-mention__item--selected': highlightIndex === index,
       'tinymce-mention__item': true
     });
 

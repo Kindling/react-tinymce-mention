@@ -117,15 +117,20 @@ const actionsMap = {
     };
   },
 
-  select(state) {
+  select(state, action) {
     const { mentions, matchedSources, highlightIndex } = state;
+    const { payload } = action;
 
     if (!matchedSources || !matchedSources.length) {
       return {};
     }
 
+    const selectIndex = payload && payload.index
+      ? payload.index
+      : highlightIndex;
+
     const updatedMentions = cloneDeep(mentions).concat([{
-      ...matchedSources[highlightIndex],
+      ...matchedSources[selectIndex],
       tinymceId: uid('mention-'),
     }]);
 

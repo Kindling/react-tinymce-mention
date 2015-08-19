@@ -21,12 +21,13 @@ export default class DefaultList {
 
     return (
       <div>
-        <h2>List popup</h2>
-        <ul className='mention-list'>
+        <ul className='tinymce-mention__list'>
           { matchedSources && matchedSources.map((match, index) => {
+            const { displayLabel } = match;
+
             return (
               <DefaultListItem
-                match={match}
+                displayLabel={displayLabel}
                 index={index}
                 key={`match-${index}`}
               />

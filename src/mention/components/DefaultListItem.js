@@ -11,7 +11,7 @@ export default class DefaultListItem {
   static propTypes = {
     highlightIndex: PropTypes.number.isRequired,
     index: PropTypes.number.isRequired,
-    match: PropTypes.string.isRequired
+    displayLabel: PropTypes.string.isRequired
   }
 
   handleClick() {
@@ -19,16 +19,16 @@ export default class DefaultListItem {
   }
 
   render() {
-    const { index, highlightIndex, match } = this.props;
+    const { index, highlightIndex, displayLabel } = this.props;
 
     const classes = classNames({
       'selected': highlightIndex === index,
-      'mention-list-item': true
+      'tinymce-mention__item': true
     });
 
     return (
       <li className={classes} onClick={::this.handleClick}>
-        {match}
+        {displayLabel}
       </li>
     );
   }

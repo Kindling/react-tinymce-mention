@@ -62,6 +62,8 @@ export default class Mention {
   render() {
     const { customRenderer, onAdd, onRemove } = this.props;
 
+    const showDebugger = false;
+
     return (
       <Provider store={store}>{() =>
         <div>
@@ -72,7 +74,8 @@ export default class Mention {
             onAdd={onAdd}
             onRemove={onRemove}
           />
-          <MentionsDebugger />
+          { showDebugger &&
+            <MentionsDebugger /> }
         </div>
       }</Provider>
     );

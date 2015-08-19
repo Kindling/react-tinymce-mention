@@ -36,14 +36,14 @@ export default class TinyMCEDelegate extends Component {
     const shouldAdd = currLength < nextLength;
     const shouldRemove = currLength > nextLength;
 
-    if (shouldAdd) {
+    if (shouldAdd && onAdd) {
       onAdd({
         mentions: nextMentions,
         changed: [last(nextMentions)]
       });
     }
 
-    if (shouldRemove) {
+    if (shouldRemove && onRemove) {
       onRemove(diffMentionState(mentions, nextMentions));
     }
 

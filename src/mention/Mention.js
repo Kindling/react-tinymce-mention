@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
-import { provide } from 'react-redux';
+import { Provider } from 'react-redux';
 import { initializePlugin } from './plugin';
 import initializeRedux from './utils/initializeRedux';
 import normalizeDataSource from './utils/normalizeDataSource';
@@ -14,7 +14,6 @@ const store = initializeRedux({
   mention: mentionReducer
 });
 
-@provide(store)
 export default class Mention {
 
   static propTypes = {
@@ -64,16 +63,18 @@ export default class Mention {
     const { customRenderer, onAdd, onRemove } = this.props;
 
     return (
-      <div>
-        <SuggestionRenderer
-          customRenderer={customRenderer}
-        />
-        <TinyMCEDelegate
-          onAdd={onAdd}
-          onRemove={onRemove}
-        />
-        <MentionsDebugger />
-      </div>
+      <Provider store={store}>{() =>
+        <div>
+          <SuggestionRenderer
+            customRenderer={customRenderer}
+          />
+          <TinyMCEDelegate
+            onAdd={onAdd}
+            onRemove={onRemove}
+          />
+          <MentionsDebugger />
+        </div>
+      }</Provider>
     );
   }
 }

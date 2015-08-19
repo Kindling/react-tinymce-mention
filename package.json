@@ -58,7 +58,6 @@
     "phantomjs": "^1.9.17",
     "pluck": "0.0.4",
     "react": "^0.13.0",
-    "react-hot-loader": "^1.2.7",
     "react-tinymce": "^0.2.3",
     "react-tools": "^0.13.3",
     "webpack": "^1.10.5",

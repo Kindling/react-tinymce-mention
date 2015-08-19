@@ -1,8 +1,8 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
-import axios from 'axios';
 import Mention from './Mention';
 import CustomList from './components/CustomList';
+import complexDataSource from './test-data-source';
 
 var plugins = [
   'autolink',
@@ -52,7 +52,7 @@ React.render(
     />
 
     <Mention
-      dataSource={axios.get('examples/shared/api/complex.json')}
+      dataSource={complexDataSource}
       delimiter={'@'}
 
       transformFn={dataSource => {

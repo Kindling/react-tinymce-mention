@@ -24,7 +24,7 @@ export default class SuggestionRenderer {
       dispatch
     } = this.props;
 
-    const onClick = () => dispatch(select());
+    const onClick = (index) => dispatch(select(index));
 
     return customRenderer({
       highlightIndex,

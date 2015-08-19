@@ -14,9 +14,11 @@ export default class CustomList {
     return (
       <ul>
         { matchedSources && matchedSources.map((source, index) => {
+          const { displayLabel } = source;
+
           return (
             <CustomListItem
-              {...source}
+              displayLabel={displayLabel}
               index={index}
               highlightIndex={highlightIndex}
               onClick={onClick}

@@ -9,14 +9,16 @@ export default class CustomListItem {
   }
 
   handleClick() {
-    this.props.onClick();
+    const { index, onClick } = this.props;
+    onClick(index);
   }
 
   render() {
     const { index, highlightIndex, displayLabel } = this.props;
 
     const classes = classNames({
-      'selected': highlightIndex === index
+      'selected': highlightIndex === index,
+      'tinymce-mention': true
     });
 
     return (

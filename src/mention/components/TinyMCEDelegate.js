@@ -20,6 +20,10 @@ export default class TinyMCEDelegate extends Component {
     onRemove: PropTypes.func
   }
 
+  state = {
+    shouldRender: false
+  }
+
   shouldComponentUpdate(nextProps) {
     const nextEditorId = nextProps.editor && nextProps.editor.id;
     const editorId = this.props.editor && this.props.editor.id;

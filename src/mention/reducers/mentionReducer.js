@@ -78,6 +78,7 @@ const actionsMap = {
     });
 
     return {
+      highlightIndex: 0,
       query: newQuery,
       matchedSources
     };
@@ -140,7 +141,6 @@ const actionsMap = {
     }]);
 
     return {
-      highlightIndex: 0,
       matchedSources: [],
       mentions: updatedMentions
     };

@@ -28,7 +28,9 @@ export default class DefaultList {
       const focusedRect = focusedListItemNode.getBoundingClientRect();
 
       if (focusedRect.bottom > listRect.bottom || focusedRect.top < listRect.top) {
-        listNode.scrollTop = (focusedListItemNode.offsetTop + focusedListItemNode.clientHeight - listNode.offsetHeight);
+        listNode.scrollTop = focusedListItemNode.offsetTop
+          + focusedListItemNode.clientHeight
+          - listNode.offsetHeight;
       }
     }
   }

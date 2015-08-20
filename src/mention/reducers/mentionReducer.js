@@ -66,7 +66,10 @@ const actionsMap = {
 
     const matchedSources = state.dataSource.filter(source => {
       if (query.length) {
-        return source.searchKey.toLowerCase().includes(newQuery);
+        return source.searchKey
+          .toLowerCase()
+          .replace(/\s/g, '')
+          .includes(newQuery.replace(/\s/g, ''));
       } else {
         return false;
       }

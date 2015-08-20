@@ -72,7 +72,6 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
     }
 
     window.tinymce.PluginManager.add('mention', (activeEditor) => {
-      console.log('here!!!!');
       editor = activeEditor;
       store = Object.freeze(reduxStore);
       delimiter = Object.freeze(delimiterConfig);
@@ -91,7 +90,6 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
         }).catch(error => {
           throw new Error(error);
         });
-
       } else {
         resolve({
           editor,

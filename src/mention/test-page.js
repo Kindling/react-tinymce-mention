@@ -11,7 +11,7 @@ var plugins = [
   'image',
   'link',
   'media',
-  'mentions',
+  'mention',
   'tabfocus'
 ];
 

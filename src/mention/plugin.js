@@ -103,12 +103,16 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
 }
 
 function start() {
-
-  // FIXME: Remove auto focus
-  // window.tinymce.activeEditor.focus()
+  stop();
 
   editor.on('keypress', handleTopLevelEditorInput);
   editor.on('keyup', handleEditorBackspace);
+}
+
+function stop() {
+  editor.off('keypress', handleTopLevelEditorInput);
+  editor.off('keyup', handleEditorBackspace);
+  editor.off('keydown', handleKeyPress);
 }
 
 /**
@@ -254,7 +258,9 @@ function handleEditorBackspace(event) {
 }
 
 function toggleFocus() {
-  return isFocused = !isFocused;
+  isFocused = !isFocused;
+
+  return isFocused;
 }
 
 // Export methods for testing

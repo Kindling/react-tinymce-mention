@@ -9,7 +9,10 @@ module.exports = {
     headers: { 'Access-Control-Allow-Origin': '*' }
   },
 
-  entry: './src/index',
+  entry: [
+    'webpack-dev-server/client?http://localhost:3333',
+    './src/index'
+  ],
 
   output: {
     path: path.join(__dirname, 'lib/umd/plugins/mention'),

@@ -11,10 +11,8 @@ var plugins = [
   'image',
   'link',
   'media',
-  'mention',
-  'nonbreaking',
-  'tabfocus',
-  'visualchars'
+  'mentions',
+  'tabfocus'
 ];
 
 React.render(

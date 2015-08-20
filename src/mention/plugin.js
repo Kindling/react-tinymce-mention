@@ -71,45 +71,36 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
       return reject('Error initializing Mention plugin: `tinymce` is undefined.');
     }
 
-    window.tinymce.create('tinymce.plugins.Mention', {
+    window.tinymce.PluginManager.add('mention', (activeEditor) => {
+      console.log('here!!!!');
+      editor = activeEditor;
+      store = Object.freeze(reduxStore);
+      delimiter = Object.freeze(delimiterConfig);
 
-      /**
-       * Callback when the Editor has been registered and is ready
-       * to accept plugin initialization.
-       * @param  {Object} editor The editor
-       */
-      init(activeEditor) {
-        editor = activeEditor;
-        store = Object.freeze(reduxStore);
-        delimiter = Object.freeze(delimiterConfig);
+      // If promise, wait for it to resolve before resolving the
+      // outer promise and initializing the app.
+      if (typeof dataSource.then === 'function') {
 
-        // If promise, wait for it to resolve before resolving the
-        // outer promise and initializing the app.
-        if (typeof dataSource.then === 'function') {
-
-          dataSource.then(response => {
-            resolve({
-              editor,
-              resolvedDataSource: response.data
-            });
-
-            start();
-          }).catch(error => {
-            throw new Error(error);
-          });
-
-        } else {
+        dataSource.then(response => {
           resolve({
             editor,
-            resolvedDataSource: dataSource
+            resolvedDataSource: response.data
           });
 
           start();
-        }
-      }
-    })
+        }).catch(error => {
+          throw new Error(error);
+        });
 
-    window.tinymce.PluginManager.add('mention', window.tinymce.plugins.Mention);
+      } else {
+        resolve({
+          editor,
+          resolvedDataSource: dataSource
+        });
+
+        start();
+      }
+    });
   });
 }
 

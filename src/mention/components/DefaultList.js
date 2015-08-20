@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import DefaultListItem from './DefaultListItem.js';
 
 @connect(state => ({
+  highlightIndex: state.mention.highlightIndex,
   matchedSources: state.mention.matchedSources
 }))
 export default class DefaultList {
@@ -13,7 +14,23 @@ export default class DefaultList {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !isEqual(nextProps.matchedSources, this.props.matchedSources);
+    return !isEqual(nextProps.matchedSources, this.props.matchedSources)
+                 || nextProps.highlightIndex !== this.props.highlightIndex;
+  }
+
+  componentDidUpdate() {
+    const { highlightIndex, matchedSources } = this.props;
+
+    if (matchedSources.length) {
+      const listNode = React.findDOMNode(this.refs.mentionList);
+      const focusedListItemNode = React.findDOMNode(this.refs['listItem' + highlightIndex]);
+      const listRect = listNode.getBoundingClientRect();
+      const focusedRect = focusedListItemNode.getBoundingClientRect();
+
+      if (focusedRect.bottom > listRect.bottom || focusedRect.top < listRect.top) {
+        listNode.scrollTop = (focusedListItemNode.offsetTop + focusedListItemNode.clientHeight - listNode.offsetHeight);
+      }
+    }
   }
 
   render() {
@@ -22,12 +39,13 @@ export default class DefaultList {
     return (
       <div>
         { matchedSources && matchedSources.length ?
-          <ul className='tinymce-mention__list'>
+          <ul className='tinymce-mention__list' ref='mentionList'>
             { matchedSources.map((match, index) => {
               const { displayLabel } = match;
 
               return (
                 <DefaultListItem
+                  ref={`listItem${index}`}
                   displayLabel={displayLabel}
                   index={index}
                   key={`match-${index}`}

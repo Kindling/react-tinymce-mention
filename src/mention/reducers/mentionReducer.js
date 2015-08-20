@@ -66,10 +66,12 @@ const actionsMap = {
 
     const matchedSources = state.dataSource.filter(source => {
       if (query.length) {
+        let noSpaceQuery = newQuery.replace(/\s/g, '');
+
         return source.searchKey
           .toLowerCase()
           .replace(/\s/g, '')
-          .includes(newQuery.replace(/\s/g, ''));
+          .includes(noSpaceQuery);
       } else {
         return false;
       }

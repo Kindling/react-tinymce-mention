@@ -13,12 +13,12 @@ export default class SuggestionRenderer {
   static propTypes = {
     highlightIndex: PropTypes.number.isRequired,
     matchedSources: PropTypes.array.isRequired,
-    customRenderer: PropTypes.func
+    customListRenderer: PropTypes.func
   }
 
   _renderCustomComponents() {
     const {
-      customRenderer,
+      customListRenderer,
       highlightIndex,
       matchedSources,
       dispatch
@@ -26,7 +26,7 @@ export default class SuggestionRenderer {
 
     const onClick = (index) => dispatch(select(index));
 
-    return customRenderer({
+    return customListRenderer({
       highlightIndex,
       matchedSources,
       clickFn: onClick
@@ -34,10 +34,10 @@ export default class SuggestionRenderer {
   }
 
   render() {
-    const { customRenderer } = this.props;
+    const { customListRenderer } = this.props;
 
     return (
-      customRenderer
+      customListRenderer
         ? this._renderCustomComponents()
         : <DefaultList />
     );

@@ -14,6 +14,7 @@ import EditorMention from '../components/EditorMention';
 export default class TinyMCEDelegate extends Component {
 
   static propTypes = {
+    customRTEMention: PropTypes.func,
     editor: PropTypes.object,
     mentions: PropTypes.array,
     onAdd: PropTypes.func,
@@ -83,15 +84,13 @@ export default class TinyMCEDelegate extends Component {
   }
 
   _renderMentionIntoEditor() {
-    const { editor, mentions } = this.props;
+    const { customRTEMention, editor, mentions } = this.props;
 
-    let markup = renderComponent(
-      <EditorMention
-        {...last(mentions)}
-      />
-    );
+    let markup = customRTEMention
+      ? customRTEMention({...last(mentions)})
+      : <EditorMention {...last(mentions)} />;
 
-    editor.execCommand('mceInsertRawHTML', false, '\u00a0' + markup);
+    editor.execCommand('mceInsertRawHTML', false, '\u00a0' + renderComponent(markup));
     exitSelection(editor);
 
     setTimeout(() => {

@@ -82,6 +82,14 @@ React.render(
           />
         );
       }}
+
+      customRTEMention={() => {
+        return (
+          <div>
+            hi!
+          </div>
+        );
+      }}
     />
   </div>
 , document.getElementById('root'));

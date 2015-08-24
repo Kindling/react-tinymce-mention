@@ -22,7 +22,8 @@ export default class Mention {
       PropTypes.func,
       PropTypes.object
     ]).isRequired,
-    customRenderer: React.PropTypes.func,
+    customListRenderer: React.PropTypes.func,
+    customRTEMention: React.PropTypes.func,
     delimiter: PropTypes.string,
     onAdd: React.PropTypes.func,
     onRemove: React.PropTypes.func,
@@ -60,7 +61,7 @@ export default class Mention {
   }
 
   render() {
-    const { customRenderer, onAdd, onRemove } = this.props;
+    const { customListRenderer, customRTEMention, onAdd, onRemove } = this.props;
 
     const showDebugger = false;
 
@@ -68,9 +69,10 @@ export default class Mention {
       <Provider store={store}>{() =>
         <div>
           <SuggestionRenderer
-            customRenderer={customRenderer}
+            customListRenderer={customListRenderer}
           />
           <TinyMCEDelegate
+            customRTEMention={customRTEMention}
             onAdd={onAdd}
             onRemove={onRemove}
           />

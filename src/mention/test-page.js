@@ -2,6 +2,7 @@ import React from 'react';
 import TinyMCE from 'react-tinymce';
 import Mention from './Mention';
 import CustomList from './components/CustomList';
+import EditorMention from './components/EditorMention';
 import complexDataSource from './test-data-source';
 
 var plugins = [
@@ -83,11 +84,13 @@ React.render(
         );
       }}
 
-      customRTEMention={() => {
+      customRTEMention={({ displayLabel, id, tinymceId }) => {
         return (
-          <div>
-            hi!
-          </div>
+          <EditorMention
+            displayLabel={displayLabel}
+            id={id}
+            tinymceId={tinymceId}
+          />
         );
       }}
     />

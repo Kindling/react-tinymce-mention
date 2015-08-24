@@ -83,13 +83,23 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
         dataSource.then(response => {
           resolve({
             editor,
-            resolvedDataSource: response.data
+            resolvedDataSource: response
           });
 
           start();
-        }).catch(error => {
-          throw new Error(error);
         });
+
+        // Check to see if promises follow spec, otherwise defer
+        // to jQuery default
+        if (dataSource.catch === 'function') {
+          dataSource.catch(error => {
+            throw new Error(error);
+          });
+        } else if (dataSource.fail === 'function') {
+          dataSource.fail(error => {
+            throw new Error(error);
+          });
+        }
       } else {
         resolve({
           editor,

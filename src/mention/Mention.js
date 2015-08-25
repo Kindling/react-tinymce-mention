@@ -63,7 +63,7 @@ export default class Mention {
   render() {
     const { customListRenderer, customRTEMention, onAdd, onRemove } = this.props;
 
-    const showDebugger = false;
+    const showDebugger = true;
 
     return (
       <Provider store={store}>{() =>

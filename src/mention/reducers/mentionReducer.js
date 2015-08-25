@@ -56,17 +56,11 @@ const actionsMap = {
   },
 
   query(state, action) {
-    const prevQuery = state.query;
-    const { query } = action.payload;
-    const len = query.length;
-
-    // Check to see if we're typing in a sequence of characters or
-    // querying by an entire word.  Build up if the former.
-    const newQuery = (len > 1 || len === 0 ? query : prevQuery + query).toLowerCase();
+    const query = action.payload.query.toLowerCase();
 
     const matchedSources = state.dataSource.filter(source => {
       if (query.length) {
-        let noSpaceQuery = newQuery.replace(/\s/g, '');
+        let noSpaceQuery = query.replace(/\s/g, '');
 
         return source.searchKey
           .toLowerCase()
@@ -79,7 +73,7 @@ const actionsMap = {
 
     return {
       highlightIndex: 0,
-      query: newQuery,
+      query,
       matchedSources
     };
   },

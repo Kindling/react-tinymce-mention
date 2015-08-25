@@ -7,6 +7,8 @@ import simpleDataSource from '../reducers/__tests__/fixtures/simple';
 import initializeEditor from './fixtures/initializeEditor';
 import { testExports } from '../plugin';
 
+// FIXME Rewrite intern tests
+
 import {
   query,
   select,

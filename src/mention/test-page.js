@@ -73,26 +73,6 @@ React.render(
       onRemove={({ mentions, changed }) => {
         console.log('REMOVED: ', mentions, 'changed: ', changed);
       }}
-
-      customRenderer={({ highlightIndex, matchedSources, clickFn }) => {
-        return (
-          <CustomList
-            highlightIndex={highlightIndex}
-            matchedSources={matchedSources}
-            onClick={clickFn}
-          />
-        );
-      }}
-
-      customRTEMention={({ displayLabel, id, tinymceId }) => {
-        return (
-          <EditorMention
-            displayLabel={displayLabel}
-            id={id}
-            tinymceId={tinymceId}
-          />
-        );
-      }}
     />
   </div>
 , document.getElementById('root'));

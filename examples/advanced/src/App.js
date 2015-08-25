@@ -7,10 +7,17 @@ export default class App {
   render() {
     return (
       <Mention
-        dataSource={axios.get('http://localhost:3000/shared/api/data.json')}
+        dataSource={axios.get('http://localhost:3333/shared/api/complex.json')}
         delimiter={'@'}
         transformFn={dataSource => {
-          return dataSource.sort().reverse();
+          const sorted = dataSource.data.map(result => {
+            return {
+              id: result.id,
+              searchKey: result.fullName,
+              displayLabel: result.fullName
+            };
+          });
+          return sorted;
         }}
         onAdd={mention => {
           console.log(mention, ' added');

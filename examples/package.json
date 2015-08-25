@@ -42,5 +42,8 @@
     "react-tinymce-mention": "^0.1.11",
     "webpack": "^1.9.6",
     "webpack-dev-server": "^1.8.2"
+  },
+  "dependencies": {
+    "react-tinymce-mention": "0.1.0-alpha.10"
   }
 }

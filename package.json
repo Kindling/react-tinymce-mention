@@ -78,6 +78,7 @@
     "react-redux": "^0.2.2",
     "redux": "^1.0.0",
     "redux-thunk": "^0.1.0",
+    "react-tinymce": "^0.2.3",
     "twitter-text": "^1.12.0"
   }
 }

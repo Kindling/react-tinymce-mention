@@ -4,7 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'inline-source-map',
   entry: [
-    'webpack-dev-server/client?http://localhost:3000',
+    'webpack-dev-server/client?http://localhost:3333',
     'webpack/hot/only-dev-server',
     './simple/src/index'
   ],

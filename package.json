@@ -9,6 +9,7 @@
     "test-watch": "node karma.server.js",
     "build": "sh scripts/build.sh",
     "prepublish": "npm run build",
+    "postinstall": "npm run build",
     "gh-pages": "sh scripts/gh-pages.sh"
   },
   "repository": {

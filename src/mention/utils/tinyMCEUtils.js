@@ -1,5 +1,6 @@
 import twitter from 'twitter-text';
 import last from './last';
+import spliceString from './spliceString';
 
 export function prevCharIsSpace(editor) {
   const start = editor.selection.getRng(true).startOffset;
@@ -9,8 +10,8 @@ export function prevCharIsSpace(editor) {
   return !!character.trim().length ? false : true;
 }
 
-export function removeMention(editor, startPos) {
-  return editor.getContent().slice(0, startPos);
+export function removeMentionAndInsertPlaceholder(editor, startPos, endPos, screenName, placeholder) {
+  return spliceString(editor.getContent(), startPos + 1, screenName.length, placeholder);
 }
 
 export function findMentions(editor) {

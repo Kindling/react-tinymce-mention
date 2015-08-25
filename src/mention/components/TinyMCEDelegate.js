@@ -1,11 +1,18 @@
 import isEqual from 'lodash.isequal';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { exitSelection, findMentions, removeMention } from '../utils/tinyMCEUtils';
 import diffMentionState from '../utils/diffMentionState';
 import last from '../utils/last';
 import renderComponent from '../utils/renderComponent';
 import EditorMention from '../components/EditorMention';
+
+import {
+  exitSelection,
+  findMentions,
+  removeMentionAndInsertPlaceholder
+} from '../utils/tinyMCEUtils';
+
+const placeholder = '[__display__]';
 
 @connect(state => ({
   editor: state.mention.editor,
@@ -76,10 +83,13 @@ export default class TinyMCEDelegate extends Component {
   _clearUnfinishedMention() {
     const { editor } = this.props;
     const { lastMention } = findMentions(editor);
-    const { startPos } = lastMention;
+    const { startPos, endPos, screenName } = lastMention;
 
     // First remove the mention
-    editor.setContent(removeMention(editor, startPos));
+    editor.setContent(removeMentionAndInsertPlaceholder(
+      editor, startPos, endPos, screenName, placeholder
+    ));
+
     exitSelection(editor);
   }
 
@@ -90,7 +100,9 @@ export default class TinyMCEDelegate extends Component {
       ? customRTEMention({...last(mentions)})
       : <EditorMention {...last(mentions)} />;
 
-    editor.execCommand('mceInsertRawHTML', false, '\u00a0' + renderComponent(markup));
+    // editor.execCommand('mceInsertRawHTML', false, '\u00a0' + renderComponent(markup));
+    editor.setContent(editor.getContent().replace('@' + placeholder, renderComponent(markup)));
+
     exitSelection(editor);
 
     setTimeout(() => {

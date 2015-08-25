@@ -73,14 +73,6 @@ describe('mentionReducer', () => {
 
     store.dispatch(query(''));
     expect(getState().matchedSources).toDeepEqual([]);
-
-    store.dispatch(query('c'));
-    store.dispatch(query('h'));
-    store.dispatch(query('r'));
-    expect(getState().matchedSources).toDeepEqual([
-      find('chris pappas'),
-      find('christopher pappas'),
-    ]);
   });
 
   it('should reset the lookup query', () => {

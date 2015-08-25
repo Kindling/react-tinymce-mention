@@ -24,9 +24,6 @@ React.render(
         browser_spellcheck: true,
         document_base_url: window.location.origin + '/',
 
-        // TODO
-        forced_root_block : '',
-
         extended_valid_elements: 'blockquote[dir|style|cite|class|dir<ltr?rtl],iframe[src|frameborder|style|scrolling|class|width|height|name|align],pre',
         ie7_compat: false,
         image_description: false,

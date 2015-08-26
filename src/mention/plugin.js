@@ -31,28 +31,9 @@ const keyMap = {
   UP: 38
 };
 
-/**
- * Reference to the TinyMCE editor.
- * @type {Object}
- */
 let editor;
-
-/**
- * The delimiter we're using to trigger @mentions. Defaults to @.
- * @type {String}
- */
 let delimiter = '@';
-
-/**
- * Checks if we're currently focused on @mention lookup with bound event handlers.
- * @type {Boolean}
- */
 let isFocused = false;
-
-/**
- * The Redux store for handling lookups, mentions and tracking.
- * @type {Object}
- */
 let store;
 
 /**
@@ -62,10 +43,6 @@ let store;
  */
 let typedMention = '';
 
-// FIXME:
-setInterval(() => {
-  // console.log('isFocused:', isFocused);
-}, 1000);
 
 export function initializePlugin(reduxStore, dataSource, delimiterConfig = delimiter) {
 

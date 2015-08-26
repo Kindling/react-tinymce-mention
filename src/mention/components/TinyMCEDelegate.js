@@ -6,10 +6,6 @@ import last from '../utils/last';
 import renderComponent from '../utils/renderComponent';
 import EditorMention from '../components/EditorMention';
 
-import {
-  exitSelection,
-} from '../utils/tinyMCEUtils';
-
 const placeholder = '[__display__]';
 
 @connect(state => ({
@@ -85,21 +81,14 @@ export default class TinyMCEDelegate extends Component {
     const match = re.exec(text.trim());
 
     if (match) {
-      const incompleteMention = match[0];
-
-      setTimeout(() => {
-        editor.setContent(editor.getContent().replace(incompleteMention, ''));
-      }, 0);
+      editor.setContent(editor.getContent().replace(match[0], placeholder));
     }
-
-    editor.insertContent(' ' + placeholder);
   }
 
   _renderMentionIntoEditor() {
     const { customRTEMention, editor, mentions } = this.props;
     const mention = last(mentions);
 
-    // FIXME: Fix the last mention issue.
     let markup = customRTEMention
       ? customRTEMention({...mention})
       : <EditorMention {...mention} />;
@@ -108,9 +97,10 @@ export default class TinyMCEDelegate extends Component {
       renderComponent(markup))
     );
 
-    editor.selection.select(editor.dom.get(mention.tinymceId), true);
-    editor.selection.collapse(false);
-    exitSelection(editor);
+    setTimeout(() => {
+      editor.selection.select(editor.dom.get(mention.tinymceId), true);
+      editor.selection.collapse(false);
+    });
   }
 
   render() {

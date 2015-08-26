@@ -110,18 +110,4 @@ describe('TinyMCE Plugin', () => {
     _handleEditorBackspace({keyCode: 8});
     expect(editor.selection.innerText).toEqual('');
   });
-
-  // _performIntermediateActions
-  it('should validate key-presses and checks for intermediate actions', () => {
-    store.dispatch(query('al'));
-    _performIntermediateActions(38, {
-      preventDefault(){
-        return false;
-      }
-    });
-    store.dispatch(select());
-    expect(getState().mentions).toEqual([
-      find('alex gray')
-    ]);
-  });
 });

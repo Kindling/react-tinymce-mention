@@ -273,9 +273,9 @@ function toggleFocus() {
 }
 
 function updateMentionText(keyCode) {
-  const mentionText = keyCode === keyMap.BACKSPACE
-    ? backspaceTypedMention()
-    : updateTypedMention(getLastChar(editor));
+  const mentionText = keyCode !== keyMap.BACKSPACE
+    ? updateTypedMention(getLastChar(editor))
+    : backspaceTypedMention();
 
   return mentionText;
 }

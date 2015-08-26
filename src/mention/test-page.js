@@ -44,7 +44,7 @@ ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui 
 voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum
 fugiat quo voluptas nulla pariatur?`;
 
-initialContent = '';
+// initialContent = '';
 
 React.render(
   <div>

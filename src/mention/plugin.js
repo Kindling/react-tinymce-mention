@@ -4,8 +4,6 @@ import closest from 'dom-closest';
 import removeNode from 'dom-remove';
 import findWhere from 'lodash.findwhere';
 import getKeyCode from './utils/getKeyCode';
-import spliceString from './utils/spliceString';
-import last from './utils/last';
 
 import {
   collectMentionIds,
@@ -206,7 +204,6 @@ function performIntermediateActions(keyCode, event) {
 function shouldSelectOrMove(keyCode) {
   switch(keyCode) {
   case keyMap.TAB:
-    removeIncompleteMention();
     store.dispatch(select());
     clearTypedMention();
   case keyMap.ENTER:
@@ -240,7 +237,6 @@ function removeMentionFromEditor(mentionNode) {
  */
 function handleKeyPress(event) {
   const keyCode = getKeyCode(event);
-
 
   if (performIntermediateActions(keyCode, event)) {
     return false;
@@ -297,7 +293,6 @@ function handleEditorBackspace(event) {
 
 function toggleFocus() {
   isFocused = !isFocused;
-
   return isFocused;
 }
 
@@ -320,16 +315,7 @@ function updateTypedMention(action = 'add', str = '') {
 }
 
 function clearTypedMention() {
-  // editor.setContent(editor.getContent().replace('@' + typedMention, ''))
   typedMention = '';
-  return true;
-}
-
-function removeIncompleteMention() {
-  const start = editor.selection.getRng(true).startOffset;
-  const text = editor.selection.getRng(true).startContainer.data || '';
-  // console.log(editor.getContent().replace(text, ''))
-  console.log(start, text.trim().split('@'));
 }
 
 // Export methods for testing

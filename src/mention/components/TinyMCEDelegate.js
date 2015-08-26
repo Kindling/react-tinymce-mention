@@ -8,8 +8,6 @@ import EditorMention from '../components/EditorMention';
 
 import {
   exitSelection,
-  findMentions,
-  removeMentionAndInsertPlaceholder
 } from '../utils/tinyMCEUtils';
 
 const placeholder = '[__display__]';
@@ -81,18 +79,20 @@ export default class TinyMCEDelegate extends Component {
    * component.
    */
   _clearUnfinishedMention() {
-    const { editor, mentions } = this.props;
-    const mention = last(mentions);
-    const { lastMention } = findMentions(editor, mention);
-    const { startPos, endPos, screenName } = lastMention;
+    const { editor } = this.props;
+    const text = editor.selection.getRng(true).startContainer.data || '';
+    const re = /@\w+\b(?! *.)/;
+    const match = re.exec(text.trim());
 
-    // First remove the mention
-    editor.insertContent(' ' + placeholder)
-    // editor.setContent(removeMentionAndInsertPlaceholder(
-    //   editor, startPos, endPos, screenName, placeholder
-    // ));
+    if (match) {
+      const incompleteMention = match[0];
 
-    exitSelection(editor);
+      setTimeout(() => {
+        editor.setContent(editor.getContent().replace(incompleteMention, ''));
+      }, 0);
+    }
+
+    editor.insertContent(' ' + placeholder);
   }
 
   _renderMentionIntoEditor() {
@@ -104,15 +104,13 @@ export default class TinyMCEDelegate extends Component {
       ? customRTEMention({...mention})
       : <EditorMention {...mention} />;
 
-    // editor.setContent(editor.getContent().replace(`@${placeholder}`,
-    //   renderComponent(markup))
-    // );
     editor.setContent(editor.getContent().replace(`${placeholder}`,
       renderComponent(markup))
     );
 
     editor.selection.select(editor.dom.get(mention.tinymceId), true);
     editor.selection.collapse(false);
+    exitSelection(editor);
   }
 
   render() {

@@ -105,7 +105,7 @@ function start() {
 
   // FIXME: Remove auto focus
   setTimeout(() => {
-    window.tinymce.activeEditor.focus();
+    // window.tinymce.activeEditor.focus();
   });
 
   editor.on('keypress', handleTopLevelEditorInput);

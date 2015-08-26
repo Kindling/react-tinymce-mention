@@ -274,21 +274,20 @@ function toggleFocus() {
 
 function updateMentionText(keyCode) {
   const mentionText = keyCode === keyMap.BACKSPACE
-    ? updateTypedMention('remove')
-    : updateTypedMention('add', getLastChar(editor));
+    ? backspaceTypedMention()
+    : updateTypedMention(getLastChar(editor));
 
   return mentionText;
 }
 
-// FIXME: rewrite hack
-function updateTypedMention(action = 'add', str = '') {
-  if (action === 'add') {
-    typedMention += str;
-  } else if (action === 'remove') {
-    typedMention = typedMention.substring(0, typedMention.length - 1);
-  }
+function updateTypedMention(str) {
+  typedMention += str;
+  return typedMention.trim();
+}
 
-  return typedMention.trim().replace(/@/, '');
+function backspaceTypedMention() {
+  typedMention = typedMention.substring(0, typedMention.length - 1);
+  return typedMention.trim();
 }
 
 function clearTypedMention() {

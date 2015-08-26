@@ -81,34 +81,38 @@ export default class TinyMCEDelegate extends Component {
    * component.
    */
   _clearUnfinishedMention() {
-    const { editor } = this.props;
-    const { lastMention } = findMentions(editor);
+    const { editor, mentions } = this.props;
+    const mention = last(mentions);
+    const { lastMention } = findMentions(editor, mention);
     const { startPos, endPos, screenName } = lastMention;
 
     // First remove the mention
-    editor.setContent(removeMentionAndInsertPlaceholder(
-      editor, startPos, endPos, screenName, placeholder
-    ));
+    editor.insertContent(' ' + placeholder)
+    // editor.setContent(removeMentionAndInsertPlaceholder(
+    //   editor, startPos, endPos, screenName, placeholder
+    // ));
 
     exitSelection(editor);
   }
 
   _renderMentionIntoEditor() {
     const { customRTEMention, editor, mentions } = this.props;
+    const mention = last(mentions);
 
+    // FIXME: Fix the last mention issue.
     let markup = customRTEMention
-      ? customRTEMention({...last(mentions)})
-      : <EditorMention {...last(mentions)} />;
+      ? customRTEMention({...mention})
+      : <EditorMention {...mention} />;
 
-    // editor.execCommand('mceInsertRawHTML', false, '\u00a0' + renderComponent(markup));
-    editor.setContent(editor.getContent().replace('@' + placeholder, renderComponent(markup)));
+    // editor.setContent(editor.getContent().replace(`@${placeholder}`,
+    //   renderComponent(markup))
+    // );
+    editor.setContent(editor.getContent().replace(`${placeholder}`,
+      renderComponent(markup))
+    );
 
-    exitSelection(editor);
-
-    setTimeout(() => {
-      // editor.insertContent('<span>&nbsp</span>')
-      // editor.execCommand('mceNonBreaking')
-    });
+    editor.selection.select(editor.dom.get(mention.tinymceId), true);
+    editor.selection.collapse(false);
   }
 
   render() {

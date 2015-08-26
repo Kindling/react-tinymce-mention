@@ -17,7 +17,6 @@ import {
 
 const {
   _performIntermediateActions,
-  _isNearMention,
   _removeMentionFromEditor,
   _handleEditorBackspace,
 } = testExports;
@@ -74,12 +73,6 @@ describe('TinyMCE Plugin', () => {
   afterEach(() => {
     store = null;
     editor = null;
-  });
-
-  // _isNearMention
-  it('should be near mentions from the editor', () => {
-    const str = 'Hello there @jim and @john';
-    expect(_isNearMention(str).toString()).toEqual('@john');
   });
 
   // _removeMentionFromEditor

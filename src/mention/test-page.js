@@ -16,7 +16,7 @@ var plugins = [
   'tabfocus'
 ];
 
-const initialContent = `Sed ut perspiciatis unde omnis
+let initialContent = `Sed ut perspiciatis unde omnis
 iste natus error sit voluptatem accusantium doloremque
 
 laudantium, totam rem aperiam, eaque ipsa quae ab illo
@@ -44,6 +44,8 @@ ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui 
 voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum
 fugiat quo voluptas nulla pariatur?`;
 
+initialContent = '';
+
 React.render(
   <div>
     <TinyMCE
@@ -51,6 +53,11 @@ React.render(
       config={{
         browser_spellcheck: true,
         document_base_url: window.location.origin + '/',
+
+        // FIXME
+        cleanup: false,
+        entity_encoding: 'named',
+        entities: '160,nbsp',
 
         extended_valid_elements: 'blockquote[dir|style|cite|class|dir<ltr?rtl],iframe[src|frameborder|style|scrolling|class|width|height|name|align],pre',
         ie7_compat: false,

@@ -13,6 +13,7 @@ export default class EditorMention {
     return (
       <a href='#' id={tinymceId} className='tinymce-mention'>
         @{displayLabel}
+        &nbsp;
       </a>
     );
   }

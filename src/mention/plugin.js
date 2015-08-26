@@ -2,13 +2,16 @@ import invariant from 'invariant';
 import twitter from 'twitter-text';
 import closest from 'dom-closest';
 import removeNode from 'dom-remove';
+import findWhere from 'lodash.findwhere';
 import getKeyCode from './utils/getKeyCode';
+import spliceString from './utils/spliceString';
 import last from './utils/last';
 
 import {
   collectMentionIds,
   getEditorContent,
-  prevCharIsSpace
+  getLastChar
+  // prevCharIsSpace
 } from './utils/tinyMCEUtils';
 
 import {
@@ -34,7 +37,7 @@ const keyMap = {
  * Reference to the TinyMCE editor.
  * @type {Object}
  */
-let editor = null;
+let editor;
 
 /**
  * The delimiter we're using to trigger @mentions. Defaults to @.
@@ -52,8 +55,19 @@ let isFocused = false;
  * The Redux store for handling lookups, mentions and tracking.
  * @type {Object}
  */
-let store = null;
+let store;
 
+/**
+ * A little state machine for tracking typed characters after `@ment|`.  Allows us
+ * to determine if we are within a mention when `isFocued` is active.
+ * @type {String}
+ */
+let typedMention = '';
+
+// FIXME:
+setInterval(() => {
+  // console.log('isFocused:', isFocused);
+}, 1000);
 
 export function initializePlugin(reduxStore, dataSource, delimiterConfig = delimiter) {
 
@@ -118,8 +132,7 @@ function start() {
   // FIXME: Remove auto focus
   setTimeout(() => {
     window.tinymce.activeEditor.focus();
-  })
-
+  });
 
   editor.on('keypress', handleTopLevelEditorInput);
   editor.on('keyup', handleEditorBackspace);
@@ -137,16 +150,17 @@ function stop() {
  * @param  {jQuery.Event} event
  */
 function handleTopLevelEditorInput(event) {
-  const character = String.fromCharCode(getKeyCode(event));
+  const keyCode = getKeyCode(event);
+  const character = String.fromCharCode(keyCode);
   const delimiterIndex = delimiter.indexOf(character);
 
   // User has typed `@` begin tracking
-  if (delimiterIndex > -1 && prevCharIsSpace(editor)) {
-    !isFocused && startListeningForInput();
+  if (!isFocused && delimiterIndex > -1) {
+    startListeningForInput();
 
-  // User has exited mentions, stop tracking
-  } else if (prevCharIsSpace(editor) || character === ' ') {
-    isFocused && stopListeningAndCleanup();
+  // User has exited mentions, or there are no mentions to find; stop tracking
+  } else if (isFocused && character === ' ') {
+    stopListeningAndCleanup();
   }
 }
 
@@ -158,6 +172,7 @@ function startListeningForInput() {
 
 function stopListeningAndCleanup() {
   if (!toggleFocus()) {
+    clearTypedMention();
     store.dispatch(resetQuery());
     editor.off('keydown', handleKeyPress);
   }
@@ -172,24 +187,31 @@ function stopListeningAndCleanup() {
  * @return {Function}
  */
 function performIntermediateActions(keyCode, event) {
-  Object.keys(keyMap).forEach(key => {
-    const keyValue = keyMap[key];
+  const { matchedSources } = store.getState().mention;
 
-    // Override default behavior if we're using anything from our keyMap.
-    if (keyCode === keyValue && keyValue !== keyMap.BACKSPACE) {
-      event.preventDefault();
-    }
-  });
+  if (matchedSources.length) {
+    Object.keys(keyMap).forEach(key => {
+      const keyValue = keyMap[key];
 
-  return shouldSelectOrMove(keyCode);
+      // Override default behavior if we're using anything from our keyMap.
+      if (keyCode === keyValue && keyValue !== keyMap.BACKSPACE) {
+        event.preventDefault();
+      }
+    });
+
+    return shouldSelectOrMove(keyCode);
+  }
 }
 
 function shouldSelectOrMove(keyCode) {
   switch(keyCode) {
   case keyMap.TAB:
-    return store.dispatch(select());
+    removeIncompleteMention();
+    store.dispatch(select());
+    clearTypedMention();
   case keyMap.ENTER:
-    return store.dispatch(select());
+    store.dispatch(select());
+    clearTypedMention();
   case keyMap.DOWN:
     return store.dispatch(moveDown());
   case keyMap.UP:
@@ -197,11 +219,6 @@ function shouldSelectOrMove(keyCode) {
   default:
     return false;
   }
-}
-
-function isNearMention(content) {
-  const re = /@\w+\b(?! *.)/;
-  return re.exec(content);
 }
 
 function extractMentionFromNode(mentionNode) {
@@ -224,15 +241,21 @@ function removeMentionFromEditor(mentionNode) {
 function handleKeyPress(event) {
   const keyCode = getKeyCode(event);
 
+
   if (performIntermediateActions(keyCode, event)) {
     return false;
   }
 
   setTimeout(() => {
-    const content = getEditorContent(editor);
+    const mentionText = updateMentionText(keyCode);
 
-    if (isNearMention(content)) {
-      const mention = last(twitter.extractMentionsWithIndices(content));
+    if (mentionText !== '') {
+      const content = getEditorContent(editor);
+      const extractedMentions = twitter.extractMentionsWithIndices(content);
+
+      const mention = findWhere(extractedMentions, {
+        screenName: mentionText
+      });
 
       if (mention && isFocused) {
         store.dispatch(query(mention.screenName));
@@ -253,7 +276,7 @@ function handleEditorBackspace(event) {
   if (keyCode === keyMap.BACKSPACE) {
     const foundMentionNode = closest(editor.selection.getNode(), mentionClassName);
 
-    // Begin query process if still in mention
+    // Query lookup
     if (foundMentionNode) {
       const mention = removeMentionFromEditor(foundMentionNode);
       store.dispatch(remove(mention));
@@ -278,10 +301,40 @@ function toggleFocus() {
   return isFocused;
 }
 
+function updateMentionText(keyCode) {
+  const mentionText = keyCode === keyMap.BACKSPACE
+    ? updateTypedMention('remove')
+    : updateTypedMention('add', getLastChar(editor));
+
+  return mentionText;
+}
+
+function updateTypedMention(action = 'add', str = '') {
+  if (action === 'add') {
+    typedMention += str;
+  } else if (action === 'remove') {
+    typedMention = typedMention.substring(0, typedMention.length - 1);
+  }
+
+  return typedMention.trim().replace(/@/, '');
+}
+
+function clearTypedMention() {
+  // editor.setContent(editor.getContent().replace('@' + typedMention, ''))
+  typedMention = '';
+  return true;
+}
+
+function removeIncompleteMention() {
+  const start = editor.selection.getRng(true).startOffset;
+  const text = editor.selection.getRng(true).startContainer.data || '';
+  // console.log(editor.getContent().replace(text, ''))
+  console.log(start, text.trim().split('@'));
+}
+
 // Export methods for testing
 export const testExports = {
   _performIntermediateActions: performIntermediateActions,
-  _isNearMention: isNearMention,
   _handleKeyPress: handleKeyPress,
   _handleEditorBackspace: handleEditorBackspace,
   _removeMentionFromEditor: removeMentionFromEditor,

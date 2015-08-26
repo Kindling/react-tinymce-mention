@@ -77,7 +77,7 @@ export default class TinyMCEDelegate extends Component {
   _clearUnfinishedMention() {
     const { editor } = this.props;
     const text = editor.selection.getRng(true).startContainer.data || '';
-    const re = /@\w+\b(?! *.)/;
+    const re = /@\w+\b/;
     const match = re.exec(text.trim());
 
     if (match) {

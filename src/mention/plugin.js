@@ -9,7 +9,6 @@ import {
   collectMentionIds,
   getEditorContent,
   getLastChar
-  // prevCharIsSpace
 } from './utils/tinyMCEUtils';
 
 import {
@@ -281,6 +280,7 @@ function updateMentionText(keyCode) {
   return mentionText;
 }
 
+// FIXME: rewrite hack
 function updateTypedMention(action = 'add', str = '') {
   if (action === 'add') {
     typedMention += str;

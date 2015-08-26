@@ -5,3 +5,4 @@ exclude_paths:
   - "examples/*"
   - "src/mention/test-data-source.js"
   - "src/mention/test-page.js"
+  - "*/fixtures/*"

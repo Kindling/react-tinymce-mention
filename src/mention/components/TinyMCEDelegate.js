@@ -93,9 +93,10 @@ export default class TinyMCEDelegate extends Component {
       ? customRTEMention({...mention})
       : <EditorMention {...mention} />;
 
-    editor.setContent(editor.getContent().replace(`${placeholder}`,
-      renderComponent(markup))
-    );
+    editor.setContent(
+      editor
+        .getContent()
+        .replace(placeholder, renderComponent(markup)));
 
     setTimeout(() => {
       editor.selection.select(editor.dom.get(mention.tinymceId), true);

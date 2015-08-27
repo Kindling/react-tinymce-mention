@@ -176,9 +176,9 @@ function performIntermediateActions(keyCode, event) {
 function shouldSelectOrMove(keyCode) {
   switch(keyCode) {
   case keyMap.TAB:
-    selectMention();
+    return selectMention();
   case keyMap.ENTER:
-    selectMention();
+    return selectMention();
   case keyMap.DOWN:
     return store.dispatch(moveDown());
   case keyMap.UP:

@@ -128,7 +128,7 @@ function handleTopLevelEditorInput(event) {
   if (!isFocused && delimiterIndex > -1) {
     startListeningForInput();
 
-  // User has exited mentions, or there are no mentions to find; stop tracking
+  // User has exited mention; stop tracking
   } else if (!isFocused || character === ' ') {
     stopListeningAndCleanup();
   }
@@ -185,7 +185,7 @@ function shouldSelectOrMove(keyCode) {
   case keyMap.UP:
     return store.dispatch(moveUp());
   case keyMap.ESC:
-    stopListeningAndCleanup();
+    return stopListeningAndCleanup();
   default:
     return false;
   }

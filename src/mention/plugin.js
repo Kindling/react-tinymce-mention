@@ -128,7 +128,7 @@ function handleTopLevelEditorInput(event) {
     startListeningForInput();
 
   // User has exited mentions, or there are no mentions to find; stop tracking
-  } else if (isFocused && character === ' ') {
+  } else if (!isFocused || character === ' ') {
     stopListeningAndCleanup();
   }
 }
@@ -140,11 +140,12 @@ function startListeningForInput() {
 }
 
 function stopListeningAndCleanup() {
-  if (!toggleFocus()) {
-    clearTypedMention();
-    store.dispatch(resetQuery());
-    editor.off('keydown', handleKeyPress);
+  if (isFocused) {
+    toggleFocus();
   }
+  clearTypedMention();
+  store.dispatch(resetQuery());
+  editor.off('keydown', handleKeyPress);
 }
 
 /**
@@ -175,11 +176,9 @@ function performIntermediateActions(keyCode, event) {
 function shouldSelectOrMove(keyCode) {
   switch(keyCode) {
   case keyMap.TAB:
-    store.dispatch(select());
-    clearTypedMention();
+    selectMention();
   case keyMap.ENTER:
-    store.dispatch(select());
-    clearTypedMention();
+    selectMention();
   case keyMap.DOWN:
     return store.dispatch(moveDown());
   case keyMap.UP:
@@ -187,6 +186,12 @@ function shouldSelectOrMove(keyCode) {
   default:
     return false;
   }
+}
+
+function selectMention() {
+  store.dispatch(select());
+  clearTypedMention();
+  stopListeningAndCleanup();
 }
 
 function extractMentionFromNode(mentionNode) {

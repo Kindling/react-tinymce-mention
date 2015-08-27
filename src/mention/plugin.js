@@ -27,7 +27,8 @@ const keyMap = {
   DOWN: 40,
   ENTER: 13,
   TAB: 9,
-  UP: 38
+  UP: 38,
+  ESC: 27
 };
 
 let editor;
@@ -183,6 +184,8 @@ function shouldSelectOrMove(keyCode) {
     return store.dispatch(moveDown());
   case keyMap.UP:
     return store.dispatch(moveUp());
+  case keyMap.ESC:
+    stopListeningAndCleanup();
   default:
     return false;
   }

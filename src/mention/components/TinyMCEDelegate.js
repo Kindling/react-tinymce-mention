@@ -81,7 +81,10 @@ export default class TinyMCEDelegate extends Component {
     const match = re.exec(text.trim());
 
     if (match) {
-      editor.setContent(editor.getContent().replace(match[0], placeholder));
+      editor.setContent(
+        editor
+          .getContent()
+          .replace(match[0], placeholder));
     }
   }
 
@@ -89,7 +92,7 @@ export default class TinyMCEDelegate extends Component {
     const { customRTEMention, editor, mentions } = this.props;
     const mention = last(mentions);
 
-    let markup = customRTEMention
+    const markup = customRTEMention
       ? customRTEMention({...mention})
       : <EditorMention {...mention} />;
 

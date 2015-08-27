@@ -37,7 +37,7 @@ export default class SuggestionRenderer {
     const { customListRenderer } = this.props;
 
     return (
-      customListRenderer
+      customListRenderer instanceof Function
         ? this._renderCustomComponents()
         : <DefaultList />
     );

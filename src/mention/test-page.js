@@ -44,7 +44,7 @@ ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui 
 voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum
 fugiat quo voluptas nulla pariatur?`;
 
-// initialContent = '';
+initialContent = '';
 
 React.render(
   <div>
@@ -99,11 +99,11 @@ React.render(
       }}
 
       onAdd={({ mentions, changed }) => {
-        console.log('ADDED: ', mentions, 'changed: ', changed);
+        // console.log('ADDED: ', mentions, 'changed: ', changed);
       }}
 
       onRemove={({ mentions, changed }) => {
-        console.log('REMOVED: ', mentions, 'changed: ', changed);
+        // console.log('REMOVED: ', mentions, 'changed: ', changed);
       }}
     />
   </div>

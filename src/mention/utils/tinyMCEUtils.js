@@ -16,3 +16,8 @@ export function collectMentionIds(editor, mentionClassName) {
 
   return mentions;
 }
+
+export function exitSelection(editor) {
+  editor.selection.select(editor.getBody(), true);
+  editor.selection.collapse(false);
+}

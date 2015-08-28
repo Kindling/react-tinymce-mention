@@ -177,9 +177,11 @@ function performIntermediateActions(keyCode, event) {
 function shouldSelectOrMove(keyCode) {
   switch(keyCode) {
   case keyMap.TAB:
-    return selectMention();
+    selectMention();
+    return true;
   case keyMap.ENTER:
-    return selectMention();
+    selectMention();
+    return true;
   case keyMap.DOWN:
     return store.dispatch(moveDown());
   case keyMap.UP:
@@ -218,6 +220,7 @@ function handleKeyPress(event) {
   const keyCode = getKeyCode(event);
 
   if (performIntermediateActions(keyCode, event)) {
+    event.preventDefault();
     return false;
   }
 

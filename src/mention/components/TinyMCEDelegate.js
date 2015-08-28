@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import diffMentionState from '../utils/diffMentionState';
 import last from '../utils/last';
 import renderComponent from '../utils/renderComponent';
+import { exitSelection } from '../utils/tinyMCEUtils';
 import EditorMention from '../components/EditorMention';
 
 const placeholder = '[__display__]';
@@ -76,15 +77,21 @@ export default class TinyMCEDelegate extends Component {
    */
   _clearUnfinishedMention() {
     const { editor } = this.props;
-    const text = editor.selection.getRng(true).startContainer.data || '';
+    const rangeText = editor.selection.getRng(true).startContainer.data;
+    const searchText = rangeText ? rangeText : editor.getContent();
     const re = /@\w+\b/;
-    const match = re.exec(text.trim());
+    const match = re.exec(searchText.trim());
 
     if (match) {
+      console.log(match);
       editor.setContent(
         editor
           .getContent()
           .replace(match[0], placeholder));
+
+      if (!rangeText) {
+        exitSelection(editor);
+      }
     }
   }
 

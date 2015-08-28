@@ -57,6 +57,7 @@ const actionsMap = {
 
   query(state, action) {
     const query = action.payload.query.toLowerCase();
+    const mentions = state.mentions;
 
     const matchedSources = state.dataSource.filter(source => {
       if (query.length) {
@@ -71,10 +72,14 @@ const actionsMap = {
       }
     });
 
+    const withoutCurrentMentions = matchedSources.filter(source => {
+      return !mentions.some(mention => mention.searchKey === source.searchKey);
+    });
+
     return {
       highlightIndex: 0,
-      query,
-      matchedSources
+      matchedSources: withoutCurrentMentions,
+      query
     };
   },
 

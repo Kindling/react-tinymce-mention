@@ -11,7 +11,7 @@ export default class MentionsDebugger {
 
     return (
       <div>
-        <h2>Current Mentions</h2>
+        <h2><strong>Current Mentions</strong></h2>
         <ul>
           { mentions && mentions.map((mention, index) => {
             return (
@@ -24,7 +24,9 @@ export default class MentionsDebugger {
 
         <div>
           <h2>
-            Available users
+            <strong>
+              Available users
+            </strong>
           </h2>
           <ul>
             { dataSource instanceof Array && dataSource.map((source, index) => {

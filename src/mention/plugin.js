@@ -129,7 +129,8 @@ function handleTopLevelEditorInput(event) {
   if (!isFocused && delimiterIndex > -1) {
     startListeningForInput();
 
-  // return needs special handing for some reason
+  // Return needs special handing in order to capture the value of
+  // the current input before the cursor leaves the range.
   } else if (keyCode === keyMap.ENTER) {
     handleKeyPress(event);
 

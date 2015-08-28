@@ -105,6 +105,7 @@ function start() {
   stop();
 
   editor.on('keypress', handleTopLevelEditorInput);
+  editor.on('keydown', handleTopLevelEditorInput);
   editor.on('keyup', handleEditorBackspace);
 }
 
@@ -127,6 +128,10 @@ function handleTopLevelEditorInput(event) {
   // User has typed `@` begin tracking
   if (!isFocused && delimiterIndex > -1) {
     startListeningForInput();
+
+  // return needs special handing for some reason
+  } else if (keyCode === keyMap.ENTER) {
+    handleKeyPress(event);
 
   // User has exited mention; stop tracking
   } else if (!isFocused || character === ' ') {

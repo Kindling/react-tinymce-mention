@@ -275,6 +275,10 @@ function handleEditorBackspace(event) {
     } else {
       const mentionIds = collectMentionIds(editor, mentionClassName);
       store.dispatch(syncEditorState(mentionIds));
+
+      if (getLastChar(editor) === '@') {
+        stopListeningAndCleanup();
+      }
     }
   }
 }

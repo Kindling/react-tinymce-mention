@@ -78,8 +78,6 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
           start();
         });
 
-        // Check to see if promises follow spec, otherwise defer
-        // to jQuery default
         if (dataSource.catch === 'function') {
           dataSource.catch(error => {
             throw new Error(error);
@@ -125,7 +123,7 @@ function handleTopLevelEditorInput(event) {
   const character = String.fromCharCode(keyCode);
   const delimiterIndex = delimiter.indexOf(character);
 
-  // User has typed `@` begin tracking
+  // Enter: user has typed `@` begin tracking
   if (!isFocused && delimiterIndex > -1) {
     startListeningForInput();
 
@@ -134,12 +132,11 @@ function handleTopLevelEditorInput(event) {
   } else if (keyCode === keyMap.ENTER) {
     handleKeyPress(event);
 
-  } else if (keyCode === keyMap.BACKSPACE) {
-    if (getLastChar(editor) === delimiter) {
-      stopListeningAndCleanup();
-    }
+  // Exit: user just erased delimiter
+  } else if (keyCode === keyMap.BACKSPACE && getLastChar(editor) === delimiter) {
+    stopListeningAndCleanup();
 
-  // User has exited mention; stop tracking
+  // Exit: user has enterd a space after `@mention `
   } else if (!isFocused || character === ' ') {
     stopListeningAndCleanup();
   }

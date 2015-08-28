@@ -134,6 +134,11 @@ function handleTopLevelEditorInput(event) {
   } else if (keyCode === keyMap.ENTER) {
     handleKeyPress(event);
 
+  } else if (keyCode === keyMap.BACKSPACE) {
+    if (getLastChar(editor) === delimiter) {
+      stopListeningAndCleanup();
+    }
+
   // User has exited mention; stop tracking
   } else if (!isFocused || character === ' ') {
     stopListeningAndCleanup();
@@ -177,17 +182,19 @@ function performIntermediateActions(keyCode, event) {
     });
 
     return shouldSelectOrMove(keyCode);
+
+  // Generally means we've typed something @notfound and have hit return.
+  } else if (keyCode === keyMap.ENTER) {
+    stopListeningAndCleanup();
   }
 }
 
 function shouldSelectOrMove(keyCode) {
   switch(keyCode) {
   case keyMap.TAB:
-    selectMention();
-    return true;
+    return selectMention();
   case keyMap.ENTER:
-    selectMention();
-    return true;
+    return selectMention();
   case keyMap.DOWN:
     return store.dispatch(moveDown());
   case keyMap.UP:
@@ -203,6 +210,7 @@ function selectMention() {
   store.dispatch(select());
   clearTypedMention();
   stopListeningAndCleanup();
+  return true;
 }
 
 function extractMentionFromNode(mentionNode) {
@@ -275,10 +283,6 @@ function handleEditorBackspace(event) {
     } else {
       const mentionIds = collectMentionIds(editor, mentionClassName);
       store.dispatch(syncEditorState(mentionIds));
-
-      if (getLastChar(editor) === '@') {
-        stopListeningAndCleanup();
-      }
     }
   }
 }

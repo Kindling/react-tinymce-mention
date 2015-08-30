@@ -11,8 +11,10 @@ describe('tinyMCEUtils', () => {
     var tinymce = initializeEditor();
   });
 
-  xit('return the last character in a text area', () => {
+  it('return the last character in a text area', () => {
     tinymce.activeEditor.setContent('<p>lorem ipsum</p>');
+    // required to force the cursor into the textarea
+    tinymce.activeEditor.focus(); 
     expect(getLastChar(tinymce.activeEditor)).toEqual('m');
   });
 

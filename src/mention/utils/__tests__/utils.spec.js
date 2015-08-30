@@ -3,6 +3,7 @@ import getKeyCode from '../getKeyCode';
 import last from '../last';
 import uid from '../uid';
 import normalizeDataSource from '../normalizeDataSource';
+import diffMentionState from '../diffMentionState';
 
 describe('Utils', () => {
   it('should ensure that each array item contains a specific type', () => {
@@ -31,5 +32,17 @@ describe('Utils', () => {
 
     expect(normalizeDataSource(dataSourceObjects)).toEqual({dataSource: dataSourceObjects});
     expect(normalizeDataSource(dataSourceStrings)).toEqual({dataSource: dataSourceObjects});
+  });
+
+  it('should diff two lists', () => {
+    var mentions = ['1', '2'];
+    var moreMentions = ['1', '2', '3'];
+
+    expect(diffMentionState([], []))
+      .toEqual({mentions: [], changed: []});
+    expect(diffMentionState(mentions, moreMentions))
+      .toEqual({mentions: moreMentions, changed: []});
+    expect(diffMentionState(moreMentions, mentions))
+      .toEqual({mentions: mentions, changed: ['3']});
   });
 });

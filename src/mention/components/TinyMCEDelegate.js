@@ -68,27 +68,23 @@ export default class TinyMCEDelegate extends Component {
 
   _renderMentionIntoEditor() {
     const { customRTEMention, editor, mentions } = this.props;
-    const text = editor.selection.getRng(true).startContainer.data || '';
-    const re = /@\w+\b/;
-    const match = re.exec(text.trim());
+    tinymce.activeEditor.execCommand('mceInsertContent', false, 'insertionplaceholder');
 
-    if (match) {
-      const mention = last(mentions);
+    const mention = last(mentions);
 
-      const markup = customRTEMention
-        ? customRTEMention({...mention})
-        : <EditorMention {...mention} />;
+    const markup = customRTEMention
+      ? customRTEMention({...mention})
+      : <EditorMention {...mention} />;
 
-      editor.setContent(
-        editor
-          .getContent()
-          .replace(match[0], renderComponent(markup)));
+    editor.setContent(
+      editor
+        .getContent()
+        .replace(/@\w+insertionplaceholder\b/, renderComponent(markup)));
 
-      setTimeout(() => {
-        editor.selection.select(editor.dom.get(mention.tinymceId), true);
-        editor.selection.collapse(false);
-      });
-    }
+    setTimeout(() => {
+      editor.selection.select(editor.dom.get(mention.tinymceId), true);
+      editor.selection.collapse(false);
+    });
   }
 
   render() {

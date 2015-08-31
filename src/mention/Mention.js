@@ -22,11 +22,12 @@ export default class Mention {
       PropTypes.func,
       PropTypes.object
     ]).isRequired,
-    customListRenderer: React.PropTypes.func,
-    customRTEMention: React.PropTypes.func,
+    customListRenderer: PropTypes.func,
+    customRTEMention: PropTypes.func,
     delimiter: PropTypes.string,
-    onAdd: React.PropTypes.func,
-    onRemove: React.PropTypes.func,
+    onAdd: PropTypes.func,
+    onRemove: PropTypes.func,
+    showDebugger: PropTypes.bool,
     transformFn: PropTypes.func
   }
 
@@ -61,9 +62,13 @@ export default class Mention {
   }
 
   render() {
-    const { customListRenderer, customRTEMention, onAdd, onRemove } = this.props;
-
-    const showDebugger = true;
+    const {
+      customListRenderer,
+      customRTEMention,
+      onAdd,
+      onRemove,
+      showDebugger
+    } = this.props;
 
     return (
       <Provider store={store}>{() =>

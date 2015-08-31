@@ -105,6 +105,8 @@ React.render(
       onRemove={({ mentions, changed }) => {
         // console.log('REMOVED: ', mentions, 'changed: ', changed);
       }}
+
+      showDebugger={true}
     />
   </div>
 , document.getElementById('root'));

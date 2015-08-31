@@ -62,38 +62,42 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
 
     window.tinymce.PluginManager.add('mention', (activeEditor) => {
       editor = activeEditor;
+    });
+
+    // Wait until plugin is registered
+    setTimeout(() => {
       store = Object.freeze(reduxStore);
       delimiter = Object.freeze(delimiterConfig);
 
       // If promise, wait for it to resolve before resolving the
       // outer promise and initializing the app.
       if (typeof dataSource.then === 'function') {
-
         dataSource.then(response => {
+          start();
           resolve({
             editor,
             resolvedDataSource: response
           });
-
-          start();
         });
 
+        // Spec-compliant promise
         if (dataSource.catch === 'function') {
           dataSource.catch(error => {
             throw new Error(error);
           });
+
+        // jQuery
         } else if (dataSource.fail === 'function') {
           dataSource.fail(error => {
             throw new Error(error);
           });
         }
       } else {
+        start();
         resolve({
           editor,
           resolvedDataSource: dataSource
         });
-
-        start();
       }
     });
   });

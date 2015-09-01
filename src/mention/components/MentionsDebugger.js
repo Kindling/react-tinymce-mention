@@ -14,7 +14,6 @@ export default class MentionsDebugger {
         <h2><strong>Current Mentions</strong></h2>
         <ul>
           { mentions.map((mention, index) => {
-            console.log(mention, mention.displayLabel);
             return (
               <li key={`mention-${index}`}>
                 {mention.displayLabel}

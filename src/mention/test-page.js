@@ -46,67 +46,85 @@ fugiat quo voluptas nulla pariatur?`;
 
 initialContent = '';
 
-React.render(
-  <div>
-    <TinyMCE
-      content={initialContent}
-      config={{
-        browser_spellcheck: true,
-        document_base_url: window.location.origin + '/',
+renderMentions();
+renderEditor();
 
-        // FIXME
-        cleanup: false,
-        entity_encoding: 'named',
-        entities: '160,nbsp',
+function renderEditor() {
+  React.render(
+    <div>
+      <TinyMCE
+        content={initialContent}
+        config={{
+          browser_spellcheck: true,
+          document_base_url: window.location.origin + '/',
 
-        extended_valid_elements: 'blockquote[dir|style|cite|class|dir<ltr?rtl],iframe[src|frameborder|style|scrolling|class|width|height|name|align],pre',
-        ie7_compat: false,
-        image_description: false,
-        image_dimensions: false,
-        media_alt_source: false,
-        media_poster: false,
-        media_dimensions: false,
-        menubar: false,
-        plugins: plugins.join(','),
+          // FIXME
+          cleanup: false,
+          entity_encoding: 'named',
+          entities: '160,nbsp',
 
-        // We always want the _full URL_ - not the relative path.
-        relative_urls: false,
-        remove_script_host: false,
-        skin: 'kindling',
-        statusbar: false,
+          extended_valid_elements: 'blockquote[dir|style|cite|class|dir<ltr?rtl],iframe[src|frameborder|style|scrolling|class|width|height|name|align],pre',
+          ie7_compat: false,
+          image_description: false,
+          image_dimensions: false,
+          media_alt_source: false,
+          media_poster: false,
+          media_dimensions: false,
+          menubar: false,
+          plugins: plugins.join(','),
 
-        // Suppress the target option for links.
-        target_list: false,
-        theme: 'kindling',
-        toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code'
-      }}
-    />
+          // We always want the _full URL_ - not the relative path.
+          relative_urls: false,
+          remove_script_host: false,
+          skin: 'kindling',
+          statusbar: false,
 
-    <Mention
-      dataSource={complexDataSource}
-      delimiter={'@'}
+          // Suppress the target option for links.
+          target_list: false,
+          theme: 'kindling',
+          toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code'
+        }}
+      />
+      <button onClick={renderMentions}>reload</button>
+    </div>
+  , document.getElementById('editor'));
+}
 
-      transformFn={dataSource => {
-        const complexDataSource = dataSource.map(result => {
-          const { fullName } = result;
-          return {
-            searchKey: fullName,
-            displayLabel: fullName
-          };
-        });
+function renderMentions() {
+  let node = document.getElementById('mentions');
 
-        return complexDataSource;
-      }}
+  if (React.unmountComponentAtNode(node)) {
+    console.log('reload');
+  }
 
-      onAdd={({ mentions, changed }) => {
-        // console.log('ADDED: ', mentions, 'changed: ', changed);
-      }}
+  React.render(
+    <div>
+      <Mention
+        dataSource={complexDataSource}
+        delimiter={'@'}
 
-      onRemove={({ mentions, changed }) => {
-        // console.log('REMOVED: ', mentions, 'changed: ', changed);
-      }}
+        transformFn={dataSource => {
+          const complexDataSource = dataSource.map(result => {
+            const { fullName } = result;
+            return {
+              searchKey: fullName,
+              displayLabel: fullName
+            };
+          });
 
-      showDebugger={true}
-    />
-  </div>
-, document.getElementById('root'));
+          return complexDataSource;
+        }}
+
+        onAdd={({ mentions, changed }) => {
+          // console.log('ADDED: ', mentions, 'changed: ', changed);
+        }}
+
+        onRemove={({ mentions, changed }) => {
+          // console.log('REMOVED: ', mentions, 'changed: ', changed);
+        }}
+
+        showDebugger={true}
+      />
+    </div>
+  , node);
+}

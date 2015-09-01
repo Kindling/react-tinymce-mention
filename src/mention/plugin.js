@@ -112,9 +112,10 @@ function start() {
 }
 
 function stop() {
-  editor.off('keypress', handleTopLevelEditorInput);
-  editor.off('keyup', handleEditorBackspace);
-  editor.off('keydown', handleKeyPress);
+  editor.off();
+  // editor.off('keypress', handleTopLevelEditorInput);
+  // editor.off('keyup', handleEditorBackspace);
+  // editor.off('keydown', handleKeyPress);
 }
 
 /**
@@ -140,7 +141,7 @@ function handleTopLevelEditorInput(event) {
   } else if (keyCode === keyMap.BACKSPACE && getLastChar(editor) === delimiter) {
     stopListeningAndCleanup();
 
-  // Exit: user has enterd a space after `@mention `
+  // Exit: user has entered a space after `@mention `
   } else if (!isFocused || character === ' ') {
     stopListeningAndCleanup();
   }

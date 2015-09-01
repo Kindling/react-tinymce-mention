@@ -10,10 +10,6 @@ import TinyMCEDelegate from './components/TinyMCEDelegate';
 import SuggestionRenderer from './components/SuggestionRenderer';
 import MentionsDebugger from './components/MentionsDebugger';
 
-const store = initializeRedux({
-  mention: mentionReducer
-});
-
 export default class Mention {
 
   static propTypes = {
@@ -31,10 +27,17 @@ export default class Mention {
     transformFn: PropTypes.func
   }
 
+  componentWillMount() {
+    console.log('here!');
+    this.store = initializeRedux({
+      mention: mentionReducer
+    });
+  }
+  j
   componentDidMount() {
     const { dataSource, delimiter, onRemove } = this.props;
 
-    initializePlugin(store, dataSource, delimiter, onRemove)
+    initializePlugin(this.store, dataSource, delimiter, onRemove)
       .then(::this._transformAndDispatch)
       .catch(error => {
         console.error(error);
@@ -58,7 +61,7 @@ export default class Mention {
 
   _transformAndDispatch({ editor, resolvedDataSource }) {
     const { dataSource } = this._transformResponse(resolvedDataSource);
-    store.dispatch(finalizeSetup(editor, dataSource));
+    this.store.dispatch(finalizeSetup(editor, dataSource));
   }
 
   render() {
@@ -71,7 +74,7 @@ export default class Mention {
     } = this.props;
 
     return (
-      <Provider store={store}>{() =>
+      <Provider store={this.store}>{() =>
         <div>
           <SuggestionRenderer
             customListRenderer={customListRenderer}

@@ -68,7 +68,8 @@ export default class TinyMCEDelegate extends Component {
 
   _renderMentionIntoEditor() {
     const { customRTEMention, editor, mentions } = this.props;
-    tinymce.activeEditor.execCommand('mceInsertContent', false, 'insertionplaceholder');
+
+    tinymce.activeEditor.insertContent('insertionplaceholder');
 
     const mention = last(mentions);
 

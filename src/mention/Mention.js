@@ -28,13 +28,13 @@ export default class Mention {
   }
 
   componentWillMount() {
-    console.log('here!');
     this.store = initializeRedux({
       mention: mentionReducer
     });
   }
-  j
+
   componentDidMount() {
+    console.log('test mount');
     const { dataSource, delimiter, onRemove } = this.props;
 
     initializePlugin(this.store, dataSource, delimiter, onRemove)

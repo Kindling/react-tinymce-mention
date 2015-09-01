@@ -9,6 +9,7 @@ export default class MentionsDebugger {
   render() {
     const { mentions, dataSource } = this.props;
 
+    console.log('rendering: ', mentions, dataSource);
     return (
       <div>
         <h2><strong>Current Mentions</strong></h2>

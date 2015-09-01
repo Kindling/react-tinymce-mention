@@ -51,8 +51,6 @@ export default class Mention {
       'Error initializing plugin: `transformFn` must be a function.'
     );
 
-    console.log(resolvedDataSource);
-
     const transformedDataSource = isFunc
       ? transformFn(resolvedDataSource)
       : resolvedDataSource;

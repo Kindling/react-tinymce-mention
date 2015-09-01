@@ -128,6 +128,11 @@ function handleTopLevelEditorInput(event) {
   const character = String.fromCharCode(keyCode);
   const delimiterIndex = delimiter.indexOf(character);
 
+  // Force a root element in case one doesn't exist.
+  if (editor.getContent() === '') {
+    editor.insertContent(' ');
+  }
+
   // Enter: user has typed `@` begin tracking
   if (!isFocused && delimiterIndex > -1) {
     startListeningForInput();

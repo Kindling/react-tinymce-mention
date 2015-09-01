@@ -34,7 +34,6 @@ export default class Mention {
   }
 
   componentDidMount() {
-    console.log('test mount');
     const { dataSource, delimiter, onRemove } = this.props;
 
     initializePlugin(this.store, dataSource, delimiter, onRemove)
@@ -51,6 +50,8 @@ export default class Mention {
     invariant(isFunc || typeof transformFn === 'undefined',
       'Error initializing plugin: `transformFn` must be a function.'
     );
+
+    console.log(resolvedDataSource);
 
     const transformedDataSource = isFunc
       ? transformFn(resolvedDataSource)

@@ -97,11 +97,25 @@ function renderMentions() {
     console.log('reload');
   }
 
+  // customListRenderer
+  // customRTEMention
+  // customEditorMention
   React.render(
     <div>
       <Mention
         dataSource={complexDataSource}
         delimiter={'@'}
+        showDebugger={true}
+
+        customRTEMention={(props) => {
+          const { tinymceId, displayLabel } = props;
+          return (
+            <a href='#' id={tinymceId} className='tinymce-mention'>
+              @{displayLabel}
+              &nbsp;
+            </a>
+          );
+        }}
 
         transformFn={dataSource => {
           const complexDataSource = dataSource.map(result => {
@@ -123,7 +137,6 @@ function renderMentions() {
           // console.log('REMOVED: ', mentions, 'changed: ', changed);
         }}
 
-        showDebugger={true}
       />
     </div>
   , node);

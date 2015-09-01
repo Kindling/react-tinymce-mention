@@ -97,9 +97,6 @@ function renderMentions() {
     console.log('reload');
   }
 
-  // customListRenderer
-  // customRTEMention
-  // customEditorMention
   React.render(
     <div>
       <Mention

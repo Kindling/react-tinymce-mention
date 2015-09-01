@@ -9,12 +9,12 @@ export default class MentionsDebugger {
   render() {
     const { mentions, dataSource } = this.props;
 
-    console.log('rendering: ', mentions, dataSource);
     return (
       <div>
         <h2><strong>Current Mentions</strong></h2>
         <ul>
-          { mentions && mentions.map((mention, index) => {
+          { mentions.map((mention, index) => {
+            console.log(mention, mention.displayLabel);
             return (
               <li key={`mention-${index}`}>
                 {mention.displayLabel}
@@ -30,7 +30,7 @@ export default class MentionsDebugger {
             </strong>
           </h2>
           <ul>
-            { dataSource instanceof Array && dataSource.map((source, index) => {
+            { dataSource.map((source, index) => {
               return (
                 <li key={`source-${index}`}>
                   {source.displayLabel}

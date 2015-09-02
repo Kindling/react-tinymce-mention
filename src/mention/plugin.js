@@ -66,14 +66,14 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
 
     // Wait until plugin is registered
     setTimeout(() => {
-      store = Object.freeze(reduxStore);
-      delimiter = Object.freeze(delimiterConfig);
+      store = reduxStore;
+      delimiter = delimiterConfig;
 
       // If promise, wait for it to resolve before resolving the
       // outer promise and initializing the app.
       if (typeof dataSource.then === 'function') {
         dataSource.then(response => {
-          start();
+          setTimeout(start, 100);
           resolve({ editor, resolvedDataSource: response });
         });
 
@@ -90,7 +90,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
           });
         }
       } else {
-        start();
+        setTimeout(start, 100);
         resolve({ editor, resolvedDataSource: dataSource });
       }
     });
@@ -106,7 +106,9 @@ function start() {
 }
 
 function stop() {
-  editor.off();
+  if (editor) {
+    editor.off();
+  }
 }
 
 /**
@@ -287,10 +289,12 @@ function selectMention() {
 }
 
 function extractMentionFromNode(mentionNode) {
-  return mentionNode
-    .innerText
-    .replace(/(?:@|_)/g, ' ')
-    .trim();
+  return mentionNode && mentionNode.innerText
+    ? mentionNode
+      .innerText
+      .replace(/(?:@|_)/g, ' ')
+      .trim()
+    : false;
 }
 
 function removeMentionFromEditor(mentionNode) {

@@ -73,12 +73,14 @@
     "lodash.difference": "^3.2.2",
     "lodash.findwhere": "^3.1.0",
     "lodash.isequal": "^3.0.4",
-    "lodash.without": "^3.2.1",
     "lodash.pluck": "^3.1.2",
+    "lodash.without": "^3.2.1",
+    "npm": "^2.14.1",
     "react-redux": "^0.2.2",
+    "react-tinymce": "^0.2.3",
     "redux": "^1.0.0",
     "redux-thunk": "^0.1.0",
-    "react-tinymce": "^0.2.3",
+    "string.prototype.includes": "^1.0.0",
     "twitter-text": "^1.12.0"
   }
 }

@@ -1,4 +1,4 @@
-import 'babel/polyfill';
+import 'string.prototype.includes';
 import Mention from './mention/Mention';
 
 try {

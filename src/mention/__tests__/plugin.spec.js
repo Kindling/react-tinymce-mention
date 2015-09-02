@@ -108,6 +108,6 @@ describe('TinyMCE Plugin', () => {
     editor.setContent(editor.selection);
 
     _handleEditorBackspace({keyCode: 8});
-    expect(editor.selection.innerText).toEqual('');
+    expect(editor.selection.textContent).toEqual('');
   });
 });

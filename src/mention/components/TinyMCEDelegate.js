@@ -86,7 +86,8 @@ export default class TinyMCEDelegate extends Component {
         .replace(/@\w+insertionplaceholder\b/, renderComponent(markup)));
 
     setTimeout(() => {
-      moveCursorToEnd(editor);
+      editor.selection.select(editor.dom.get(mention.tinymceId), true);
+      editor.selection.collapse(false);
     });
   }
 

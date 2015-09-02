@@ -1,3 +1,4 @@
+import 'babel/polyfill';
 import Mention from './mention/Mention';
 
 try {

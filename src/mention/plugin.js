@@ -73,7 +73,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
       // outer promise and initializing the app.
       if (typeof dataSource.then === 'function') {
         dataSource.then(response => {
-          setTimeout(start, 100);
+          setTimeout(start, 100); // Firefox fix
           resolve({ editor, resolvedDataSource: response });
         });
 
@@ -90,7 +90,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
           });
         }
       } else {
-        setTimeout(start, 100);
+        setTimeout(start, 100); // Firefox fix
         resolve({ editor, resolvedDataSource: dataSource });
       }
     });
@@ -106,9 +106,7 @@ function start() {
 }
 
 function stop() {
-  if (editor) {
-    editor.off();
-  }
+  editor.off();
 }
 
 /**
@@ -289,12 +287,10 @@ function selectMention() {
 }
 
 function extractMentionFromNode(mentionNode) {
-  return mentionNode && mentionNode.innerText
-    ? mentionNode
-      .innerText
-      .replace(/(?:@|_)/g, ' ')
-      .trim()
-    : false;
+  return mentionNode
+    .innerText
+    .replace(/(?:@|_)/g, ' ')
+    .trim();
 }
 
 function removeMentionFromEditor(mentionNode) {

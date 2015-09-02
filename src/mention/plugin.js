@@ -107,6 +107,7 @@ function start() {
   stop();
 
   editor.on('keypress', handleTopLevelEditorInput);
+  editor.on('keydown', handleTopLevelActionKeys);
   editor.on('keyup', handleEditorBackspace);
 }
 
@@ -129,28 +130,32 @@ function handleTopLevelEditorInput(event) {
     editor.insertContent(' ');
   }
 
-  // Return needs special handing in order to capture the value of
-  // the current input before the cursor leaves the range.
-  if (isFocused && keyCode === keyMap.ENTER) {
-    event.preventDefault();
-    handleKeyPress(event);
-    return false;
-  }
-
   if (!isFocused && delimiterIndex > -1) {
     startListeningForInput();
-
-  } else if (keyCode === keyMap.BACKSPACE && getLastChar(editor) === delimiter) {
-    stopListeningAndCleanup();
-
   } else if (!isFocused || character === ' ') {
     stopListeningAndCleanup();
   }
 }
 
+function handleTopLevelActionKeys(event) {
+  const keyCode = getKeyCode(event);
+
+  if (isFocused && keyCode === keyMap.BACKSPACE) {
+
+    // Next to @, clear list but dont exit
+    if (getLastChar(editor, 2) === delimiter){
+      const mentionText = updateMentionText(keyCode);
+      store.dispatch(query(mentionText));
+    } else if (getLastChar(editor) === delimiter) {
+      stopListeningAndCleanup();
+    }
+  }
+}
+
 function startListeningForInput() {
   if (toggleFocus()) {
-    editor.on('keydown', handleKeyPress);
+    editor.on('keydown', handleActionKeys);
+    editor.on('keypress', handleKeyPress);
   }
 }
 
@@ -160,72 +165,17 @@ function stopListeningAndCleanup() {
   }
   clearTypedMention();
   store.dispatch(resetQuery());
-  editor.off('keydown', handleKeyPress);
+  editor.off('keydown', handleActionKeys);
+  editor.off('keypress', handleKeyPress);
 }
 
-/**
- * Validates input and checks to see if any intermediate actions should
- * be performed.
- *
- * @param  {Number} keyCode The current key being pressed
- * @param  {jQuery.Event} event
- * @return {Function}
- */
-function performIntermediateActions(keyCode, event) {
-  const { matchedSources } = store.getState().mention;
+function handleActionKeys(event) {
+  const keyCode = getKeyCode(event);
 
-  if (matchedSources.length) {
-    Object.keys(keyMap).forEach(key => {
-      const keyValue = keyMap[key];
-
-      // Override default behavior if we're using anything from our keyMap.
-      if (keyCode === keyValue && keyValue !== keyMap.BACKSPACE) {
-        event.preventDefault();
-      }
-    });
-
-    return shouldSelectOrMove(keyCode);
-
-  // Generally means we've typed something @notfound and have hit return.
-  } else if (keyCode === keyMap.ENTER) {
-    stopListeningAndCleanup();
-  }
-}
-
-function shouldSelectOrMove(keyCode) {
-  switch(keyCode) {
-  case keyMap.TAB:
-    return selectMention();
-  case keyMap.ENTER:
-    return selectMention();
-  case keyMap.DOWN:
-    return store.dispatch(moveDown());
-  case keyMap.UP:
-    return store.dispatch(moveUp());
-  case keyMap.ESC:
-    return stopListeningAndCleanup();
-  default:
+  if (shouldSelectOrMove(keyCode, event)) {
+    event.preventDefault();
     return false;
   }
-}
-
-function selectMention() {
-  store.dispatch(select());
-  clearTypedMention();
-  stopListeningAndCleanup();
-  return true;
-}
-
-function extractMentionFromNode(mentionNode) {
-  return mentionNode
-    .innerText
-    .replace(/(?:@|_)/g, ' ')
-    .trim();
-}
-
-function removeMentionFromEditor(mentionNode) {
-  removeNode(mentionNode);
-  return extractMentionFromNode(mentionNode);
 }
 
 /**
@@ -235,11 +185,6 @@ function removeMentionFromEditor(mentionNode) {
  */
 function handleKeyPress(event) {
   const keyCode = getKeyCode(event);
-
-  if (performIntermediateActions(keyCode, event)) {
-    event.preventDefault();
-    return false;
-  }
 
   setTimeout(() => {
     const mentionText = updateMentionText(keyCode);
@@ -252,7 +197,7 @@ function handleKeyPress(event) {
         screenName: mentionText
       });
 
-      if (mention && isFocused) {
+      if (mention) {
         store.dispatch(query(mention.screenName));
       }
     }
@@ -279,6 +224,7 @@ function handleEditorBackspace(event) {
     // Remove all mentions
     } else if (!getEditorContent(editor).trim().length) {
       store.dispatch(resetMentions());
+      stopListeningAndCleanup();
 
     // Default, validate internal mention state and sync if necessary. Use-case:
     // if the user highlights an @mention and then deletes, we can no longer check
@@ -286,6 +232,31 @@ function handleEditorBackspace(event) {
     } else {
       const mentionIds = collectMentionIds(editor, mentionClassName);
       store.dispatch(syncEditorState(mentionIds));
+    }
+  }
+}
+
+function shouldSelectOrMove(keyCode, event) {
+  const { matchedSources } = store.getState().mention;
+
+  if (matchedSources.length) {
+    if (keyCode === keyMap.BACKSPACE) {
+      return handleKeyPress(event);
+    } else {
+      switch(keyCode) {
+      case keyMap.TAB:
+        return selectMention();
+      case keyMap.ENTER:
+        return selectMention();
+      case keyMap.DOWN:
+        return store.dispatch(moveDown());
+      case keyMap.UP:
+        return store.dispatch(moveUp());
+      case keyMap.ESC:
+        return stopListeningAndCleanup();
+      default:
+        return false;
+      }
     }
   }
 }
@@ -317,9 +288,27 @@ function clearTypedMention() {
   typedMention = '';
 }
 
+function selectMention() {
+  store.dispatch(select());
+  clearTypedMention();
+  stopListeningAndCleanup();
+  return true;
+}
+
+function extractMentionFromNode(mentionNode) {
+  return mentionNode
+    .innerText
+    .replace(/(?:@|_)/g, ' ')
+    .trim();
+}
+
+function removeMentionFromEditor(mentionNode) {
+  removeNode(mentionNode);
+  return extractMentionFromNode(mentionNode);
+}
+
 // Export methods for testing
 export const testExports = {
-  _performIntermediateActions: performIntermediateActions,
   _handleKeyPress: handleKeyPress,
   _handleEditorBackspace: handleEditorBackspace,
   _removeMentionFromEditor: removeMentionFromEditor,

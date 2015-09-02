@@ -1,7 +1,7 @@
-export function getLastChar(editor) {
+export function getLastChar(editor, negativeIndex = 1) {
   const start = editor.selection.getRng(true).startOffset;
   const text = editor.selection.getRng(true).startContainer.data || '';
-  const character = text.substr(start - 1, 1);
+  const character = text.substr(start - negativeIndex, 1);
   return character;
 }
 

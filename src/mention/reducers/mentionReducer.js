@@ -56,7 +56,7 @@ const actionsMap = {
   },
 
   query(state, action) {
-    const query = action.payload.query.toLowerCase();
+    const query = action.payload.query.toUpperCase();
     const mentions = state.mentions;
 
     const matchedSources = state.dataSource.filter(source => {
@@ -64,7 +64,7 @@ const actionsMap = {
         let noSpaceQuery = query.replace(/\s/g, '');
 
         return source.searchKey
-          .toLowerCase()
+          .toUpperCase()
           .replace(/\s/g, '')
           .includes(noSpaceQuery);
       } else {
@@ -95,8 +95,8 @@ const actionsMap = {
     const foundMention = last(mentions.filter(source => {
       const { displayLabel } = source;
       return displayLabel && displayLabel
-        .toLowerCase()
-        .includes(mention.toLowerCase());
+        .toUpperCase()
+        .includes(mention.toUpperCase());
     }));
 
     const updatedMentions = without(mentions, foundMention);

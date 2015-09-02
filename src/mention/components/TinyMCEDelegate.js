@@ -5,6 +5,7 @@ import diffMentionState from '../utils/diffMentionState';
 import last from '../utils/last';
 import renderComponent from '../utils/renderComponent';
 import EditorMention from '../components/EditorMention';
+import { moveCursorToEnd } from '../utils/tinyMCEUtils';
 
 @connect(state => ({
   editor: state.mention.editor,
@@ -71,12 +72,10 @@ export default class TinyMCEDelegate extends Component {
   }
 
   _renderMentionIntoEditor() {
-    const { customRTEMention, editor, mentions } = this.props;
-
     tinymce.activeEditor.insertContent('insertionplaceholder');
 
+    const { customRTEMention, editor, mentions } = this.props;
     const mention = last(mentions);
-
     const markup = customRTEMention
       ? customRTEMention({...mention})
       : <EditorMention {...mention} />;
@@ -87,8 +86,7 @@ export default class TinyMCEDelegate extends Component {
         .replace(/@\w+insertionplaceholder\b/, renderComponent(markup)));
 
     setTimeout(() => {
-      editor.selection.select(editor.dom.get(mention.tinymceId), true);
-      editor.selection.collapse(false);
+      moveCursorToEnd(editor);
     });
   }
 

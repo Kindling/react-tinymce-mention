@@ -62,10 +62,6 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
 
     window.tinymce.PluginManager.add('mention', (activeEditor) => {
       editor = activeEditor;
-    });
-
-    // Wait until plugin is registered
-    setTimeout(() => {
       store = reduxStore;
       delimiter = delimiterConfig;
 

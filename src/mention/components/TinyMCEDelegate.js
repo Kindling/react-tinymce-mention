@@ -20,6 +20,10 @@ export default class TinyMCEDelegate extends Component {
     onRemove: PropTypes.func
   }
 
+  static defaultProps = {
+    mentions: []
+  }
+
   state = {
     shouldRender: false
   }
@@ -27,6 +31,8 @@ export default class TinyMCEDelegate extends Component {
   shouldComponentUpdate(nextProps) {
     const nextEditorId = nextProps.editor && nextProps.editor.id;
     const editorId = this.props.editor && this.props.editor.id;
+
+    console.log(nextEditorId, editorId, !isEqual(nextProps.mentions, this.props.mentions));
 
     return nextEditorId !== editorId
       || !isEqual(nextProps.mentions, this.props.mentions);

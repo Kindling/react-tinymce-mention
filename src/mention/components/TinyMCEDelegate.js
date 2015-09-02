@@ -32,8 +32,6 @@ export default class TinyMCEDelegate extends Component {
     const nextEditorId = nextProps.editor && nextProps.editor.id;
     const editorId = this.props.editor && this.props.editor.id;
 
-    console.log(nextEditorId, editorId, !isEqual(nextProps.mentions, this.props.mentions));
-
     return nextEditorId !== editorId
       || !isEqual(nextProps.mentions, this.props.mentions);
   }

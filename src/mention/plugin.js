@@ -107,15 +107,11 @@ function start() {
   stop();
 
   editor.on('keypress', handleTopLevelEditorInput);
-  editor.on('keydown', handleTopLevelEditorInput);
   editor.on('keyup', handleEditorBackspace);
 }
 
 function stop() {
   editor.off();
-  // editor.off('keypress', handleTopLevelEditorInput);
-  // editor.off('keyup', handleEditorBackspace);
-  // editor.off('keydown', handleKeyPress);
 }
 
 /**
@@ -133,20 +129,20 @@ function handleTopLevelEditorInput(event) {
     editor.insertContent(' ');
   }
 
-  // Enter: user has typed `@` begin tracking
+  // Return needs special handing in order to capture the value of
+  // the current input before the cursor leaves the range.
+  if (isFocused && keyCode === keyMap.ENTER) {
+    event.preventDefault();
+    handleKeyPress(event);
+    return false;
+  }
+
   if (!isFocused && delimiterIndex > -1) {
     startListeningForInput();
 
-  // Return needs special handing in order to capture the value of
-  // the current input before the cursor leaves the range.
-  } else if (keyCode === keyMap.ENTER) {
-    handleKeyPress(event);
-
-  // Exit: user just erased delimiter
   } else if (keyCode === keyMap.BACKSPACE && getLastChar(editor) === delimiter) {
     stopListeningAndCleanup();
 
-  // Exit: user has entered a space after `@mention `
   } else if (!isFocused || character === ' ') {
     stopListeningAndCleanup();
   }

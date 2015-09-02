@@ -61,7 +61,7 @@ const actionsMap = {
 
     const matchedSources = state.dataSource.filter(source => {
       if (query.length) {
-        let noSpaceQuery = query.replace(/\s/g, '');
+        const noSpaceQuery = query.replace(/\s/g, '');
 
         return source.searchKey
           .toUpperCase()
@@ -94,6 +94,7 @@ const actionsMap = {
     // Remove mention from internal collection of current mentions
     const foundMention = last(mentions.filter(source => {
       const { displayLabel } = source;
+
       return displayLabel && displayLabel
         .toUpperCase()
         .includes(mention.toUpperCase());

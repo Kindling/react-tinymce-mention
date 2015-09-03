@@ -44,7 +44,7 @@ ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui 
 voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum
 fugiat quo voluptas nulla pariatur?`;
 
-initialContent = '';
+// initialContent = '';
 
 renderMentions();
 renderEditor();
@@ -107,10 +107,12 @@ function renderMentions() {
         customRTEMention={(props) => {
           const { tinymceId, displayLabel } = props;
           return (
-            <a href='#' id={tinymceId} className='tinymce-mention'>
-              @{displayLabel}
+            <span>
+              <a href='#' id={tinymceId} className='tinymce-mention'>
+                @{displayLabel}
+              </a>
               &nbsp;
-            </a>
+            </span>
           );
         }}
 

@@ -80,14 +80,15 @@ export default class TinyMCEDelegate extends Component {
 
     editor.insertContent('insertionplaceholder');
 
+    const bm = editor.selection.getBookmark(2,false);
+
     editor.setContent(
       editor
         .getContent()
         .replace(/@\w+insertionplaceholder/, renderComponent(markup)));
 
     setTimeout(() => {
-      editor.selection.select(editor.dom.get(mention.tinymceId), true);
-      editor.selection.collapse(false);
+      editor.selection.moveToBookmark(bm);
     });
   }
 

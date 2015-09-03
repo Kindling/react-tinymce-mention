@@ -58,7 +58,7 @@ describe('mentionReducer', () => {
 
   it('should update the current lookup query', () => {
     store.dispatch(query('alex'));
-    expect(getState().query).toBe('alex');
+    expect(getState().query).toBe('alex'.toUpperCase());
     expect(getState().matchedSources).toDeepEqual([
       find('alex gray'),
       find('alex gutierrez'),

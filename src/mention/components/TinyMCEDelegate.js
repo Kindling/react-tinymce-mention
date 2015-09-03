@@ -83,7 +83,7 @@ export default class TinyMCEDelegate extends Component {
     editor.setContent(
       editor
         .getContent()
-        .replace(/@\w+insertionplaceholder\b/, renderComponent(markup)));
+        .replace(/@\w+insertionplaceholder/, renderComponent(markup)));
 
     setTimeout(() => {
       editor.selection.select(editor.dom.get(mention.tinymceId), true);

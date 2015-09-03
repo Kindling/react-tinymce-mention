@@ -137,24 +137,6 @@ function handleTopLevelActionKeys(event) {
   }
 }
 
-function startListeningForInput() {
-  if (toggleFocus()) {
-    editor.on('keydown', handleActionKeys);
-    editor.on('keypress', handleKeyPress);
-  }
-}
-
-function stopListeningAndCleanup() {
-  if (isFocused) {
-    toggleFocus();
-  }
-
-  clearTypedMention();
-  store.dispatch(resetQuery());
-  editor.off('keydown', handleActionKeys);
-  editor.off('keypress', handleKeyPress);
-}
-
 function handleActionKeys(event) {
   const keyCode = getKeyCode(event);
 
@@ -246,6 +228,24 @@ function shouldSelectOrMove(keyCode, event) {
       }
     }
   }
+}
+
+function startListeningForInput() {
+  if (toggleFocus()) {
+    editor.on('keydown', handleActionKeys);
+    editor.on('keypress', handleKeyPress);
+  }
+}
+
+function stopListeningAndCleanup() {
+  if (isFocused) {
+    toggleFocus();
+  }
+
+  clearTypedMention();
+  store.dispatch(resetQuery());
+  editor.off('keydown', handleActionKeys);
+  editor.off('keypress', handleKeyPress);
 }
 
 function toggleFocus() {

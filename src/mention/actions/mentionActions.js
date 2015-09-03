@@ -27,11 +27,30 @@ export function query(input) {
     const { asyncDataSource } = getState().mention;
 
     if (asyncDataSource) {
-      dispatch({
-        type: Types.QUERY,
-        payload: {
-          query: input
-        }
+      asyncDataSource(input).then(() => {
+        dispatch({
+          type: Types.QUERY,
+          payload: {
+            query: input,
+            dataSource: [
+              {
+                id: 0,
+                searchKey: 'a',
+                displayLabel: 'a'
+              },
+              {
+                id: 1,
+                searchKey: 'b',
+                displayLabel: 'b'
+              },
+              {
+                id: 2,
+                searchKey: 'c',
+                displayLabel: 'c'
+              }
+            ]
+          }
+        });
       });
     } else {
       dispatch({

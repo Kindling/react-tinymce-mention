@@ -17,7 +17,8 @@ export default class Mention {
       PropTypes.array,
       PropTypes.func,
       PropTypes.object
-    ]).isRequired,
+    ]),
+    asyncDataSource: PropTypes.func,
     customListRenderer: PropTypes.func,
     customRTEMention: PropTypes.func,
     delimiter: PropTypes.string,
@@ -35,13 +36,13 @@ export default class Mention {
     }, {
       mention: {
         ...initialState,
-        asyncDataSource: asyncDataSource ? asyncDataSource : false
+        asyncDataSource
       }
     });
   }
 
   componentDidMount() {
-    const { dataSource, delimiter, onRemove } = this.props;
+    const { dataSource = [], delimiter, onRemove } = this.props;
 
     initializePlugin(this.store, dataSource, delimiter, onRemove)
       .then(::this._transformAndDispatch)

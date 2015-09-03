@@ -97,10 +97,16 @@ function renderMentions() {
     console.log('reload');
   }
 
+  // dataSource={complexDataSource}
+
   React.render(
     <div>
       <Mention
-        dataSource={complexDataSource}
+        asyncDataSource={(input) => {
+          console.log(input)
+
+          return Promise.resolve();
+        }}
         delimiter={'@'}
         showDebugger={true}
 

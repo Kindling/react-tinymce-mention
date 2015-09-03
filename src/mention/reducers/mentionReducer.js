@@ -60,7 +60,11 @@ const actionsMap = {
     const query = action.payload.query.toUpperCase();
     const mentions = state.mentions;
 
-    const matchedSources = state.dataSource.filter(source => {
+    const dataSource = state.asyncDataSource
+      ? action.payload.dataSource
+      : state.dataSource;
+
+    const matchedSources = dataSource.filter(source => {
       if (query.length) {
         const noSpaceQuery = query.replace(/\s/g, '');
 
@@ -78,6 +82,7 @@ const actionsMap = {
     });
 
     return {
+      dataSource,
       highlightIndex: 0,
       matchedSources: withoutCurrentMentions,
       query

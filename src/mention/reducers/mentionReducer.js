@@ -5,6 +5,7 @@ import last from '../utils/last';
 import uid from '../utils/uid';
 
 export const initialState = {
+  asyncDataSource: false,
   dataSource: [],
   highlightIndex: 0,
   matchedSources: [],

@@ -23,10 +23,23 @@ export function moveUp() {
 }
 
 export function query(input) {
-  return {
-    type: Types.QUERY,
-    payload: {
-      query: input
+  return (dispatch, getState) => {
+    const { asyncDataSource } = getState().mention;
+
+    if (asyncDataSource) {
+      dispatch({
+        type: Types.QUERY,
+        payload: {
+          query: input
+        }
+      });
+    } else {
+      dispatch({
+        type: Types.QUERY,
+        payload: {
+          query: input
+        }
+      });
     }
   };
 }

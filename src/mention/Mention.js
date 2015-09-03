@@ -5,7 +5,7 @@ import { initializePlugin } from './plugin';
 import initializeRedux from './utils/initializeRedux';
 import normalizeDataSource from './utils/normalizeDataSource';
 import { finalizeSetup } from './actions/mentionActions';
-import mentionReducer from './reducers/mentionReducer';
+import mentionReducer, { initialState } from './reducers/mentionReducer';
 import TinyMCEDelegate from './components/TinyMCEDelegate';
 import SuggestionRenderer from './components/SuggestionRenderer';
 import MentionsDebugger from './components/MentionsDebugger';
@@ -28,8 +28,15 @@ export default class Mention {
   }
 
   componentWillMount() {
+    const { asyncDataSource } = this.props;
+
     this.store = initializeRedux({
-      mention: mentionReducer
+      mention: mentionReducer,
+    }, {
+      mention: {
+        ...initialState,
+        asyncDataSource: asyncDataSource ? asyncDataSource : false
+      }
     });
   }
 

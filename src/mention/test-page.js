@@ -82,9 +82,10 @@ React.render(
     <Mention
       delimiter={'@'}
       showDebugger={true}
+      transformFn={transformDataSource}
       asyncDataSource={input => {
         console.log(input);
-        return Promise.resolve(transformDataSource(complexDataSource))
+        return Promise.resolve(transformDataSource(complexDataSource));
       }}
       customRTEMention={props => {
         const { tinymceId, displayLabel } = props;
@@ -97,12 +98,11 @@ React.render(
           </span>
         );
       }}
-      transformFn={transformDataSource}
       onAdd={({ mentions, changed }) => {
-        // console.log('ADDED: ', mentions, 'changed: ', changed);
+        console.log('ADDED: ', mentions, 'changed: ', changed);
       }}
       onRemove={({ mentions, changed }) => {
-        // console.log('REMOVED: ', mentions, 'changed: ', changed);
+        console.log('REMOVED: ', mentions, 'changed: ', changed);
       }}
 
     />

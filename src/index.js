@@ -1,5 +1,8 @@
 import 'string.prototype.includes';
+import Promise from 'es6-promise';
 import Mention from './mention/Mention';
+
+Promise.polyfill();
 
 try {
   if (__PLUGIN_DEV__) {

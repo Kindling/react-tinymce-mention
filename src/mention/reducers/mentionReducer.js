@@ -97,7 +97,6 @@ const actionsMap = {
       return {};
     }
 
-    // Remove mention from internal collection of current mentions
     const foundMention = last(mentions.filter(source => {
       const { displayLabel } = source;
 

@@ -16,15 +16,3 @@ export function collectMentionIds(editor, mentionClassName) {
 
   return mentions;
 }
-
-export function moveCursorToEnd(editor) {
-  const root = editor.dom.getRoot();
-  var lastnode = root.childNodes[root.childNodes.length-1];
-
-  if (tinymce.isGecko) {
-    lastnode = lastnode.childNodes[lastnode.childNodes.length-1];
-  }
-
-  editor.selection.select(lastnode);
-  editor.selection.collapse(false);
-}

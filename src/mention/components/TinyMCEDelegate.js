@@ -5,7 +5,6 @@ import diffMentionState from '../utils/diffMentionState';
 import last from '../utils/last';
 import renderComponent from '../utils/renderComponent';
 import EditorMention from '../components/EditorMention';
-import { moveCursorToEnd } from '../utils/tinyMCEUtils';
 
 @connect(state => ({
   editor: state.mention.editor,

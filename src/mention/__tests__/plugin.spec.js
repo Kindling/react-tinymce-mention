@@ -1,9 +1,7 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import findWhere from 'lodash.findwhere';
 import { initializePlugin } from '../plugin';
 import mentionReducer from '../reducers/mentionReducer';
 import simpleDataSource from '../reducers/__tests__/fixtures/simple';
+import initializeRedux from '../utils/initializeRedux';
 import initializeEditor from './fixtures/initializeEditor';
 import { testExports } from '../plugin';
 
@@ -16,7 +14,6 @@ import {
 
 
 const {
-  _performIntermediateActions,
   _removeMentionFromEditor,
   _handleEditorBackspace,
 } = testExports;
@@ -31,14 +28,6 @@ describe('TinyMCE Plugin', () => {
     };
   });
 
-  const getState = () => {
-    const state = store.getState();
-    state.mentions.forEach(mention => delete mention.tinymceId);
-    return state;
-  };
-
-  const find = (name) => findWhere(dataSource, { displayLabel: name });
-
   beforeEach((done) => {
     jasmine.addMatchers({
       toDeepEqual: function() {
@@ -52,13 +41,14 @@ describe('TinyMCE Plugin', () => {
       }
     });
 
-    const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-
-    store = createStoreWithMiddleware(mentionReducer, {
-      dataSource: dataSource,
-      highlightIndex: 0,
-      mentions: [],
-      query: ''
+    store = initializeRedux({ mention: mentionReducer }, {
+      mention: {
+        asyncDataSource: false,
+        dataSource: dataSource,
+        highlightIndex: 0,
+        mentions: [],
+        query: ''
+      }
     });
 
     tinymce = initializeEditor();

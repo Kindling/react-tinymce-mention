@@ -1,7 +1,6 @@
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
 import findWhere from 'lodash.findwhere';
 import isEqual from 'lodash.isequal';
+import initializeRedux from '../../utils/initializeRedux';
 import mentionReducer from '../mentionReducer';
 import simpleDataSource from './fixtures/simple';
 
@@ -26,7 +25,7 @@ describe('mentionReducer', () => {
   });
 
   const getState = () => {
-    const state = store.getState();
+    const state = store.getState().mention;
     state.mentions.forEach(mention => delete mention.tinymceId);
     return state;
   };
@@ -46,13 +45,14 @@ describe('mentionReducer', () => {
       }
     });
 
-    const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
-
-    store = createStoreWithMiddleware(mentionReducer, {
-      dataSource: dataSource,
-      highlightIndex: 0,
-      mentions: [],
-      query: ''
+    store = initializeRedux({ mention: mentionReducer }, {
+      mention: {
+        asyncDataSource: false,
+        dataSource: dataSource,
+        highlightIndex: 0,
+        mentions: [],
+        query: ''
+      }
     });
   });
 
@@ -137,7 +137,7 @@ describe('mentionReducer', () => {
     expect(getState().highlightIndex).toBe(0);
     store.dispatch(moveUp());
     expect(getState().highlightIndex).toBe(2);
-  })
+  });
 
   it('should remove the selected item if no characters match from query', function() {
     store.dispatch(query('kalleberg'));

@@ -9,7 +9,7 @@ import {
   collectMentionIds,
   getEditorContent,
   getLastChar,
-  moveCursorToEnd
+  // moveCursorToEnd
 } from './utils/tinyMCEUtils';
 
 import {

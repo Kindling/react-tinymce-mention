@@ -31,9 +31,7 @@ export default class Mention {
   componentWillMount() {
     const { asyncDataSource } = this.props;
 
-    this.store = initializeRedux({
-      mention: mentionReducer,
-    }, {
+    this.store = initializeRedux({ mention: mentionReducer }, {
       mention: {
         ...initialState,
         asyncDataSource

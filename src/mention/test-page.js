@@ -105,7 +105,23 @@ function renderMentions() {
         asyncDataSource={(input) => {
           console.log(input)
 
-          return Promise.resolve();
+          return Promise.resolve([
+            {
+              id: 0,
+              searchKey: 'a',
+              displayLabel: 'a'
+            },
+            {
+              id: 1,
+              searchKey: 'b',
+              displayLabel: 'b'
+            },
+            {
+              id: 2,
+              searchKey: 'c',
+              displayLabel: 'c'
+            }
+          ]);
         }}
         delimiter={'@'}
         showDebugger={true}

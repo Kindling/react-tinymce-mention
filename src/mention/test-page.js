@@ -83,23 +83,8 @@ React.render(
       delimiter={'@'}
       showDebugger={true}
       asyncDataSource={input => {
-        return Promise.resolve([
-          {
-            id: 0,
-            searchKey: 'a',
-            displayLabel: 'a'
-          },
-          {
-            id: 1,
-            searchKey: 'b',
-            displayLabel: 'b'
-          },
-          {
-            id: 2,
-            searchKey: 'c',
-            displayLabel: 'c'
-          }
-        ]);
+        console.log(input);
+        return Promise.resolve(transformDataSource(complexDataSource))
       }}
       customRTEMention={props => {
         const { tinymceId, displayLabel } = props;
@@ -112,17 +97,7 @@ React.render(
           </span>
         );
       }}
-      transformFn={dataSource => {
-        const complexDataSource = dataSource.map(result => {
-          const { fullName } = result;
-          return {
-            searchKey: fullName,
-            displayLabel: fullName
-          };
-        });
-
-        return complexDataSource;
-      }}
+      transformFn={transformDataSource}
       onAdd={({ mentions, changed }) => {
         // console.log('ADDED: ', mentions, 'changed: ', changed);
       }}
@@ -133,3 +108,15 @@ React.render(
     />
   </div>
 , document.getElementById('mentions'));
+
+function transformDataSource(dataSource) {
+  const complexDataSource = dataSource.map(result => {
+    const { fullName } = result;
+    return {
+      searchKey: fullName,
+      displayLabel: fullName
+    };
+  });
+
+  return complexDataSource;
+}

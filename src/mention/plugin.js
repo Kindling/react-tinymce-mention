@@ -292,7 +292,6 @@ function extractMentionFromNode(mentionNode) {
 
 function removeMentionFromEditor(mentionNode) {
   removeNode(mentionNode);
-  insertSpace();
   return extractMentionFromNode(mentionNode);
 }
 
@@ -302,16 +301,6 @@ function normalizeEditorInput() {
   if (editor.getContent() === '') {
     editor.insertContent(' ');
   }
-}
-
-function insertSpace() {
-  // if (window.tinymce.isGecko) {
-    console.log(editor.dom.getRoot(), editor.dom.getRoot().childNodes);
-    tinymce.activeEditor.execCommand('mceInsertContent', false, '&nbsp;');
-    // editor.insertContent('[___space___]');
-    // editor.setContent(editor.getContent().replace('[__space__]', ' '));
-    // moveCursorToEnd(editor);
-  // }
 }
 
 // Export methods for testing

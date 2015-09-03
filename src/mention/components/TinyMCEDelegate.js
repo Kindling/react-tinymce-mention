@@ -80,7 +80,7 @@ export default class TinyMCEDelegate extends Component {
 
     editor.insertContent('insertionplaceholder');
 
-    const bm = editor.selection.getBookmark(2,false);
+    const bm = editor.selection.getBookmark(2, false);
 
     editor.setContent(
       editor

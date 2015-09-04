@@ -83,8 +83,8 @@ React.render(
       delimiter={'@'}
       showDebugger={true}
       transformFn={transformDataSource}
-      asyncDataSource={input => {
-        console.log(input);
+      dataSource={complexDataSource}
+      _asyncDataSource={input => {
         return Promise.resolve(transformDataSource(complexDataSource));
       }}
       customRTEMention={props => {

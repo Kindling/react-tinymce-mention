@@ -54,16 +54,16 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
     'Plugin must be initialized with a dataSource.  Datasource can be an array or promise.'
   );
 
+  store = reduxStore;
+  delimiter = delimiterConfig;
+
   return new Promise((resolve, reject) => {
 
     if (typeof window.tinymce === 'undefined') {
       return reject('Error initializing Mention plugin: `tinymce` is undefined.');
     }
 
-    window.tinymce.PluginManager.add('mention', (activeEditor) => {
-      editor = activeEditor;
-      store = reduxStore;
-      delimiter = delimiterConfig;
+    function loadMentionData() {
 
       // If promise, wait for it to resolve before resolving the
       // outer promise and initializing the app.
@@ -89,7 +89,17 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
         setTimeout(start, 100);
         resolve({ editor, resolvedDataSource: dataSource });
       }
-    });
+    }
+
+    if (!pluginInitialized()) {
+      window.tinymce.PluginManager.add('mention', (activeEditor) => {
+        editor = activeEditor;
+        loadMentionData();
+      });
+    } else {
+      loadMentionData();
+    }
+
   });
 }
 
@@ -211,26 +221,26 @@ function shouldSelectOrMove(keyCode, event) {
     if (keyCode === keyMap.BACKSPACE) {
       updateTypedMention(keyCode);
       return handleKeyPress(event);
-    } else {
-      switch(keyCode) {
-      case keyMap.TAB:
-        selectMention();
-        return true;
-      case keyMap.ENTER:
-        selectMention();
-        return true;
-      case keyMap.DOWN:
-        store.dispatch(moveDown());
-        return true;
-      case keyMap.UP:
-        store.dispatch(moveUp());
-        return true;
-      case keyMap.ESC:
-        stopListeningAndCleanup();
-        return true;
-      default:
-        return false;
-      }
+    }
+
+    switch(keyCode) {
+    case keyMap.TAB:
+      selectMention();
+      return true;
+    case keyMap.ENTER:
+      selectMention();
+      return true;
+    case keyMap.DOWN:
+      store.dispatch(moveDown());
+      return true;
+    case keyMap.UP:
+      store.dispatch(moveUp());
+      return true;
+    case keyMap.ESC:
+      stopListeningAndCleanup();
+      return true;
+    default:
+      return false;
     }
   }
 }
@@ -305,6 +315,13 @@ function normalizeEditorInput() {
   if (editor.getContent() === '') {
     editor.insertContent(' ');
   }
+}
+
+function pluginInitialized() {
+  const ed = window.tinymce.activeEditor;
+  const plugins = ed && ed.plugins;
+  const mention = plugins && plugins.mention;
+  return mention ? true : false;;
 }
 
 // Export methods for testing

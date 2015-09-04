@@ -214,15 +214,20 @@ function shouldSelectOrMove(keyCode, event) {
     } else {
       switch(keyCode) {
       case keyMap.TAB:
-        return selectMention();
+        selectMention();
+        return true;
       case keyMap.ENTER:
-        return selectMention();
+        selectMention();
+        return true;
       case keyMap.DOWN:
-        return store.dispatch(moveDown());
+        store.dispatch(moveDown());
+        return true;
       case keyMap.UP:
-        return store.dispatch(moveUp());
+        store.dispatch(moveUp());
+        return true;
       case keyMap.ESC:
-        return stopListeningAndCleanup();
+        stopListeningAndCleanup();
+        return true;
       default:
         return false;
       }

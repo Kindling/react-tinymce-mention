@@ -84,9 +84,6 @@ React.render(
       showDebugger={true}
       transformFn={transformDataSource}
       dataSource={complexDataSource}
-      _asyncDataSource={input => {
-        return Promise.resolve(transformDataSource(complexDataSource));
-      }}
       customRTEMention={props => {
         const { tinymceId, displayLabel } = props;
         return (
@@ -104,7 +101,6 @@ React.render(
       onRemove={({ mentions, changed }) => {
         console.log('REMOVED: ', mentions, 'changed: ', changed);
       }}
-
     />
   </div>
 , document.getElementById('mentions'));

@@ -33,12 +33,19 @@ const keyMap = {
 
 let editor;
 let delimiter = '@';
-let isFocused = false;
 let store;
+
+const focus = {
+  active: false,
+
+  toggle() {
+    return this.active = !this.active;
+  }
+};
 
 /**
  * Tracks typed characters after `@ment|`.  Allows us to determine if we
- * are within a mention when `isFocued` is active.
+ * are within a mention when `focus.active`
  */
 const typedMention = {
    value: '',
@@ -128,11 +135,6 @@ function stop() {
   editor.off();
 }
 
-/**
- * Add persistent top-level listener for delegating handlers for
- * binding and unbinding events related to UI interaction / querying.
- * @param  {jQuery.Event} event
- */
 function handleTopLevelEditorInput(event) {
   const keyCode = getKeyCode(event);
   const character = String.fromCharCode(keyCode);
@@ -140,9 +142,9 @@ function handleTopLevelEditorInput(event) {
 
   normalizeEditorInput();
 
-  if (!isFocused && delimiterIndex > -1) {
+  if (!focus.active && delimiterIndex > -1) {
     startListeningForInput();
-  } else if (!isFocused || character === ' ') {
+  } else if (!focus.active || character === ' ') {
     stopListeningAndCleanup();
   }
 }
@@ -150,7 +152,7 @@ function handleTopLevelEditorInput(event) {
 function handleTopLevelActionKeys(event) {
   const keyCode = getKeyCode(event);
 
-  if (isFocused && keyCode === keyMap.BACKSPACE) {
+  if (focus.active && keyCode === keyMap.BACKSPACE) {
     if (getLastChar(editor) === delimiter){
       stopListeningAndCleanup();
     } else {
@@ -169,11 +171,6 @@ function handleActionKeys(event) {
   }
 }
 
-/**
- * Handler for internal key-presses. Parses the input and dispatches
- * queries back to the store for list view and selection.
- * @param  {jQuery.Event} event
- */
 function handleKeyPress(event) {
   const keyCode = getKeyCode(event);
 
@@ -195,11 +192,6 @@ function handleKeyPress(event) {
   }, 0);
 }
 
-/**
- * Handler for backspace presses. Dispatches back to store with request
- * to reset the current query and matches.
- * @param  {jQuery.Event} event
- */
 function handleEditorBackspace(event) {
   const keyCode = getKeyCode(event);
   const mentionClassName = '.tinymce-mention';
@@ -207,7 +199,7 @@ function handleEditorBackspace(event) {
   if (keyCode === keyMap.BACKSPACE) {
     const foundMentionNode = closest(editor.selection.getNode(), mentionClassName);
 
-    // Query lookup
+    // Remove single
     if (foundMentionNode) {
       const mention = removeMentionFromEditor(foundMentionNode);
       store.dispatch(remove(mention));
@@ -217,9 +209,7 @@ function handleEditorBackspace(event) {
       store.dispatch(resetMentions());
       stopListeningAndCleanup();
 
-    // Default, validate internal mention state and sync if necessary. Use-case:
-    // if the user highlights an @mention and then deletes, we can no longer check
-    // the proximity of the cursor via regex and thus need to collect ids and sync.
+    // Sync
     } else {
       const mentionIds = collectMentionIds(editor, mentionClassName);
       store.dispatch(syncEditorState(mentionIds));
@@ -259,26 +249,21 @@ function shouldSelectOrMove(keyCode, event) {
 }
 
 function startListeningForInput() {
-  if (toggleFocus()) {
+  if (focus.toggle()) {
     editor.on('keydown', handleActionKeys);
     editor.on('keypress', handleKeyPress);
   }
 }
 
 function stopListeningAndCleanup() {
-  if (isFocused) {
-    toggleFocus();
+  if (focus.active) {
+    focus.toggle();
   }
 
   typedMention.clear();
   store.dispatch(resetQuery());
   editor.off('keydown', handleActionKeys);
   editor.off('keypress', handleKeyPress);
-}
-
-function toggleFocus() {
-  isFocused = !isFocused;
-  return isFocused;
 }
 
 function updateMentionText(keyCode) {

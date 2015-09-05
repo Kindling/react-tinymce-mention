@@ -87,6 +87,7 @@ export default class TinyMCEDelegate extends Component {
         .replace(/@\w+insertionplaceholder/, renderComponent(markup)));
 
     setTimeout(() => {
+      editor.getBody().focus();
       editor.selection.moveToBookmark(bm);
     });
   }

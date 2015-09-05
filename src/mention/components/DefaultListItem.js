@@ -29,7 +29,7 @@ export default class DefaultListItem {
     });
 
     return (
-      <li className={classes} onClick={::this.handleClick}>
+      <li className={classes} onMouseDown={::this.handleClick} style={{ cursor: 'pointer' }}>
         {displayLabel}
       </li>
     );

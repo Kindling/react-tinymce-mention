@@ -37,9 +37,8 @@ let isFocused = false;
 let store;
 
 /**
- * A little state machine for tracking typed characters after `@ment|`.  Allows us
- * to determine if we are within a mention when `isFocued` is active.
- * @type {String}
+ * Tracks typed characters after `@ment|`.  Allows us to determine if we
+ * are within a mention when `isFocued` is active.
  */
 const typedMention = {
    value: '',

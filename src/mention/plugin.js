@@ -33,9 +33,9 @@ const keyMap = {
 
 const delimiters = ['@', '#'];
 
-let delimiter = '@';
-let editor;
-let store;
+var delimiter = '@';
+var editor;
+var store;
 
 const focus = {
   active: false,

@@ -21,24 +21,11 @@ React.render(
     <TinyMCE
       content={initialContent}
       config={{
-        browser_spellcheck: true,
-        document_base_url: window.location.origin + '/',
-        entity_encoding: 'named',
-        entities: '160,nbsp',
         extended_valid_elements: 'blockquote[dir|style|cite|class|dir<ltr?rtl],iframe[src|frameborder|style|scrolling|class|width|height|name|align],pre',
-        ie7_compat: false,
-        image_description: false,
-        image_dimensions: false,
-        media_alt_source: false,
-        media_poster: false,
-        media_dimensions: false,
         menubar: false,
         plugins: plugins.join(','),
-        relative_urls: false,
-        remove_script_host: false,
         skin: 'kindling',
         statusbar: false,
-        target_list: false,
         theme: 'kindling',
         toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code'
       }}
@@ -65,12 +52,10 @@ React.render(
           </span>
         );
       }}
-      onAdd={({ mentions, changed }) => {
-        console.log('ADDED: ', mentions, 'changed: ', changed);
-      }}
-      onRemove={({ mentions, changed }) => {
-        console.log('REMOVED: ', mentions, 'changed: ', changed);
-      }}
+      onAdd={({ mentions, changed }) =>
+        console.log('Added', mentions, changed) }
+      onRemove={({ mentions, changed }) =>
+        console.log('Removed', mentions, changed) }
     />
   </div>
 , document.getElementById('mentions'));

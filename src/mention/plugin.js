@@ -41,8 +41,22 @@ let store;
  * to determine if we are within a mention when `isFocued` is active.
  * @type {String}
  */
-let typedMention = '';
+const typedMention = {
+   value: '',
 
+   update(str) {
+     this.value = (this.value + str).trim();
+     return this.value;
+   },
+   backspace() {
+     const val = this.value;
+     this.value = val.substring(0, val.length - 1).trim();
+     return this.value;
+   },
+   clear() {
+     this.value = '';
+   }
+ };
 
 export function initializePlugin(reduxStore, dataSource, delimiterConfig = delimiter) {
 
@@ -219,7 +233,8 @@ function shouldSelectOrMove(keyCode, event) {
 
   if (matchedSources.length) {
     if (keyCode === keyMap.BACKSPACE) {
-      updateTypedMention(keyCode);
+      typedMention.update(keyCode)
+      // updateTypedMention(keyCode);
       return handleKeyPress(event);
     }
 
@@ -257,7 +272,7 @@ function stopListeningAndCleanup() {
     toggleFocus();
   }
 
-  clearTypedMention();
+  typedMention.clear(); //clearTypedMention();
   store.dispatch(resetQuery());
   editor.off('keydown', handleActionKeys);
   editor.off('keypress', handleKeyPress);
@@ -270,29 +285,30 @@ function toggleFocus() {
 
 function updateMentionText(keyCode) {
   const mentionText = keyCode !== keyMap.BACKSPACE
-    ? updateTypedMention(getLastChar(editor))
-    : backspaceTypedMention();
+    ? typedMention.update(getLastChar(editor)) //updateTypedMention(getLastChar(editor))
+    : typedMention.backspace() //backspaceTypedMention();
 
   return mentionText;
 }
 
-function updateTypedMention(str) {
-  typedMention += str;
-  return typedMention.trim();
-}
 
-function backspaceTypedMention() {
-  typedMention = typedMention.substring(0, typedMention.length - 1);
-  return typedMention.trim();
-}
-
-function clearTypedMention() {
-  typedMention = '';
-}
+// function updateTypedMention(str) {
+//   typedMention += str;
+//   return typedMention.trim();
+// }
+//
+// function backspaceTypedMention() {
+//   typedMention = typedMention.
+//   return typedMention.trim();
+// }
+//
+// function clearTypedMention() {
+//   typedMention = '';
+// }
 
 function selectMention() {
   store.dispatch(select());
-  clearTypedMention();
+  typedMention.clear(); //clearTypedMention();
   stopListeningAndCleanup();
   return true;
 }

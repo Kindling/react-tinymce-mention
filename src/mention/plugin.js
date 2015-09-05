@@ -105,27 +105,24 @@ export function initializePlugin(reduxStore, dataSource, delimiterValue = delimi
 function loadMentions(dataSource, resolve) {
   if (typeof dataSource.then === 'function') {
     dataSource.then(response => {
-      setTimeout(start, 100); // FF fix
+      start();
       resolve({
         editor,
         resolvedDataSource: response
       });
     });
 
-    // Spec-compliant promise
     if (dataSource.catch === 'function') {
       dataSource.catch(error => {
         throw new Error(error);
       });
-
-    // jQuery
     } else if (dataSource.fail === 'function') {
       dataSource.fail(error => {
         throw new Error(error);
       });
     }
   } else {
-    setTimeout(start, 100);
+    start();
     resolve({
       editor,
       resolvedDataSource: dataSource
@@ -134,11 +131,15 @@ function loadMentions(dataSource, resolve) {
 }
 
 function start() {
-  stop();
+  const delay = 100; // ff fix
 
-  editor.on('keypress', handleTopLevelEditorInput);
-  editor.on('keydown', handleTopLevelActionKeys);
-  editor.on('keyup', handleEditorBackspace);
+  setTimeout(() => {
+    stop();
+
+    editor.on('keypress', handleTopLevelEditorInput);
+    editor.on('keydown', handleTopLevelActionKeys);
+    editor.on('keyup', handleEditorBackspace);
+  }, delay);
 }
 
 function stop() {
@@ -258,22 +259,21 @@ function shouldSelectOrMove(keyCode, event) {
 }
 
 function startListeningForInput() {
-  if (focus.toggle()) {
+  if (!focus.active) {
+    focus.toggle();
     editor.on('keydown', handleActionKeys);
     editor.on('keypress', handleKeyPress);
   }
 }
 
-// FIXME
 function stopListeningAndCleanup() {
   if (focus.active) {
     focus.toggle();
+    typedMention.clear();
+    store.dispatch(resetQuery());
+    editor.off('keydown', handleActionKeys);
+    editor.off('keypress', handleKeyPress);
   }
-
-  typedMention.clear();
-  store.dispatch(resetQuery());
-  editor.off('keydown', handleActionKeys);
-  editor.off('keypress', handleKeyPress);
 }
 
 function updateMentionText(keyCode) {
@@ -304,9 +304,8 @@ function removeMentionFromEditor(mentionNode) {
   return extractMentionFromNode(mentionNode);
 }
 
+// Force a root element in case one doesn't exist.
 function normalizeEditorInput() {
-
-  // Force a root element in case one doesn't exist.
   if (editor.getContent() === '') {
     editor.insertContent(' ');
   }

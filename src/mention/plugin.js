@@ -167,7 +167,7 @@ function handleActionKeys(event) {
     event.preventDefault();
     return false;
   }
-}
+};
 
 function handleKeyPress(event) {
   const keyCode = getKeyCode(event);
@@ -202,7 +202,7 @@ function handleEditorBackspace(event) {
       const mention = removeMentionFromEditor(foundMentionNode);
       store.dispatch(remove(mention));
 
-    // Remove all mentions
+    // Remove all
     } else if (!getEditorContent(editor).trim().length) {
       store.dispatch(resetMentions());
       stopListeningAndCleanup();

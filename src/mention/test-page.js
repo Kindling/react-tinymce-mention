@@ -80,7 +80,7 @@ React.render(
       }}
     />
     <Mention
-      delimiter={'@'}
+      delimiter={'#'}
       showDebugger={true}
       transformFn={transformDataSource}
       dataSource={complexDataSource}

@@ -73,6 +73,7 @@ export default class Mention {
     const {
       customListRenderer,
       customRTEMention,
+      delimiter,
       onAdd,
       onRemove,
       showDebugger
@@ -86,6 +87,7 @@ export default class Mention {
           />
           <TinyMCEDelegate
             customRTEMention={customRTEMention}
+            delimiter={delimiter}
             onAdd={onAdd}
             onRemove={onRemove}
           />

@@ -71,20 +71,21 @@ export default class TinyMCEDelegate extends Component {
   }
 
   _renderMentionIntoEditor() {
-    const { customRTEMention, editor, mentions } = this.props;
+    const { customRTEMention, delimiter, editor, mentions } = this.props;
     const mention = last(mentions);
     const markup = customRTEMention
       ? customRTEMention({...mention})
       : <EditorMention {...mention} />;
 
-    editor.insertContent('insertionplaceholder');
+    editor.insertContent('__PLACEHOLDER__');
 
     const bm = editor.selection.getBookmark(2, false);
+    const re = new RegExp(delimiter + '\\w+__PLACEHOLDER__');
 
     editor.setContent(
       editor
         .getContent()
-        .replace(/@\w+insertionplaceholder/, renderComponent(markup)));
+        .replace(re, renderComponent(markup)));
 
     setTimeout(() => {
       editor.getBody().focus();

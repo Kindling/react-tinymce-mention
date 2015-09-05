@@ -1,9 +1,9 @@
 import invariant from 'invariant';
-import twitter from 'twitter-text';
 import closest from 'dom-closest';
 import removeNode from 'dom-remove';
 import findWhere from 'lodash.findwhere';
 import getKeyCode from './utils/getKeyCode';
+import extractMentions from './utils/extractMentions';
 
 import {
   collectMentionIds,
@@ -136,11 +136,10 @@ function stop() {
 function handleTopLevelEditorInput(event) {
   const keyCode = getKeyCode(event);
   const character = String.fromCharCode(keyCode);
-  const delimiterIndex = delimiter.indexOf(character);
 
   normalizeEditorInput();
 
-  if (!focus.active && delimiterIndex > -1) {
+  if (!focus.active && delimiter.indexOf(character) > -1) {
     startListeningForInput();
   } else if (!focus.active || character === ' ') {
     stopListeningAndCleanup();
@@ -177,14 +176,14 @@ function handleKeyPress(event) {
 
     if (mentionText !== '') {
       const content = getEditorContent(editor);
-      const extractedMentions = twitter.extractMentionsWithIndices(content);
+      const { mentions, prop } = extractMentions(content, delimiter);
 
-      const mention = findWhere(extractedMentions, {
-        screenName: mentionText
+      const mention = findWhere(mentions, {
+        [prop]: mentionText
       });
 
       if (mention) {
-        store.dispatch(query(mention.screenName));
+        store.dispatch(query(mention[prop]));
       }
     }
   }, 0);
@@ -280,9 +279,10 @@ function selectMention() {
 }
 
 function extractMentionFromNode(mentionNode) {
+  const re = new RegExp('(?:' + delimiter + '|_)', 'g');
   return mentionNode
     .innerHTML
-    .replace(/(?:@|_)/g, '')
+    .replace(re, '')
     .trim();
 }
 

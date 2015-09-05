@@ -31,6 +31,8 @@ const keyMap = {
   ESC: 27
 };
 
+const delimiters = ['@', '#'];
+
 let delimiter = '@';
 let editor;
 let store;
@@ -65,60 +67,70 @@ const typedMention = {
    }
  };
 
-export function initializePlugin(reduxStore, dataSource, delimiterConfig = delimiter) {
+export function initializePlugin(reduxStore, dataSource, delimiterValue = delimiter) {
 
-  invariant(reduxStore,
-    'Plugin must be initialized with a Redux store.'
-  );
-
-  invariant(dataSource,
-    'Plugin must be initialized with a dataSource.  Datasource can be an array or promise.'
-  );
-
-  store = reduxStore;
-  delimiter = delimiterConfig;
+  if (typeof window.tinymce === 'undefined') {
+    throw new Error('Error initializing Mention plugin: `tinymce` is undefined.');
+  }
 
   return new Promise((resolve, reject) => {
 
-    if (typeof window.tinymce === 'undefined') {
-      return reject('Error initializing Mention plugin: `tinymce` is undefined.');
-    }
-
-    function loadMentions() {
-
-      if (typeof dataSource.then === 'function') {
-        dataSource.then(response => {
-          setTimeout(start, 100); // FF fix
-          resolve({ editor, resolvedDataSource: response });
-        });
-
-        // Spec-compliant promise
-        if (dataSource.catch === 'function') {
-          dataSource.catch(error => {
-            throw new Error(error);
-          });
-
-        // jQuery
-        } else if (dataSource.fail === 'function') {
-          dataSource.fail(error => {
-            throw new Error(error);
-          });
-        }
-      } else {
-        setTimeout(start, 100);
-        resolve({ editor, resolvedDataSource: dataSource });
-      }
-    }
-
-    if (!pluginInitialized()) {
-      window.tinymce.PluginManager.add('mention', (activeEditor) => {
-        editor = activeEditor;
-        loadMentions();
-      });
+    if (pluginInitialized()) {
+      loadMentions(dataSource, resolve, reject);
     } else {
-      loadMentions();
+      window.tinymce.PluginManager.add('mention', (activeEditor) => {
+
+        invariant(reduxStore,
+          'Plugin must be initialized with a Redux store.'
+        );
+
+        invariant(dataSource,
+          'Plugin must be initialized with a dataSource.  Datasource can be an array or promise.'
+        );
+
+        invariant(isValidDelimiter(delimiterValue),
+          `Plugin must be initialized with a valid delimiter (${delimiters.toString()})`
+        );
+
+        store = reduxStore;
+        delimiter = delimiterValue;
+        editor = activeEditor;
+
+        loadMentions(dataSource, resolve, reject);
+      });
     }
   });
+}
+
+function loadMentions(dataSource, resolve) {
+  if (typeof dataSource.then === 'function') {
+    dataSource.then(response => {
+      setTimeout(start, 100); // FF fix
+      resolve({
+        editor,
+        resolvedDataSource: response
+      });
+    });
+
+    // Spec-compliant promise
+    if (dataSource.catch === 'function') {
+      dataSource.catch(error => {
+        throw new Error(error);
+      });
+
+    // jQuery
+    } else if (dataSource.fail === 'function') {
+      dataSource.fail(error => {
+        throw new Error(error);
+      });
+    }
+  } else {
+    setTimeout(start, 100);
+    resolve({
+      editor,
+      resolvedDataSource: dataSource
+    });
+  }
 }
 
 function start() {
@@ -252,6 +264,7 @@ function startListeningForInput() {
   }
 }
 
+// FIXME
 function stopListeningAndCleanup() {
   if (focus.active) {
     focus.toggle();
@@ -304,6 +317,10 @@ function pluginInitialized() {
   const plugins = ed && ed.plugins;
   const mention = plugins && plugins.mention;
   return mention ? true : false;;
+}
+
+function isValidDelimiter(delimiter) {
+  return delimiters.some(d => d === delimiter);
 }
 
 // Export methods for testing

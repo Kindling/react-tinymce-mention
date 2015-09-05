@@ -131,7 +131,7 @@ function loadMentions(dataSource, resolve) {
 }
 
 function start() {
-  const delay = 100; // ff fix
+  const delay = 100; // FireFox fix
 
   setTimeout(() => {
     stop();

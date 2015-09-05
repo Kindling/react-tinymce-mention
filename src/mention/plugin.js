@@ -232,8 +232,7 @@ function shouldSelectOrMove(keyCode, event) {
 
   if (matchedSources.length) {
     if (keyCode === keyMap.BACKSPACE) {
-      typedMention.update(keyCode)
-      // updateTypedMention(keyCode);
+      typedMention.update(keyCode);
       return handleKeyPress(event);
     }
 
@@ -271,7 +270,7 @@ function stopListeningAndCleanup() {
     toggleFocus();
   }
 
-  typedMention.clear(); //clearTypedMention();
+  typedMention.clear();
   store.dispatch(resetQuery());
   editor.off('keydown', handleActionKeys);
   editor.off('keypress', handleKeyPress);
@@ -284,30 +283,15 @@ function toggleFocus() {
 
 function updateMentionText(keyCode) {
   const mentionText = keyCode !== keyMap.BACKSPACE
-    ? typedMention.update(getLastChar(editor)) //updateTypedMention(getLastChar(editor))
-    : typedMention.backspace() //backspaceTypedMention();
+    ? typedMention.update(getLastChar(editor))
+    : typedMention.backspace();
 
   return mentionText;
 }
 
-
-// function updateTypedMention(str) {
-//   typedMention += str;
-//   return typedMention.trim();
-// }
-//
-// function backspaceTypedMention() {
-//   typedMention = typedMention.
-//   return typedMention.trim();
-// }
-//
-// function clearTypedMention() {
-//   typedMention = '';
-// }
-
 function selectMention() {
   store.dispatch(select());
-  typedMention.clear(); //clearTypedMention();
+  typedMention.clear();
   stopListeningAndCleanup();
   return true;
 }

@@ -31,15 +31,16 @@ const keyMap = {
   ESC: 27
 };
 
-let editor;
 let delimiter = '@';
+let editor;
 let store;
 
 const focus = {
   active: false,
 
   toggle() {
-    return this.active = !this.active;
+    this.active = !this.active;
+    return this.active;
   }
 };
 
@@ -83,10 +84,8 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
       return reject('Error initializing Mention plugin: `tinymce` is undefined.');
     }
 
-    function loadMentionData() {
+    function loadMentions() {
 
-      // If promise, wait for it to resolve before resolving the
-      // outer promise and initializing the app.
       if (typeof dataSource.then === 'function') {
         dataSource.then(response => {
           setTimeout(start, 100); // FF fix
@@ -114,12 +113,11 @@ export function initializePlugin(reduxStore, dataSource, delimiterConfig = delim
     if (!pluginInitialized()) {
       window.tinymce.PluginManager.add('mention', (activeEditor) => {
         editor = activeEditor;
-        loadMentionData();
+        loadMentions();
       });
     } else {
-      loadMentionData();
+      loadMentions();
     }
-
   });
 }
 

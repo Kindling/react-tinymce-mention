@@ -74,8 +74,10 @@ export default class TinyMCEDelegate extends Component {
     const { customRTEMention, delimiter, editor, mentions } = this.props;
     const mention = last(mentions);
     const markup = customRTEMention
-      ? customRTEMention({...mention})
-      : <EditorMention {...mention} />;
+      ? customRTEMention({...mention, delimiter })
+      : <EditorMention {...mention}
+          delimiter={delimiter}
+        />;
 
     editor.insertContent('__PLACEHOLDER__');
 

@@ -85,11 +85,11 @@ React.render(
       transformFn={transformDataSource}
       dataSource={complexDataSource}
       customRTEMention={props => {
-        const { tinymceId, displayLabel } = props;
+        const { tinymceId, delimiter, displayLabel } = props;
         return (
           <span>
             <a href='#' id={tinymceId} className='tinymce-mention'>
-              @{displayLabel}
+              {delimiter}{displayLabel}
             </a>
             &nbsp;
           </span>

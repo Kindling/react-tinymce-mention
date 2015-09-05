@@ -79,10 +79,10 @@ export default class TinyMCEDelegate extends Component {
           delimiter={delimiter}
         />;
 
-    editor.insertContent('__PLACEHOLDER__');
+    editor.insertContent('____PLACEHOLDER____');
 
     const bm = editor.selection.getBookmark(2, false);
-    const re = new RegExp(delimiter + '\\w+__PLACEHOLDER__');
+    const re = new RegExp(delimiter + '\\w+____PLACEHOLDER____');
 
     editor.setContent(
       editor

@@ -85,7 +85,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterValue = delimi
         );
 
         invariant(dataSource,
-          'Plugin must be initialized with a dataSource.  Datasource can be an array or promise.'
+          'Plugin must be initialized with a `dataSource` that is an array or promise.'
         );
 
         invariant(isValidDelimiter(delimiterValue),
@@ -209,17 +209,14 @@ function handleEditorBackspace(event) {
   if (keyCode === keyMap.BACKSPACE) {
     const foundMentionNode = closest(editor.selection.getNode(), mentionClassName);
 
-    // Remove single
     if (foundMentionNode) {
       const mention = removeMentionFromEditor(foundMentionNode);
       store.dispatch(remove(mention));
 
-    // Remove all
     } else if (!getEditorContent(editor).trim().length) {
       store.dispatch(resetMentions());
       stopListeningAndCleanup();
 
-    // Sync
     } else {
       const mentionIds = collectMentionIds(editor, mentionClassName);
       store.dispatch(syncEditorState(mentionIds));
@@ -315,7 +312,7 @@ function pluginInitialized() {
   const ed = window.tinymce.activeEditor;
   const plugins = ed && ed.plugins;
   const mention = plugins && plugins.mention;
-  return mention ? true : false;;
+  return mention ? true : false;
 }
 
 function isValidDelimiter(delimiter) {

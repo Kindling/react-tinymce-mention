@@ -138,7 +138,7 @@ function start() {
 
     editor.on('keypress', handleTopLevelEditorInput);
     editor.on('keydown', handleTopLevelActionKeys);
-    editor.on('keyup', handleEditorBackspace);
+    editor.on('keyup', handleBackspace);
   }, delay);
 }
 
@@ -149,10 +149,11 @@ function stop() {
 function handleTopLevelEditorInput(event) {
   const keyCode = getKeyCode(event);
   const character = String.fromCharCode(keyCode);
+  const foundDelimiter = delimiter.indexOf(character) > -1;
 
-  normalizeEditorInput();
+  normalizeEditorInput(editor);
 
-  if (!focus.active && delimiter.indexOf(character) > -1) {
+  if (!focus.active && foundDelimiter) {
     startListeningForInput();
   } else if (!focus.active || character === ' ') {
     stopListeningAndCleanup();
@@ -202,7 +203,7 @@ function handleKeyPress(event) {
   }, 0);
 }
 
-function handleEditorBackspace(event) {
+function handleBackspace(event) {
   const keyCode = getKeyCode(event);
   const mentionClassName = '.tinymce-mention';
 
@@ -258,6 +259,7 @@ function shouldSelectOrMove(keyCode, event) {
 function startListeningForInput() {
   if (!focus.active) {
     focus.toggle();
+
     editor.on('keydown', handleActionKeys);
     editor.on('keypress', handleKeyPress);
   }
@@ -288,7 +290,7 @@ function selectMention() {
   return true;
 }
 
-function extractMentionFromNode(mentionNode) {
+function extractMentionFromNode(mentionNode, delimiter) {
   const re = new RegExp('(?:' + delimiter + '|_)', 'g');
   return mentionNode
     .innerHTML
@@ -298,11 +300,11 @@ function extractMentionFromNode(mentionNode) {
 
 function removeMentionFromEditor(mentionNode) {
   removeNode(mentionNode);
-  return extractMentionFromNode(mentionNode);
+  return extractMentionFromNode(mentionNode, delimiter);
 }
 
 // Force a root element in case one doesn't exist.
-function normalizeEditorInput() {
+function normalizeEditorInput(editor) {
   if (editor.getContent() === '') {
     editor.insertContent(' ');
   }
@@ -321,8 +323,16 @@ function isValidDelimiter(delimiter) {
 
 // Export methods for testing
 export const testExports = {
+  _typedMention: typedMention,
+  _focus: focus,
+  _loadMentions: loadMentions,
+  _shouldSelectOrMove: shouldSelectOrMove,
+  _updateMentionText: updateMentionText,
+  _normalizeEditorInput: normalizeEditorInput,
+  _isValidDelimiter: isValidDelimiter,
+
   _handleKeyPress: handleKeyPress,
-  _handleEditorBackspace: handleEditorBackspace,
+  _handleEditorBackspace: handleBackspace,
   _removeMentionFromEditor: removeMentionFromEditor,
   _extractMentionFromNode: extractMentionFromNode
 };

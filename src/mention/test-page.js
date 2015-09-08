@@ -51,22 +51,7 @@ React.render(
       delimiter={'@'}
       showDebugger={true}
       transformFn={transformDataSource}
-      _dataSource={complexDataSource}
-      dataSource={[
-        {
-          fullName: 'chris'
-        },
-        {
-          fullName: 'david'
-        },
-        {
-          fullName: 'jim'
-        },
-        {
-          fullName: 'garrett'
-        }
-
-      ]}
+      dataSource={complexDataSource}
       customRTEMention={props => {
         const { tinymceId, delimiter, displayLabel } = props;
         return (

@@ -96,7 +96,10 @@ export function initializePlugin(reduxStore, dataSource, delimiterValue) {
         delimiter = delimiterValue;
         editor = activeEditor;
 
-        loadMentions(dataSource, resolve, reject);
+        setTimeout(() => {
+          loadMentions(dataSource, resolve, reject);
+        }, 100);
+
       });
     }
   });
@@ -179,7 +182,7 @@ function handleActionKeys(event) {
     event.preventDefault();
     return false;
   }
-};
+}
 
 function handleKeyPress(event) {
   const keyCode = getKeyCode(event);

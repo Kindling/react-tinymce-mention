@@ -6,7 +6,7 @@ Promise.polyfill();
 
 try {
   if (__PLUGIN_DEV__) {
-    require('./mention/test-page');
+    require('./mention/test-page-async');
   }
 } catch (error) {}
 

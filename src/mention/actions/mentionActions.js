@@ -1,5 +1,5 @@
 import * as Types from '../constants/MentionActionTypes';
-import inputIsValid from '../utils/inputIsValid';
+import inputValid from '../utils/inputValid';
 
 export function finalizeSetup(editor, dataSource) {
   return {
@@ -27,7 +27,7 @@ export function query(input) {
   return (dispatch, getState) => {
     const { asyncDataSource } = getState().mention;
 
-    if (asyncDataSource && inputIsValid(input)) {
+    if (asyncDataSource && inputValid(input)) {
       asyncDataSource(input).then((response) => {
         dispatch({
           type: Types.QUERY,

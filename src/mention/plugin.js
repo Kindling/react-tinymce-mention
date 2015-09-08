@@ -67,7 +67,7 @@ const typedMention = {
    }
  };
 
-export function initializePlugin(reduxStore, dataSource, delimiterValue = delimiter) {
+export function initializePlugin(reduxStore, dataSource, delimiterValue) {
 
   if (typeof window.tinymce === 'undefined') {
     throw new Error('Error initializing Mention plugin: `tinymce` is undefined.');
@@ -95,6 +95,8 @@ export function initializePlugin(reduxStore, dataSource, delimiterValue = delimi
         store = reduxStore;
         delimiter = delimiterValue;
         editor = activeEditor;
+
+        console.log(delimiter);
 
         loadMentions(dataSource, resolve, reject);
       });

@@ -31,12 +31,13 @@ React.render(
       }}
     />
     <Mention
+      delimiter={'@'}
       showDebugger={true}
       asyncDataSource={(query) => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           axios.get(`/examples/shared/api/complex.json?q=${query}`)
             .then(response => {
-              resolve(transformDataSource(response));
+              resolve(transformDataSource(response.data));
             });
         });
       }}

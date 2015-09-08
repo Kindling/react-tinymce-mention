@@ -1,6 +1,6 @@
-const INPUT_THRESHOLD = 2;
+const INPUT_THRESHOLD = 1;
 
-export default function inputIsValid(input) {
+export default function inputValid(input) {
   const length = input.length;
 
   return (length > INPUT_THRESHOLD || length === 0)

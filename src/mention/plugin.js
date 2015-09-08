@@ -96,8 +96,6 @@ export function initializePlugin(reduxStore, dataSource, delimiterValue) {
         delimiter = delimiterValue;
         editor = activeEditor;
 
-        console.log(delimiter);
-
         loadMentions(dataSource, resolve, reject);
       });
     }

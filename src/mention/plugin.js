@@ -142,7 +142,7 @@ function start() {
 }
 
 function stop() {
-  editor.off();
+  // editor.off();
 }
 
 function handleTopLevelEditorInput(event) {

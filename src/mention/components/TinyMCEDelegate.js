@@ -79,10 +79,7 @@ export default class TinyMCEDelegate extends Component {
           delimiter={delimiter}
         />;
 
-    editor.insertContent('____PLACEHOLDER____');
-
-    const bm = editor.selection.getBookmark(2, false);
-    const re = new RegExp(delimiter + '\\w+____PLACEHOLDER____');
+    editor.insertContent('insertionplaceholder<span id="cursor"></span>');
 
     editor.setContent(
       editor
@@ -91,7 +88,9 @@ export default class TinyMCEDelegate extends Component {
 
     setTimeout(() => {
       editor.getBody().focus();
-      editor.selection.moveToBookmark(bm);
+      editor.selection.select(editor.dom.select('#cursor')[0]);
+      editor.selection.collapse(true);
+      editor.dom.remove(editor.dom.select('#cursor')[0]);
     });
   }
 

@@ -303,8 +303,8 @@ function removeMentionFromEditor(mentionNode) {
 }
 
 // Force a root element in case one doesn't exist.
-function normalizeEditorInput(editor) {
-  if (editor.getContent() === '') {
+function normalizeEditorInput() {
+  if (editor.getContent() === '' || editor.getContent({format: 'raw'}) === '<br>') {
     editor.insertContent(' ');
   }
 }

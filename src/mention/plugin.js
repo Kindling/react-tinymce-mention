@@ -105,7 +105,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterValue) {
 function loadMentions(dataSource, resolve) {
   if (typeof dataSource.then === 'function') {
     dataSource.then(response => {
-      start();
+      setTimeout(start, 100) //();
       resolve({
         editor,
         resolvedDataSource: response
@@ -122,7 +122,7 @@ function loadMentions(dataSource, resolve) {
       });
     }
   } else {
-    start();
+    setTimeout(start, 100) //();
     resolve({
       editor,
       resolvedDataSource: dataSource
@@ -134,11 +134,11 @@ function start() {
   const delay = 100; // FireFox fix
 
   stop();
-  setTimeout(() => {
+  // setTimeout(() => {
     editor.on('keypress', handleTopLevelEditorInput);
     editor.on('keydown', handleTopLevelActionKeys);
     editor.on('keyup', handleBackspace);
-  }, delay);
+  // }, delay);
 }
 
 function stop() {

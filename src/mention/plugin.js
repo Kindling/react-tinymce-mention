@@ -133,9 +133,8 @@ function loadMentions(dataSource, resolve) {
 function start() {
   const delay = 100; // FireFox fix
 
+  stop();
   setTimeout(() => {
-    stop();
-
     editor.on('keypress', handleTopLevelEditorInput);
     editor.on('keydown', handleTopLevelActionKeys);
     editor.on('keyup', handleBackspace);

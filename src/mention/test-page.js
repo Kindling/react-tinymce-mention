@@ -52,8 +52,6 @@ React.render(
 function init() {
   const el = document.getElementById('mentions');
 
-  // React.unmountComponentAtNode(el);
-
   React.render(
     <div>
       <button onClick={() => init()}>Reload</button>

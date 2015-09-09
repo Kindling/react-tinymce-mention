@@ -93,7 +93,7 @@ export default class TinyMCEDelegate extends Component {
       editor.selection.select(editor.dom.select('#cursor')[0]);
       editor.selection.collapse(true);
       editor.dom.remove(editor.dom.select('#cursor')[0]);
-    });
+    }, 0);
   }
 
   render() {

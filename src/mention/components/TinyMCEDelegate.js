@@ -82,13 +82,12 @@ export default class TinyMCEDelegate extends Component {
 
     editor.insertContent('insertionplaceholder<span id="cursor">&nbsp;</span>');
 
+    editor.setContent(
+      editor
+        .getContent()
+        .replace(re, renderComponent(markup)));
 
     setTimeout(() => {
-      editor.setContent(
-        editor
-          .getContent()
-          .replace(re, renderComponent(markup)));
-
       editor.getBody().focus();
       editor.selection.select(editor.dom.select('#cursor')[0]);
       editor.selection.collapse(true);

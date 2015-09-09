@@ -304,9 +304,10 @@ function removeMentionFromEditor(mentionNode) {
   return extractMentionFromNode(mentionNode, delimiter);
 }
 
+// TODO: Cleanup
 // Force a root element in case one doesn't exist.
 function normalizeEditorInput() {
-  if (editor.getContent() === '' || editor.getContent({format: 'raw'}) === '<br>') {
+  if (editor.getContent() === '' || editor.getContent({ format: 'raw' }) === '<br>') {
     editor.insertContent(' ');
   }
 }

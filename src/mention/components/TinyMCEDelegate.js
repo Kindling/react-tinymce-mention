@@ -77,7 +77,7 @@ export default class TinyMCEDelegate extends Component {
       ? customRTEMention({...mention})
       : <EditorMention {...mention} />;
 
-    editor.insertContent('insertionplaceholder<span id="cursor"></span>');
+    editor.insertContent('insertionplaceholder<span id="cursor">&nbsp;</span>');
 
     editor.setContent(
       editor

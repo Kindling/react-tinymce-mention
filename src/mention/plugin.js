@@ -96,48 +96,47 @@ export function initializePlugin(reduxStore, dataSource, delimiterValue) {
         delimiter = delimiterValue;
         editor = activeEditor;
 
-        setTimeout(() => {
-          loadMentions(dataSource, resolve, reject);
-        }, 100);
-
+        loadMentions(dataSource, resolve, reject);
       });
     }
   });
 }
 
 function loadMentions(dataSource, resolve) {
-  if (typeof dataSource.then === 'function') {
-    dataSource.then(response => {
+  setTimeout(() => {
+    if (typeof dataSource.then === 'function') {
+      dataSource.then(response => {
+        start();
+        resolve({
+          editor,
+          resolvedDataSource: response
+        });
+      });
+
+      if (dataSource.catch === 'function') {
+        dataSource.catch(error => {
+          throw new Error(error);
+        });
+      } else if (dataSource.fail === 'function') {
+        dataSource.fail(error => {
+          throw new Error(error);
+        });
+      }
+    } else {
       start();
       resolve({
         editor,
-        resolvedDataSource: response
-      });
-    });
-
-    if (dataSource.catch === 'function') {
-      dataSource.catch(error => {
-        throw new Error(error);
-      });
-    } else if (dataSource.fail === 'function') {
-      dataSource.fail(error => {
-        throw new Error(error);
+        resolvedDataSource: dataSource
       });
     }
-  } else {
-    start();
-    resolve({
-      editor,
-      resolvedDataSource: dataSource
-    });
-  }
+  }, 50);
 }
 
 function start() {
   const delay = 100; // FireFox fix
-
-  stop();
   setTimeout(() => {
+    stop();
+
     editor.on('keypress', handleTopLevelEditorInput);
     editor.on('keydown', handleTopLevelActionKeys);
     editor.on('keyup', handleBackspace);

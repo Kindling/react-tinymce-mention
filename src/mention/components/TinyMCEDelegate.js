@@ -82,6 +82,7 @@ export default class TinyMCEDelegate extends Component {
 
     editor.insertContent('insertionplaceholder<span id="cursor">&nbsp;</span>');
 
+    // FIXME: configurable delimiter
     editor.setContent(
       editor
         .getContent()

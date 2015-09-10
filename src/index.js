@@ -1,4 +1,3 @@
-import 'es5-shim';
 import 'string.prototype.includes';
 import Promise from 'es6-promise';
 import Mention from './mention/Mention';

@@ -213,12 +213,12 @@ function handleKeyPress(event) {
 function handleBackspace(event) {
   const keyCode = getKeyCode(event);
   const mentionClassName = '.tinymce-mention';
-  const $ = tinymce.dom.DomQuery;
+  const $ = window.tinymce.dom.DomQuery;
 
   if (keyCode === keyMap.BACKSPACE) {
     const node = editor.selection.getNode();
 
-    const el = tinymce.isIE
+    const el = window.tinymce.isIE
       ? node.firstElementChild
       : node;
 
@@ -228,7 +228,7 @@ function handleBackspace(event) {
       const mention = removeMentionFromEditor(foundMentionNode);
       store.dispatch(remove(mention));
 
-    } else if (!getEditorContent(editor).trim().length) {
+    } else if (!editor.getContent({format: 'html'}).trim().length) {
       store.dispatch(resetMentions());
       stopListeningAndCleanup();
 

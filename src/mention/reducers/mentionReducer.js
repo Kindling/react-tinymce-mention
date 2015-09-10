@@ -160,7 +160,7 @@ const actionsMap = {
 
     return filteredMentions.length
       ? { mentions: filteredMentions }
-      : {};
+      : { mentions: [] };
   }
 };
 

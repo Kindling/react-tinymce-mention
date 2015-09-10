@@ -26,7 +26,7 @@ const {
   _handleEditorBackspace,
 } = testExports;
 
-describe('TinyMCE Plugin', () => {
+fdescribe('TinyMCE Plugin', () => {
   var store, tinymce, editor;
 
   const dataSource = simpleDataSource.sort().map(source => {
@@ -73,37 +73,59 @@ describe('TinyMCE Plugin', () => {
     editor = null;
   });
 
-  describe('typedMention', function() {
-    it('should update', function() {
+  describe('#typedMention', function() {
+    beforeEach(function() {
+      _typedMention.clear();
+    });
 
+    it('should update', function() {
+      var val = _typedMention.update('hey');
+      expect(_typedMention.value).toEqual('hey');
+      expect(val).toEqual('hey');
+
+      _typedMention.update('hey you');
+      expect(_typedMention.value).toEqual('heyhey you');
     });
 
     it('should backspace', function() {
-
-    });
-
-    it('should clear', function() {
-
+      _typedMention.update('hey');
+      _typedMention.backspace();
+      expect(_typedMention.value).toEqual('he');
+      _typedMention.backspace();
+      expect(_typedMention.value).toEqual('h');
+      _typedMention.update('ey');
+      expect(_typedMention.value).toEqual('hey');
     });
   });
 
-  describe('focus', function() {
+  describe('#focus', function() {
+
     it('should toggle', function() {
-
+      expect(_focus.toggle()).toEqual(true);
+      expect(_focus.toggle()).toEqual(false);
     });
   });
 
-  describe('#loadMentions', function() {
-    it('should load datasources that are spec Promises', function() {
+  fdescribe('#loadMentions', function() {
+    const dataSource = ['a', 'b', 'c'];
 
-    });
+    fit('should load datasources that are Promises', function(done) {
+      const promiseDataSource = {
+        then(resolve) {
+          resolve(dataSource);
+        }
+      };
 
-    it('should load datasources that are jquery Promises', function() {
-
+      _loadMentions(promiseDataSource, ({ resolvedDataSource }) => {
+        expect(resolvedDataSource).toEqual(dataSource);
+        done();
+      });
     });
 
     it('should load datasources that are arrays', function() {
-
+      _loadMentions(dataSource, ({ resolvedDataSource }) => {
+        expect(resolvedDataSource).toEqual(dataSource);
+      });
     });
   });
 

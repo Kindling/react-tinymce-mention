@@ -1,6 +1,6 @@
-var path = require('path');
-var webpack = require('webpack');
-var config = require('./webpack.config');
+const path = require('path');
+const webpack = require('webpack');
+const config = require('./webpack.config');
 
 config.devtool = false;
 config.entry = './src/index';

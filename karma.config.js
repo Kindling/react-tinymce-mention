@@ -13,8 +13,6 @@ module.exports = function (config) {
 
     files: [
       'https://code.jquery.com/jquery-2.1.4.js',
-      'examples/shared/scripts/vendor/tinymce/skins/kinding/skin.min.css',
-      'examples/shared/scripts/vendor/tinymce/skins/kinding/content.min.css',
       'examples/shared/scripts/vendor/tinymce/tinymce.full.js',
       'karma.tests.webpack.js'
     ],
@@ -43,5 +41,5 @@ module.exports = function (config) {
     webpackServer: {
       noInfo: true
     }
-  })
-}
+  });
+};

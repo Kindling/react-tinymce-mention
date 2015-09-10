@@ -243,6 +243,10 @@ function shouldSelectOrMove(keyCode, event) {
   const { matchedSources } = store.getState().mention;
 
   if (matchedSources.length) {
+    if (store.getState().mention.loading) {
+      return true;
+    }
+
     if (keyCode === keyMap.BACKSPACE) {
       typedMention.update(keyCode);
       return handleKeyPress(event);

@@ -11,6 +11,15 @@ export function finalizeSetup(editor, dataSource) {
   };
 }
 
+export function loading(isLoading) {
+  return {
+    type: Types.LOADING,
+    payload: {
+      loading: isLoading
+    }
+  };
+}
+
 export function moveDown() {
   return {
     type: Types.MOVE_DOWN
@@ -28,12 +37,15 @@ export function query(input) {
     const { asyncDataSource } = getState().mention;
 
     if (asyncDataSource && inputValid(input)) {
+      dispatch(loading(true));
+
       asyncDataSource(input).then((response) => {
         dispatch({
           type: Types.QUERY,
           payload: {
-            query: input,
-            dataSource: response
+            dataSource: response,
+            loading: false,
+            query: input
           }
         });
       });

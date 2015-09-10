@@ -24,6 +24,14 @@ const actionsMap = {
     };
   },
 
+  loading(state, action) {
+    const { loading } = action.payload;
+
+    return {
+      loading
+    };
+  },
+
   moveDown(state) {
     const { highlightIndex, matchedSources } = state;
     const len = matchedSources && matchedSources.length;
@@ -84,6 +92,7 @@ const actionsMap = {
     return {
       dataSource,
       highlightIndex: 0,
+      loading: false,
       matchedSources: withoutCurrentMentions,
       query
     };

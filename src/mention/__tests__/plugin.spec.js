@@ -14,6 +14,14 @@ import {
 
 
 const {
+  _typedMention,
+  _focus,
+  _loadMentions,
+  _shouldSelectOrMove,
+  _updateMentionText,
+  _normalizeEditorInput,
+  _isValidDelimiter,
+
   _removeMentionFromEditor,
   _handleEditorBackspace,
 } = testExports;
@@ -64,6 +72,79 @@ describe('TinyMCE Plugin', () => {
     store = null;
     editor = null;
   });
+
+  describe('typedMention', function() {
+    it('should update', function() {
+
+    });
+
+    it('should backspace', function() {
+
+    });
+
+    it('should clear', function() {
+
+    });
+  });
+
+  describe('focus', function() {
+    it('should toggle', function() {
+
+    });
+  });
+
+  describe('#loadMentions', function() {
+    it('should load datasources that are spec Promises', function() {
+
+    });
+
+    it('should load datasources that are jquery Promises', function() {
+
+    });
+
+    it('should load datasources that are arrays', function() {
+
+    });
+  });
+
+  describe('#shouldSelectOrMove', function() {
+    it('should update typed mention on BACKSPACE', function() {
+
+    });
+
+    it('should select mention on TAB', function() {
+
+    });
+
+    it('should select mention on ENTER', function() {
+
+    });
+
+    it('should move highlight on DOWN', function() {
+
+    });
+
+    it('should move highlight on UP', function() {
+
+    });
+
+    it('should exit on ESC', function() {
+
+    });
+  });
+
+  it('#shouldUpdateOnMention', function() {
+
+  });
+
+  it('should #normalizeEditorInput', function() {
+
+  });
+
+  it('#isValidDelimiter should validate if delimiter is in defaults', function() {
+
+  });
+
 
   // _removeMentionFromEditor
   it('should remove mention from the Editor', () => {

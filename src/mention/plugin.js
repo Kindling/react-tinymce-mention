@@ -34,8 +34,7 @@ const keyMap = {
 const delimiters = ['@', '#'];
 
 var delimiter = '@';
-var editor;
-var store;
+var editor, store;
 
 const focus = {
   active: false,
@@ -51,21 +50,22 @@ const focus = {
  * are within a mention when `focus.active`
  */
 const typedMention = {
-   value: '',
+  value: '',
 
-   update(str) {
-     this.value = (this.value + str).trim();
-     return this.value;
-   },
-   backspace() {
-     const val = this.value;
-     this.value = val.substring(0, val.length - 1).trim();
-     return this.value;
-   },
-   clear() {
-     this.value = '';
-   }
- };
+  update(str) {
+    this.value = (this.value + str).trim();
+    return this.value;
+  },
+  backspace() {
+    const val = this.value;
+    this.value = val.substring(0, val.length - 1).trim();
+    return this.value;
+  },
+  clear() {
+    this.value = '';
+  }
+};
+
 
 export function initializePlugin(reduxStore, dataSource, delimiterValue) {
 

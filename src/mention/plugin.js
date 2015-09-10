@@ -134,6 +134,13 @@ function loadMentions(dataSource, resolve) {
 
 function start() {
   const delay = 100; // FireFox fix
+
+  // IE fix against loss of cursor position when immediately
+  // inserting an @mention into the editor.
+  if (window.tinymce.isIE) {
+    editor.insertContent('&nbsp;');
+  }
+
   setTimeout(() => {
     stop();
 

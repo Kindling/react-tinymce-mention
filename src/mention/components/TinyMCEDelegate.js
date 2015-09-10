@@ -80,28 +80,19 @@ export default class TinyMCEDelegate extends Component {
           delimiter={delimiter}
         />;
 
+    editor.insertContent('insertionplaceholder<span id="cursor">&nbsp;</span>');
 
-    if (window.tinymce.isIE) {
-      // editor.insertContent('insertionplaceholder<span id="cursor">&nbsp;</span>');
-      //
-      // editor.setContent(
-      //   editor.getContent().replace(/\w+insertionplaceholder/, 'other content')
-      // )
-    } else {
-      editor.insertContent('insertionplaceholder<span id="cursor">&nbsp;</span>');
+    editor.setContent(
+      editor
+        .getContent()
+        .replace(re, renderComponent(markup)));
 
-      editor.setContent(
-        editor
-          .getContent()
-          .replace(re, renderComponent(markup)));
-
-      setTimeout(() => {
-        editor.getBody().focus();
-        editor.selection.select(editor.dom.select('#cursor')[0]);
-        editor.selection.collapse(true);
-        editor.dom.remove(editor.dom.select('#cursor')[0]);
-      }, 0);
-    }
+    setTimeout(() => {
+      editor.getBody().focus();
+      editor.selection.select(editor.dom.select('#cursor')[0]);
+      editor.selection.collapse(true);
+      editor.dom.remove(editor.dom.select('#cursor')[0]);
+    }, 0);
   }
 
   render() {

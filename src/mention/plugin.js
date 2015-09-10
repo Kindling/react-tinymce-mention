@@ -1,5 +1,4 @@
 import invariant from 'invariant';
-import closest from 'dom-closest';
 import removeNode from 'dom-remove';
 import findWhere from 'lodash.findwhere';
 import getKeyCode from './utils/getKeyCode';
@@ -214,9 +213,16 @@ function handleKeyPress(event) {
 function handleBackspace(event) {
   const keyCode = getKeyCode(event);
   const mentionClassName = '.tinymce-mention';
+  const $ = tinymce.dom.DomQuery;
 
   if (keyCode === keyMap.BACKSPACE) {
-    const foundMentionNode = closest(editor.selection.getNode(), mentionClassName);
+    const node = editor.selection.getNode();
+
+    const el = tinymce.isIE
+      ? node.firstElementChild
+      : node;
+
+    const foundMentionNode = $(el).closest(mentionClassName)[0];
 
     if (foundMentionNode) {
       const mention = removeMentionFromEditor(foundMentionNode);

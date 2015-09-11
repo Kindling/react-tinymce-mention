@@ -5,6 +5,7 @@ import DefaultList from '../components/DefaultList.js';
 
 @connect(state => ({
   editor: state.mention.editor,
+  fetching: state.mention.fetching,
   highlightIndex: state.mention.highlightIndex,
   matchedSources: state.mention.matchedSources
 }))
@@ -19,6 +20,7 @@ export default class SuggestionRenderer {
   _renderCustomComponents() {
     const {
       customListRenderer,
+      fetching,
       highlightIndex,
       matchedSources,
       dispatch
@@ -27,6 +29,7 @@ export default class SuggestionRenderer {
     const onClick = (index) => dispatch(select(index));
 
     return customListRenderer({
+      fetching,
       highlightIndex,
       matchedSources,
       clickFn: onClick

@@ -7,6 +7,7 @@ import uid from '../utils/uid';
 export const initialState = {
   asyncDataSource: false,
   dataSource: [],
+  fetching: false,
   highlightIndex: 0,
   matchedSources: [],
   mentions: [],
@@ -24,11 +25,11 @@ const actionsMap = {
     };
   },
 
-  loading(state, action) {
-    const { loading } = action.payload;
+  fetching(state, action) {
+    const { fetching } = action.payload;
 
     return {
-      loading
+      fetching
     };
   },
 
@@ -92,7 +93,7 @@ const actionsMap = {
     return {
       dataSource,
       highlightIndex: 0,
-      loading: false,
+      fetching: false,
       matchedSources: withoutCurrentMentions,
       query
     };

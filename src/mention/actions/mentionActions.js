@@ -11,11 +11,11 @@ export function finalizeSetup(editor, dataSource) {
   };
 }
 
-export function loading(isLoading) {
+export function fetching(isFetching) {
   return {
-    type: Types.LOADING,
+    type: Types.FETCHING,
     payload: {
-      loading: isLoading
+      fetching: isFetching
     }
   };
 }
@@ -37,7 +37,7 @@ export function query(input) {
     const { asyncDataSource } = getState().mention;
 
     if (asyncDataSource && inputValid(input)) {
-      dispatch(loading(true));
+      dispatch(fetching(true));
 
       asyncDataSource(input).then((response) => {
         dispatch({

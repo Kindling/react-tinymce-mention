@@ -182,13 +182,11 @@ function handleTopLevelActionKeys(event) {
 
 function handleActionKeys(event) {
   const keyCode = getKeyCode(event);
-  const isLoading = store.getState().mention.loading;
+  const isFetching = store.getState().mention.fetching;
 
-  if (!isLoading) {
-    if (shouldSelectOrMove(keyCode, event)) {
-      event.preventDefault();
-      return false;
-    }
+  if (isFetching || shouldSelectOrMove(keyCode, event)) {
+    event.preventDefault();
+    return false;
   }
 }
 

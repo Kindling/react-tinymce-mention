@@ -220,12 +220,7 @@ function handleBackspace(event) {
 
   if (keyCode === keyMap.BACKSPACE) {
     const node = editor.selection.getNode();
-
-    const el = window.tinymce.isIE
-      ? node.firstElementChild
-      : node;
-
-    const foundMentionNode = $(el).closest(mentionClassName)[0];
+    const foundMentionNode = $(node).closest(mentionClassName)[0];
 
     if (foundMentionNode) {
       const mention = removeMentionFromEditor(foundMentionNode);

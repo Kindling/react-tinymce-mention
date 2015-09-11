@@ -37,7 +37,9 @@ React.render(
         return new Promise(resolve => {
           axios.get(`/examples/shared/api/complex.json?q=${query}`)
             .then(response => {
-              resolve(transformDataSource(response.data));
+              setTimeout(() => {
+                resolve(transformDataSource(response.data));
+              }, 1000);
             });
         });
       }}

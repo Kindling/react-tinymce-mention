@@ -182,9 +182,8 @@ function handleTopLevelActionKeys(event) {
 
 function handleActionKeys(event) {
   const keyCode = getKeyCode(event);
-  const { fetching } = store.getState().mention;
 
-  if (isFetching(keyMap, keyCode, fetching) || shouldSelectOrMove(keyCode, event)) {
+  if (isFetching(keyMap, keyCode, store) || shouldSelectOrMove(keyCode, event)) {
     event.preventDefault();
     return false;
   }
@@ -332,7 +331,9 @@ function isValidDelimiter(delimiter) {
   return delimiters.some(d => d === delimiter);
 }
 
-function isFetching(keyMap, keyCode, fetching) {
+function isFetching(keyMap, keyCode, store) {
+  const { fetching } = store.getState().mention;
+
   const shouldCancelEvent = Object.keys(keyMap).some(key => {
     const actionKeyCode = keyMap[key];
 

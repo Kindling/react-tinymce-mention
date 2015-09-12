@@ -1,7 +1,8 @@
 import React from 'react';
+import axios from 'axios';
 import Editor from './components/Editor';
 import Mention from '../Mention';
-import axios from 'axios';
+import CustomList from './components/CustomList';
 
 React.render(
   <div>
@@ -13,9 +14,21 @@ React.render(
         return new Promise(resolve => {
           axios.get(`/examples/shared/api/complex.json?q=${query}`)
             .then(response => {
-              resolve(transformDataSource(response.data));
+              setTimeout(() => {
+                resolve(transformDataSource(response.data));
+              }, 500);
             });
         });
+      }}
+      customListRenderer={({ highlightIndex, matchedSources, clickFn, fetching }) => {
+        return (
+          <CustomList
+            fetching={fetching}
+            highlightIndex={highlightIndex}
+            matchedSources={matchedSources}
+            onClick={clickFn}
+          />
+        );
       }}
     />
   </div>

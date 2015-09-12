@@ -41,7 +41,6 @@ export default class MentionList {
           { matchedSources.length
             ? matchedSources.map((source, index) => {
                 const { displayLabel, id } = source;
-
                 return (
                   <MentionListItem
                     onClick={onClick}
@@ -55,7 +54,11 @@ export default class MentionList {
                 );
               })
             : fetching &&
-              <li className='tinymce-mention__item--loading'></li>
+              <li className='tinymce-mention__item--loading'>
+                <strong>
+                  loading
+                </strong>
+              </li>
           }
         </ul>
       </div>

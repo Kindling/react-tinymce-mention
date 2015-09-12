@@ -29,9 +29,9 @@ const keyMap = {
   ESC: 27
 };
 
-const delimiters = ['@', '#'];
+const defaultDelimiter = '@';
+const delimiters = ['#', '@'];
 
-var defaultDelimiter = '@';
 var delimiter, editor, store;
 
 const focus = {
@@ -63,7 +63,6 @@ const typedMention = {
     this.value = '';
   }
 };
-
 
 export function initializePlugin(reduxStore, dataSource, delimiterValue = defaultDelimiter) {
 
@@ -127,11 +126,10 @@ function loadMentions(dataSource, resolve) {
         resolvedDataSource: dataSource
       });
     }
-  }, 10);
+  }, 20);
 }
 
 function start() {
-  const delay = 20; // FireFox fix
 
   // IE fix against loss of cursor position when immediately
   // inserting an @mention into the editor.
@@ -139,13 +137,14 @@ function start() {
     editor.insertContent('&nbsp;');
   }
 
+  // FireFox fix
   setTimeout(() => {
     stop();
 
     editor.on('keypress', handleTopLevelEditorInput);
     editor.on('keydown', handleTopLevelActionKeys);
     editor.on('keyup', handleBackspace);
-  }, delay);
+  }, 20);
 }
 
 function stop() {

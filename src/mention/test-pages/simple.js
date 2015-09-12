@@ -8,7 +8,6 @@ React.render(
     <Editor />
     <Mention
       showDebugger={true}
-      delimiter={'@'}
       dataSource={simpleDataSource}
     />
   </div>

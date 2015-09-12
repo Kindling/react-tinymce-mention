@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Editor from './components/Editor';
 import Mention from '../Mention';
 

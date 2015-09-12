@@ -6,12 +6,15 @@ export default function validateDataSource(dataSource) {
     'Error transforming response: `transformedDataSource` must be an array.'
   );
 
-  // Array of ojects with a `searchKey`
+  // Array of ojects with a `displayLabel` and `searchKey`
   if (containsConsistantType(dataSource, 'object')) {
 
     // Validate that each object has `searchKey`
     const isValid = dataSource.every(s => {
-      return s.hasOwnProperty('searchKey') && typeof s.searchKey === 'string';
+      return (
+        s.hasOwnProperty('displayLabel') && typeof s.displayLabel === 'string' &&
+        s.hasOwnProperty('searchKey') && typeof s.searchKey === 'string'
+      );
     });
 
     invariant(isValid,
@@ -23,6 +26,7 @@ export default function validateDataSource(dataSource) {
       dataSource
     };
 
+  // Array containing simple strings, e.g., ['dimitri', 'shostakovich']
   } else if (containsConsistantType(dataSource, 'string')) {
     const normalizedDataSource = dataSource.map(source => ({
       searchKey: source,
@@ -36,7 +40,7 @@ export default function validateDataSource(dataSource) {
   } else {
     throw new Error(
       'Validation Error: `transformedDataSource` must be an array of strings ' +
-      'or contain objects with a `searchKey` property.'
+      'or contain objects with a `displayLabel` and `searchKey` property.'
     );
   }
 }

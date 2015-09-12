@@ -28,6 +28,10 @@ export default class Mention {
     transformFn: PropTypes.func
   }
 
+  static defaultProps = {
+    delimiter: '@'
+  }
+
   componentWillMount() {
     const { asyncDataSource } = this.props;
 
@@ -86,8 +90,8 @@ export default class Mention {
             customListRenderer={customListRenderer}
           />
           <TinyMCEDelegate
-            customRTEMention={customRTEMention}
             delimiter={delimiter}
+            customRTEMention={customRTEMention}
             onAdd={onAdd}
             onRemove={onRemove}
           />

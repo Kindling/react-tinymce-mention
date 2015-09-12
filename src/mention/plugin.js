@@ -31,8 +31,8 @@ const keyMap = {
 
 const delimiters = ['@', '#'];
 
-var delimiter = '@';
-var editor, store;
+var defaultDelimiter = '@';
+var delimiter, editor, store;
 
 const focus = {
   active: false,
@@ -65,7 +65,7 @@ const typedMention = {
 };
 
 
-export function initializePlugin(reduxStore, dataSource, delimiterValue) {
+export function initializePlugin(reduxStore, dataSource, delimiterValue = defaultDelimiter) {
 
   if (typeof window.tinymce === 'undefined') {
     throw new Error('Error initializing Mention plugin: `tinymce` is undefined.');

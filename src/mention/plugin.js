@@ -30,7 +30,7 @@ const keyMap = {
 };
 
 const defaultDelimiter = '@';
-const delimiters = ['#', '@'];
+const delimiterOptions = ['#', '@'];
 
 var delimiter, editor, store;
 
@@ -86,7 +86,7 @@ export function initializePlugin(reduxStore, dataSource, delimiterValue = defaul
         );
 
         invariant(isValidDelimiter(delimiterValue),
-          `Plugin must be initialized with a valid delimiter (${delimiters.toString()})`
+          `Plugin must be initialized with a valid delimiter (${delimiterOptions.toString()})`
         );
 
         store = reduxStore;
@@ -328,7 +328,7 @@ function pluginInitialized() {
 }
 
 function isValidDelimiter(delimiter) {
-  return delimiters.some(d => d === delimiter);
+  return delimiterOptions.some(d => d === delimiter);
 }
 
 function isFetching(keyMap, keyCode, store) {

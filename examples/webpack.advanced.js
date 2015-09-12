@@ -5,7 +5,6 @@ module.exports = {
   devtool: 'inline-source-map',
   entry: [
     'webpack-dev-server/client?http://localhost:3333',
-    // 'webpack/hot/only-dev-server',
     './advanced/src/index'
   ],
   output: {
@@ -14,7 +13,6 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   ],
   resolve: {
@@ -23,7 +21,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.jsx?$/,
-      loaders: ['react-hot', 'babel'],
+      loaders: ['babel'],
       include: [
         path.join(__dirname, 'advanced/src')
       ]

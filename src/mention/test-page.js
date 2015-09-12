@@ -1,7 +1,8 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
 import Mention from './Mention';
-import complexDataSource from './test-data-source';
+import complexDataSource from '../../examples/shared/api/complex';
+import simpleDataSource from '../../examples/shared/api/simple';
 
 var plugins = [
   'autolink',
@@ -34,51 +35,44 @@ Fugiat quo voluptas nulla pariatur?`;
 initialContent = '';
 
 React.render(
-  <TinyMCE
-    content={initialContent}
-    config={{
-      extended_valid_elements: 'blockquote[dir|style|cite|class|dir<ltr?rtl],iframe[src|frameborder|style|scrolling|class|width|height|name|align],pre',
-      menubar: false,
-      plugins: plugins.join(','),
-      skin: 'kindling',
-      statusbar: false,
-      theme: 'kindling',
-      toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code'
-    }}
-  />
-, document.getElementById('editor')
+  <div>
+    <TinyMCE
+      content={initialContent}
+      config={{
+        extended_valid_elements: 'blockquote[dir|style|cite|class|dir<ltr?rtl],iframe[src|frameborder|style|scrolling|class|width|height|name|align],pre',
+        menubar: false,
+        plugins: plugins.join(','),
+        skin: 'kindling',
+        statusbar: false,
+        theme: 'kindling',
+        toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code'
+      }}
+    />
+    <Mention
+      delimiter={'@'}
+      showDebugger={true}
+      _transformFn={transformDataSource}
+      _dataSource={complexDataSource}
+      dataSource={simpleDataSource}
+      customRTEMention={props => {
+        const { tinymceId, delimiter, displayLabel } = props;
+        return (
+          <span>
+            <a href='#' id={tinymceId} className='tinymce-mention'>
+              {delimiter}{displayLabel}
+            </a>
+            &nbsp;
+          </span>
+        );
+      }}
+      onAdd={({ mentions, changed }) =>
+        console.log('Added', mentions, changed) }
+      onRemove={({ mentions, changed }) =>
+        console.log('Removed', mentions, changed) }
+    />
+  </div>
+, document.getElementById('mentions')
 );
-
-function init() {
-  const el = document.getElementById('mentions');
-
-  React.render(
-    <div>
-      <button onClick={() => init()}>Reload</button>
-      <Mention
-        delimiter={'@'}
-        showDebugger={true}
-        transformFn={transformDataSource}
-        dataSource={complexDataSource}
-        customRTEMention={props => {
-          const { tinymceId, delimiter, displayLabel } = props;
-          return (
-            <span>
-              <a href='#' id={tinymceId} className='tinymce-mention'>
-                {delimiter}{displayLabel}
-              </a>
-              &nbsp;
-            </span>
-          );
-        }}
-        onAdd={({ mentions, changed }) =>
-          console.log('Added', mentions, changed) }
-        onRemove={({ mentions, changed }) =>
-          console.log('Removed', mentions, changed) }
-      />
-    </div>
-  , el);
-}
 
 function transformDataSource(dataSource) {
   const complexDataSource = dataSource.map(result => {
@@ -91,5 +85,3 @@ function transformDataSource(dataSource) {
 
   return complexDataSource;
 }
-
-init();

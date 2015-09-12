@@ -24,7 +24,7 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      '__PLUGIN_DEV__': true
+      '__DEV__': true
     })
   ],
 

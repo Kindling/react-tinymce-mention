@@ -2,7 +2,7 @@ import React from 'react';
 import TinyMCE from 'react-tinymce';
 import Mention from './Mention';
 
-var plugins = [
+const plugins = [
   'autolink',
   'autoresize',
   'code',
@@ -61,4 +61,4 @@ React.render(
         console.log('Removed', mentions, changed) }
     />
   </div>
-, document.getElementById('mentions'));
+, document.getElementById('root'));

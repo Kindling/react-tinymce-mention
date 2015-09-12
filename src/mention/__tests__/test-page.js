@@ -1,10 +1,10 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
-import Mention from './Mention';
-import complexDataSource from '../../examples/shared/api/complex';
-import simpleDataSource from '../../examples/shared/api/simple';
+import Mention from '../Mention';
+import complexDataSource from './fixtures/complexDataSource';
+import simpleDataSource from './fixtures/simpleDataSource';
 
-var plugins = [
+const plugins = [
   'autolink',
   'autoresize',
   'code',
@@ -71,7 +71,7 @@ React.render(
         console.log('Removed', mentions, changed) }
     />
   </div>
-, document.getElementById('mentions')
+, document.getElementById('root')
 );
 
 function transformDataSource(dataSource) {

@@ -106,10 +106,10 @@ fdescribe('TinyMCE Plugin', () => {
     });
   });
 
-  fdescribe('#loadMentions', function() {
+  describe('#loadMentions', function() {
     const dataSource = ['a', 'b', 'c'];
 
-    fit('should load datasources that are Promises', function(done) {
+    it('should load datasources that are Promises', function(done) {
       const promiseDataSource = {
         then(resolve) {
           resolve(dataSource);

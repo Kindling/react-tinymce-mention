@@ -4,7 +4,7 @@ import TinyMCE from 'react-tinymce';
 import Mention from '../../Mention';
 import simpleDataSource from '../../reducers/__tests__/fixtures/simple';
 
-var plugins = [
+const plugins = [
   'autolink',
   'autoresize',
   'code',
@@ -15,46 +15,22 @@ var plugins = [
   'tabfocus'
 ];
 
-function createContainer() {
-  var root = document.createElement('div');
-  var id = 'root';
-  root.setAttribute('id', id);
-  document.body.appendChild(root);
-  return document.getElementById(id);
-}
-
 export default function initializeEditor() {
   var domNode = createContainer();
 
   React.render(
     <div>
       <TinyMCE
-        content='heyyy'
+        content={''}
         config={{
-          browser_spellcheck: true,
-          document_base_url: window.location.origin + '/',
           extended_valid_elements: 'blockquote[dir|style|cite|class|dir<ltr?rtl],iframe[src|frameborder|style|scrolling|class|width|height|name|align],pre',
-          ie7_compat: false,
-          image_description: false,
-          image_dimensions: false,
-          media_alt_source: false,
-          media_poster: false,
-          media_dimensions: false,
           menubar: false,
           plugins: plugins.join(','),
-
-          // We always want the _full URL_ - not the relative path.
-          relative_urls: false,
-          remove_script_host: false,
           skin: 'kindling',
           statusbar: false,
-
-          // Suppress the target option for links.
-          target_list: false,
           theme: 'kindling',
-          toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code',
+          toolbar: 'bold italic underline strikethrough | bullist numlist blockquote | link unlink | image media | removeformat code'
         }}
-
       />
       <Mention
         dataSource={simpleDataSource}
@@ -64,4 +40,12 @@ export default function initializeEditor() {
   , domNode);
 
   return window.tinymce;
+}
+
+function createContainer() {
+  const root = document.createElement('div');
+  const id = 'root';
+  root.setAttribute('id', id);
+  document.body.appendChild(root);
+  return document.getElementById(id);
 }

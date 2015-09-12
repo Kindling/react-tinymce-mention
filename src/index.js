@@ -5,8 +5,8 @@ import Mention from './mention/Mention';
 Promise.polyfill();
 
 try {
-  if (__PLUGIN_DEV__) {
-    require('./mention/test-page');
+  if (__DEV__) {
+    require('./mention/__tests__/test-page');
   }
 } catch (error) {}
 

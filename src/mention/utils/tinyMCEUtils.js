@@ -5,10 +5,6 @@ export function getLastChar(editor, negativeIndex = 1) {
   return character;
 }
 
-export function getEditorContent(editor, format = 'text') {
-  return editor.getContent({ format });
-}
-
 export function collectMentionIds(editor, mentionClassName) {
   const mentions = editor.dom
     .select(mentionClassName)

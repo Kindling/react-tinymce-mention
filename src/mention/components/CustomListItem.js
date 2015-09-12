@@ -2,27 +2,34 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
 export default class CustomListItem {
+
   static propTypes = {
-    onClick: PropTypes.func.isRequired,
+    displayLabel: PropTypes.string.isRequired,
+    highlightIndex: PropTypes.number.isRequired,
     index: PropTypes.number.isRequired,
-    displayLabel: PropTypes.string.isRequired
+    onClick: PropTypes.func.isRequired
   }
 
-  handleClick() {
+  handleClick(event) {
+    event.stopPropagation();
     const { index, onClick } = this.props;
     onClick(index);
+  }
+
+  componentWillMount() {
+    React.initializeTouchEvents(true);
   }
 
   render() {
     const { index, highlightIndex, displayLabel } = this.props;
 
     const classes = classNames({
-      'selected': highlightIndex === index,
-      'tinymce-mention': true
+      'tinymce-mention__item--selected': highlightIndex === index,
+      'tinymce-mention__item': true
     });
 
     return (
-      <li className={classes} onClick={::this.handleClick}>
+      <li className={classes} onMouseDown={::this.handleClick} onTouchStart={::this.handleClick}>
         {displayLabel}
       </li>
     );

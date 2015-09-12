@@ -1,32 +1,64 @@
 import React, { PropTypes } from 'react';
-import CustomListItem from './CustomListItem';
+import MentionListItem from './CustomListItem';
 
-export default class CustomList {
+export default class MentionList {
+
   static propTypes = {
-    onClick: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
     highlightIndex: PropTypes.number.isRequired,
     matchedSources: PropTypes.array.isRequired,
+    onClick: PropTypes.func.isRequired,
+  }
+
+  componentDidUpdate() {
+    const { highlightIndex, matchedSources } = this.props;
+
+    if (matchedSources.length) {
+      const listNode = React.findDOMNode(this.refs.mentionList);
+      const focusedListItemNode = React.findDOMNode(this.refs['listItem' + highlightIndex]);
+      const listRect = listNode.getBoundingClientRect();
+      const focusedRect = focusedListItemNode.getBoundingClientRect();
+
+      if (focusedRect.bottom > listRect.bottom || focusedRect.top < listRect.top) {
+        listNode.scrollTop = focusedListItemNode.offsetTop
+          + focusedListItemNode.clientHeight
+          - listNode.offsetHeight;
+      }
+    }
   }
 
   render() {
-    const { onClick, highlightIndex, matchedSources } = this.props;
+    const {
+      fetching,
+      highlightIndex,
+      matchedSources,
+      onClick
+    } = this.props;
 
     return (
-      <ul>
-        { matchedSources && matchedSources.map((source, index) => {
-          const { displayLabel } = source;
+      <div>
+        <ul className='tinymce-mention__list' ref='mentionList'>
+          { matchedSources.length
+            ? matchedSources.map((source, index) => {
+                const { displayLabel, id } = source;
 
-          return (
-            <CustomListItem
-              displayLabel={displayLabel}
-              index={index}
-              highlightIndex={highlightIndex}
-              onClick={onClick}
-              key={`item-${index}`}
-            />
-          );
-        })}
-      </ul>
+                return (
+                  <MentionListItem
+                    onClick={onClick}
+                    highlightIndex={highlightIndex}
+                    id={id}
+                    index={index}
+                    displayLabel={displayLabel}
+                    key={`match-${index}`}
+                    ref={`listItem${index}`}
+                  />
+                );
+              })
+            : fetching &&
+              <li className='tinymce-mention__item--loading'></li>
+          }
+        </ul>
+      </div>
     );
   }
 }

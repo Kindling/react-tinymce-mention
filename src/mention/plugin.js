@@ -6,7 +6,6 @@ import extractMentions from './utils/extractMentions';
 
 import {
   collectMentionIds,
-  getEditorContent,
   getLastChar,
 } from './utils/tinyMCEUtils';
 
@@ -196,7 +195,7 @@ function handleKeyPress(event) {
     const mentionText = updateMentionText(keyCode);
 
     if (mentionText !== '') {
-      const content = getEditorContent(editor);
+      const content = editor.getContent();
       const { mentions, prop } = extractMentions(content, delimiter);
 
       const mention = findWhere(mentions, {
@@ -277,8 +276,10 @@ function startListeningForInput() {
 function stopListeningAndCleanup() {
   if (focus.active) {
     focus.toggle();
+
     typedMention.clear();
     store.dispatch(resetQuery());
+
     editor.off('keydown', handleActionKeys);
     editor.off('keypress', handleKeyPress);
   }

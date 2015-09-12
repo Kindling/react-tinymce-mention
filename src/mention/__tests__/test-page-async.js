@@ -3,7 +3,7 @@ import TinyMCE from 'react-tinymce';
 import Mention from './Mention';
 import axios from 'axios';
 
-var plugins = [
+const plugins = [
   'autolink',
   'autoresize',
   'code',
@@ -59,7 +59,7 @@ React.render(
         console.log('Removed', mentions, changed) }
     />
   </div>
-, document.getElementById('mentions'));
+, document.getElementById('root'));
 
 function transformDataSource(dataSource) {
   const complexDataSource = dataSource.map(result => {

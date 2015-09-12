@@ -38,7 +38,7 @@ fdescribe('TinyMCE Plugin', () => {
 
   beforeEach((done) => {
     jasmine.addMatchers({
-      toDeepEqual: function() {
+      toDeepEqual: () => {
         return {
           compare: function(actual, expected) {
             return {
@@ -73,12 +73,12 @@ fdescribe('TinyMCE Plugin', () => {
     editor = null;
   });
 
-  describe('#typedMention', function() {
-    beforeEach(function() {
+  describe('#typedMention', () => {
+    beforeEach(() => {
       _typedMention.clear();
     });
 
-    it('should update', function() {
+    it('should update', () => {
       var val = _typedMention.update('hey');
       expect(_typedMention.value).toEqual('hey');
       expect(val).toEqual('hey');
@@ -87,7 +87,7 @@ fdescribe('TinyMCE Plugin', () => {
       expect(_typedMention.value).toEqual('heyhey you');
     });
 
-    it('should backspace', function() {
+    it('should backspace', () => {
       _typedMention.update('hey');
       _typedMention.backspace();
       expect(_typedMention.value).toEqual('he');
@@ -98,18 +98,18 @@ fdescribe('TinyMCE Plugin', () => {
     });
   });
 
-  describe('#focus', function() {
+  describe('#focus', () => {
 
-    it('should toggle', function() {
+    it('should toggle', () => {
       expect(_focus.toggle()).toEqual(true);
       expect(_focus.toggle()).toEqual(false);
     });
   });
 
-  describe('#loadMentions', function() {
+  describe('#loadMentions', () => {
     const dataSource = ['a', 'b', 'c'];
 
-    it('should load datasources that are Promises', function(done) {
+    it('should load datasources that are Promises', (done) => {
       const promiseDataSource = {
         then(resolve) {
           resolve(dataSource);
@@ -122,48 +122,48 @@ fdescribe('TinyMCE Plugin', () => {
       });
     });
 
-    it('should load datasources that are arrays', function() {
+    it('should load datasources that are arrays', () => {
       _loadMentions(dataSource, ({ resolvedDataSource }) => {
         expect(resolvedDataSource).toEqual(dataSource);
       });
     });
   });
 
-  describe('#shouldSelectOrMove', function() {
-    it('should update typed mention on BACKSPACE', function() {
+  describe('#shouldSelectOrMove', () => {
+    it('should update typed mention on BACKSPACE', () => {
 
     });
 
-    it('should select mention on TAB', function() {
+    it('should select mention on TAB', () => {
 
     });
 
-    it('should select mention on ENTER', function() {
+    it('should select mention on ENTER', () => {
 
     });
 
-    it('should move highlight on DOWN', function() {
+    it('should move highlight on DOWN', () => {
 
     });
 
-    it('should move highlight on UP', function() {
+    it('should move highlight on UP', () => {
 
     });
 
-    it('should exit on ESC', function() {
+    it('should exit on ESC', () => {
 
     });
   });
 
-  it('#shouldUpdateOnMention', function() {
+  it('#shouldUpdateOnMention', () => {
 
   });
 
-  it('should #normalizeEditorInput', function() {
+  it('should #normalizeEditorInput', () => {
 
   });
 
-  it('#isValidDelimiter should validate if delimiter is in defaults', function() {
+  it('#isValidDelimiter should validate if delimiter is in defaults', () => {
 
   });
 
@@ -194,7 +194,7 @@ fdescribe('TinyMCE Plugin', () => {
     mentionNode.appendChild(node);
     mentionNode.className = 'mention';
     editor.selection = mentionNode;
-    editor.selection.getNode = function() {
+    editor.selection.getNode = () => {
       return editor.selection.innerHTML.substring(1);
     };
     editor.selection = editor.selection.getNode();

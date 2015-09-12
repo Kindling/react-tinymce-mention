@@ -6,7 +6,7 @@ import initializeEditor from './fixtures/initializeEditor';
 
 describe('tinyMCEUtils', () => {
 
-  beforeEach(function() {
+  beforeEach(() => {
     tinymce = initializeEditor();
   });
 

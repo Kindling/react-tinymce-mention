@@ -127,11 +127,11 @@ function loadMentions(dataSource, resolve) {
         resolvedDataSource: dataSource
       });
     }
-  }, 50);
+  }, 10);
 }
 
 function start() {
-  const delay = 100; // FireFox fix
+  const delay = 20; // FireFox fix
 
   // IE fix against loss of cursor position when immediately
   // inserting an @mention into the editor.

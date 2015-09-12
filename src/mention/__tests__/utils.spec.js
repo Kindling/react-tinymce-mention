@@ -1,9 +1,9 @@
-import containsConsistantType from '../containsConsistantType';
-import getKeyCode from '../getKeyCode';
-import last from '../last';
-import uid from '../uid';
-import normalizeDataSource from '../normalizeDataSource';
-import diffMentionState from '../diffMentionState';
+import containsConsistantType from '../utils/containsConsistantType';
+import getKeyCode from '../utils/getKeyCode';
+import last from '../utils/last';
+import uid from '../utils/uid';
+import normalizeDataSource from '../utils/normalizeDataSource';
+import diffMentionState from '../utils/diffMentionState';
 
 describe('Utils', () => {
   it('should ensure that each array item contains a specific type', () => {

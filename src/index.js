@@ -6,7 +6,7 @@ Promise.polyfill();
 
 try {
   if (__DEV__) {
-    require('./mention/__tests__/test-page');
+    require('./mention/test-pages/test-page');
   }
 } catch (error) {}
 

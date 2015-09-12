@@ -1,7 +1,7 @@
 import findWhere from 'lodash.findwhere';
 import isEqual from 'lodash.isequal';
-import initializeRedux from '../../utils/initializeRedux';
-import mentionReducer from '../mentionReducer';
+import initializeRedux from '../utils/initializeRedux';
+import mentionReducer from '../reducers/mentionReducer';
 import simpleDataSource from './fixtures/simple';
 
 import {
@@ -12,7 +12,7 @@ import {
   resetMentions,
   resetQuery,
   select,
-} from '../../actions/mentionActions';
+} from '../actions/mentionActions';
 
 describe('mentionReducer', () => {
   var store;

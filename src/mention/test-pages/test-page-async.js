@@ -1,6 +1,7 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
-import Mention from './Mention';
+import Mention from '../Mention';
+import axios from 'axios';
 
 const plugins = [
   'autolink',
@@ -30,9 +31,17 @@ React.render(
       }}
     />
     <Mention
-      dataSource={axios.get('/examples/shared/api/complex.json')}
       delimiter={'@'}
       showDebugger={true}
+      asyncDataSource={(query) => {
+        return new Promise(resolve => {
+          axios.get(`/examples/shared/api/complex.json?q=${query}`)
+            .then(response => {
+              resolve(transformDataSource(response.data));
+            });
+        });
+      }}
+      transformFn={transformDataSource}
       customRTEMention={(props) => {
         const { tinymceId, displayLabel } = props;
         return (
@@ -44,17 +53,6 @@ React.render(
           </span>
         );
       }}
-      transformFn={dataSource => {
-        const complexDataSource = dataSource.data.map(result => {
-          const { fullName } = result;
-          return {
-            searchKey: fullName,
-            displayLabel: fullName
-          };
-        });
-
-        return complexDataSource;
-      }}
       onAdd={({ mentions, changed }) =>
         console.log('Added', mentions, changed) }
       onRemove={({ mentions, changed }) =>
@@ -62,3 +60,15 @@ React.render(
     />
   </div>
 , document.getElementById('root'));
+
+function transformDataSource(dataSource) {
+  const complexDataSource = dataSource.map(result => {
+    const { fullName } = result;
+    return {
+      searchKey: fullName,
+      displayLabel: fullName
+    };
+  });
+
+  return complexDataSource;
+}

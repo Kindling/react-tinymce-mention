@@ -1,6 +1,6 @@
 import { initializePlugin } from '../plugin';
 import mentionReducer from '../reducers/mentionReducer';
-import simpleDataSource from '../reducers/__tests__/fixtures/simple';
+import simpleDataSource from './fixtures/simple';
 import initializeRedux from '../utils/initializeRedux';
 import initializeEditor from './fixtures/initializeEditor';
 import { testExports } from '../plugin';

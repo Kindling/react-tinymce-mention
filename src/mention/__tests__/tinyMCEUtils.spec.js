@@ -1,8 +1,8 @@
 import {
   getLastChar,
   collectMentionIds
-} from '../tinyMCEUtils';
-import initializeEditor from '../../__tests__/fixtures/initializeEditor';
+} from '../utils/tinyMCEUtils';
+import initializeEditor from './fixtures/initializeEditor';
 
 describe('tinyMCEUtils', () => {
 

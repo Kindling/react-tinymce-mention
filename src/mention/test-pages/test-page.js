@@ -1,7 +1,8 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
-import Mention from './Mention';
-import axios from 'axios';
+import Mention from '../Mention';
+import complexDataSource from './api/complexDataSource';
+import simpleDataSource from './api/simpleDataSource';
 
 const plugins = [
   'autolink',
@@ -14,7 +15,24 @@ const plugins = [
   'tabfocus'
 ];
 
-let initialContent = '';
+let initialContent = `Sed ut perspiciatis unde omnis
+iste natus error sit voluptatem accusantium doloremque
+
+laudantium, totam rem aperiam, eaque ipsa quae ab illo
+<br /><br />
+<br />
+
+
+inventore veritatis et quasi architecto beatae
+vitae dicta sunt explicabo. Nemo enim ipsam voluptatem
+quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni
+dolores eos qui ratione voluptatem sequi nesciunt.
+<br />
+<br />
+
+Fugiat quo voluptas nulla pariatur?`;
+
+initialContent = '';
 
 React.render(
   <div>
@@ -33,21 +51,15 @@ React.render(
     <Mention
       delimiter={'@'}
       showDebugger={true}
-      asyncDataSource={(query) => {
-        return new Promise(resolve => {
-          axios.get(`/examples/shared/api/complex.json?q=${query}`)
-            .then(response => {
-              resolve(transformDataSource(response.data));
-            });
-        });
-      }}
-      transformFn={transformDataSource}
-      customRTEMention={(props) => {
-        const { tinymceId, displayLabel } = props;
+      _transformFn={transformDataSource}
+      _dataSource={complexDataSource}
+      dataSource={simpleDataSource}
+      customRTEMention={props => {
+        const { tinymceId, delimiter, displayLabel } = props;
         return (
           <span>
             <a href='#' id={tinymceId} className='tinymce-mention'>
-              @{displayLabel}
+              {delimiter}{displayLabel}
             </a>
             &nbsp;
           </span>
@@ -59,7 +71,8 @@ React.render(
         console.log('Removed', mentions, changed) }
     />
   </div>
-, document.getElementById('root'));
+, document.getElementById('root')
+);
 
 function transformDataSource(dataSource) {
   const complexDataSource = dataSource.map(result => {

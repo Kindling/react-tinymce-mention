@@ -14,7 +14,7 @@ const plugins = [
   'tabfocus'
 ];
 
-let initialContent = '';
+const initialContent = '';
 
 React.render(
   <div>

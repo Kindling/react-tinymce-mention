@@ -6,7 +6,10 @@ Promise.polyfill();
 
 try {
   if (__DEV__) {
-    require('./mention/test-pages/test-page');
+    require('./mention/test-pages/simple');
+    // require('./mention/test-pages/complex');
+    // require('./mention/test-pages/promise');
+    // require('./mention/test-pages/async');
   }
 } catch (error) {}
 

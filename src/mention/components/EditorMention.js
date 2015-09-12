@@ -11,10 +11,12 @@ export default class EditorMention {
     const { delimiter, displayLabel, tinymceId } = this.props;
 
     return (
-      <a href='#' id={tinymceId} className='tinymce-mention'>
-        {delimiter}{displayLabel}
+      <span>
+        <a href='#' id={tinymceId} className='tinymce-mention'>
+          {delimiter}{displayLabel}
+        </a>
         &nbsp;
-      </a>
+      </span>
     );
   }
 }

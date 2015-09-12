@@ -79,7 +79,6 @@
     "react-redux": "^2.1.0",
     "react-tinymce": "^0.2.3",
     "redux": "^2.0.0",
-    "redux-batched-updates": "^0.1.0",
     "redux-thunk": "^0.1.0",
     "sinon": "^1.16.1",
     "string.prototype.includes": "^1.0.0",

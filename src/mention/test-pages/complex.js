@@ -1,6 +1,8 @@
 import React from 'react';
 import Editor from './components/Editor';
 import Mention from '../Mention';
+import CustomList from './components/CustomList';
+import CustomRTEMention from './components/CustomRTEMention';
 import complexDataSource from './api/complexDataSource';
 
 React.render(
@@ -21,7 +23,7 @@ React.render(
       }}
       customListRenderer={({ highlightIndex, matchedSources, clickFn, fetching }) => {
         return (
-          <MentionList
+          <CustomList
             fetching={fetching}
             highlightIndex={highlightIndex}
             matchedSources={matchedSources}
@@ -29,11 +31,12 @@ React.render(
           />
         );
       }}
-      customRTEMention={({ delimiter, displayLabel, tinymceId }) => {
+      customRTEMention={({ delimiter, displayLabel, id, tinymceId }) => {
         return (
           <CustomRTEMention
             delimiter={delimiter}
             displayLabel={displayLabel}
+            id={id}
             tinymceId={tinymceId}
           />
         );

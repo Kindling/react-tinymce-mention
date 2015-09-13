@@ -12,7 +12,7 @@ React.render(
       delimiter={'@'}
       asyncDataSource={(query) => {
         return new Promise(resolve => {
-          axios.get(`/examples/shared/api/complex.json?q=${query}`)
+          axios.get(`/public/api/complex.json?q=${query}`)
             .then(response => {
               setTimeout(() => {
                 resolve(transformDataSource(response.data));

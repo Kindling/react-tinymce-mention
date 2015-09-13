@@ -9,7 +9,7 @@ React.render(
     <Mention
       showDebugger={true}
       delimiter={'@'}
-      dataSource={axios.get('/examples/shared/api/complex.json')}
+      dataSource={axios.get('/public/api/complex.json')}
       transformFn={dataSource => {
         return dataSource.data.map(result => {
           const { fullName } = result;

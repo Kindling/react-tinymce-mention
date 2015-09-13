@@ -111,9 +111,9 @@ See `src/mention/test-pages/advanced.js` for a working example.
 ### Promise Example
 ```javascript
 import React from 'react';
+import Mention from 'react-tinymce-mention';
 import axios from 'axios';
 import Editor from './components/Editor';
-import Mention from '../Mention';
 
 React.render(
   <div>
@@ -138,13 +138,15 @@ React.render(
 
 In this example, if you pass in a Promise one of the hard requirements is that the array you return from your `transformFn` conforms to the above -- a `searchKey` and `displayLabel` is required. If you forget these properties an error will be thrown.
 
+See `src/mention/test-pages/promise.js` for a working example.
+
 
 ### Async Example
 ```javascript
 import React from 'react';
+import Mention from 'react-tinymce-mention';
 import axios from 'axios';
 import Editor from './components/Editor';
-import Mention from '../Mention';
 import CustomList from './components/CustomList';
 
 React.render(
@@ -189,6 +191,8 @@ function transformDataSource(dataSource) {
 ```
 
 Lastly, if you would like to implement a Mention component that queries a an API when the user types, define an `asynDataSource`. As with the Promise example above, your final dataSource will need to conform to the `searchKey` and `displayLabel` requirement.
+
+See `src/mention/test-pages/async.js` for a working example.
 
 
 ## Troubleshooting

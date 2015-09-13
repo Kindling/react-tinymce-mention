@@ -26,7 +26,7 @@ const {
   _handleEditorBackspace,
 } = testExports;
 
-fdescribe('TinyMCE Plugin', () => {
+describe('TinyMCE Plugin', () => {
   var store, tinymce, editor;
 
   const dataSource = simpleDataSource.sort().map(source => {

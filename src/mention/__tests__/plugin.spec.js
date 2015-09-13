@@ -3,6 +3,7 @@ import mentionReducer from '../reducers/mentionReducer';
 import simpleDataSource from './fixtures/simple';
 import initializeRedux from '../utils/initializeRedux';
 import initializeEditor from './fixtures/initializeEditor';
+import jasmineHelpers from './helpers/jasmineHelpers';
 import { testExports } from '../plugin';
 
 // FIXME Rewrite intern tests
@@ -37,17 +38,7 @@ describe('TinyMCE Plugin', () => {
   });
 
   beforeEach((done) => {
-    jasmine.addMatchers({
-      toDeepEqual: () => {
-        return {
-          compare: function(actual, expected) {
-            return {
-              pass: isEqual(actual, expected)
-            };
-          }
-        };
-      }
-    });
+    jasmineHelpers();
 
     store = initializeRedux({ mention: mentionReducer }, {
       mention: {

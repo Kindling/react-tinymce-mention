@@ -35,7 +35,7 @@ React.render(
 
 In the simplest case, only `dataSource` is required; the list containing `@mention` matches is rendered with a default set of components that you can hijack via stylesheet classes. See `src/mention/test-pages/simple.js` for a working example.
 
-### Advanced Use Case (Complete API)
+### Advanced Use Case (Complete API, minus `asyncDataSource`)
 ```javascript
 import React from 'react';
 import Mention from 'react-tinymce-mention';

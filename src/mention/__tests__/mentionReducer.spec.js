@@ -1,8 +1,9 @@
 import findWhere from 'lodash.findwhere';
-import isEqual from 'lodash.isequal';
 import initializeRedux from '../utils/initializeRedux';
 import mentionReducer from '../reducers/mentionReducer';
 import simpleDataSource from './fixtures/simple';
+import jasmineHelpers from './helpers/jasmineHelpers';
+
 
 import {
   moveDown,
@@ -33,17 +34,7 @@ describe('mentionReducer', () => {
   const find = (name) => findWhere(dataSource, { displayLabel: name });
 
   beforeEach(function() {
-    jasmine.addMatchers({
-      toDeepEqual: function() {
-        return {
-          compare: function(actual, expected) {
-            return {
-              pass: isEqual(actual, expected)
-            };
-          }
-        };
-      }
-    });
+    jasmineHelpers();
 
     store = initializeRedux({ mention: mentionReducer }, {
       mention: {

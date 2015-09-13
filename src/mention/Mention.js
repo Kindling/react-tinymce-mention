@@ -53,8 +53,7 @@ export default class Mention {
       });
   }
 
-  _transformResponse(resolvedDataSource) {
-    const { transformFn } = this.props;
+  _transformResponse(resolvedDataSource, transformFn) {
     const isFunc = typeof transformFn === 'function';
 
     invariant(isFunc || typeof transformFn === 'undefined',
@@ -69,7 +68,7 @@ export default class Mention {
   }
 
   _transformAndDispatch({ editor, resolvedDataSource }) {
-    const { dataSource } = this._transformResponse(resolvedDataSource);
+    const { dataSource } = this._transformResponse(resolvedDataSource, this.props.transformFn);
     this.store.dispatch(finalizeSetup(editor, dataSource));
   }
 

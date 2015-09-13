@@ -21,12 +21,13 @@ config.externals = {
 
 config.plugins = [
   new webpack.DefinePlugin({
-    '__DEV__': JSON.stringify(false),
     'process.env': {
       NODE_ENV: JSON.stringify('production')
     }
   }),
-  new webpack.optimize.UglifyJsPlugin({ minimize: true })
+  new webpack.optimize.UglifyJsPlugin({
+    minimize: true
+  })
 ];
 
 module.exports = config;

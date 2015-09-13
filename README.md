@@ -14,6 +14,10 @@ Works best with [react-tinymce](https://github.com/mzabriskie/react-tinymce/tree
 
 ### Simple Use Case
 ```javascript
+import React from 'react';
+import Mention from 'react-tinymce-mention';
+import Editor from './components/Editor';
+
 React.render(
   <div>
     <Editor />
@@ -31,11 +35,11 @@ React.render(
 
 In the simplest case, only `dataSource` is required; the list containing `@mention` matches is rendered with a default set of components that you can hijack via stylesheet classes. See `src/mention/test-pages/simple.js` for a working example.
 
-### Advanced Use Case
+### Advanced Use Case (Complete API)
 ```javascript
 import React from 'react';
+import Mention from 'react-tinymce-mention';
 import Editor from './components/Editor';
-import Mention from '../Mention';
 import CustomList from './components/CustomList';
 import CustomRTEMention from './components/CustomRTEMention';
 import complexDataSource from './api/complexDataSource';
@@ -44,14 +48,17 @@ React.render(
   <div>
     <Editor />
     <Mention
-      delimiter={'#'}
+      delimiter={'@'}
       dataSource={complexDataSource}
       transformFn={dataSource => {
         return dataSource.map(result => {
           const { fullName } = result;
+
+          // When transforming your dataSource, a `displayLabel` and
+          // `searchKey` is required
           return {
-            searchKey: fullName,
-            displayLabel: fullName
+            displayLabel: fullName,
+            searchKey: fullName
           };
         });
       }}
@@ -113,7 +120,7 @@ React.render(
     <Editor />
     <Mention
       showDebugger={true}
-      delimiter={'@'}
+      delimiter={'#'}
       dataSource={axios.get('/public/api/complex.json')}
       transformFn={dataSource => {
         return dataSource.data.map(result => {

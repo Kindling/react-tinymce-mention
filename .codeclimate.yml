@@ -3,6 +3,5 @@ languages:
 exclude_paths:
   - "lib/*"
   - "public/*"
-  - "src/mention/test-data-source.js"
-  - "src/mention/test-page.js"
+  - "src/mention/test-pages/*"
   - "*/fixtures/*"

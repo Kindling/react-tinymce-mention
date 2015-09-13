@@ -4,9 +4,9 @@ import Mention from './mention/Mention';
 
 Promise.polyfill();
 
-// require('./mention/test-pages/simple');
-// require('./mention/test-pages/advanced');
-// require('./mention/test-pages/promise');
-// require('./mention/test-pages/async');
+// import './mention/test-pages/simple';
+// import './mention/test-pages/advanced';
+// import './mention/test-pages/promise';
+// import './mention/test-pages/async';
 
 export default Mention;

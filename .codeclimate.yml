@@ -1,8 +1,6 @@
 engines:
   eslint:
     enabled: true
-languages:
-  JavaScript: true
 exclude_paths:
   - "lib/*"
   - "public/*"

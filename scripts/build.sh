@@ -8,6 +8,6 @@ git clean -f $build_dir
 
 $babel ./src -d $build_dir --ignore "__tests__" --stage 0
 
-$webpack --config webpack.dist.js __DEV__=false
+$webpack --config webpack.dist.js
 
 echo "gzipped, the global build is `gzip -c $build_dir/umd/plugins/mention/plugin.min.js | wc -c | sed -e 's/^[[:space:]]*//'` bytes"

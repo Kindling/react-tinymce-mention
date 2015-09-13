@@ -7,7 +7,7 @@ Provides a simple yet flexible interface for adding `@mention` functionality int
 
 Works best with [react-tinymce](https://github.com/mzabriskie/react-tinymce/tree/master), but will work in any environment where `window.tinymce` is available.  
 
-![mentions](https://cloud.githubusercontent.com/assets/236943/9835116/bc38acb2-598e-11e5-9056-abc1eb8246d9.gif)
+![mentions](https://cloud.githubusercontent.com/assets/236943/9835178/028d5d72-5992-11e5-9c55-f94d78f3581d.gif)
 
 ## Installation
 `npm install --save react-tinymce-mention`

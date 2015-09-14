@@ -205,9 +205,9 @@ If you are not using `react-tinymce` and find that editor errors out stating tha
 
 ```
 npm install
-npm test
+npm test (or) npm run test-watch
 npm start
-open http://localhost:3000
+open http://localhost:3333
 ```
 
 Example implementations have been given in `src/mention/test-pages`. To enable, uncomment the relevant line in `src/index.js` and save.

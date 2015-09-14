@@ -3,7 +3,7 @@ import initializeRedux from '../utils/initializeRedux';
 import mentionReducer from '../reducers/mentionReducer';
 import simpleDataSource from './fixtures/simple';
 import jasmineHelpers from './helpers/jasmineHelpers';
-
+import redux from './helpers/redux';
 
 import {
   moveDown,
@@ -16,35 +16,14 @@ import {
 } from '../actions/mentionActions';
 
 describe('mentionReducer', () => {
-  var store;
+  let { initStore, dataSource, state, find } = redux();
+  let store, getState;
 
-  const dataSource = simpleDataSource.sort().map(source => {
-    return {
-      searchKey: source,
-      displayLabel: source
-    };
-  });
-
-  const getState = () => {
-    const state = store.getState().mention;
-    state.mentions.forEach(mention => delete mention.tinymceId);
-    return state;
-  };
-
-  const find = (name) => findWhere(dataSource, { displayLabel: name });
-
-  beforeEach(function() {
+  beforeEach(() => {
     jasmineHelpers();
 
-    store = initializeRedux({ mention: mentionReducer }, {
-      mention: {
-        asyncDataSource: false,
-        dataSource: dataSource,
-        highlightIndex: 0,
-        mentions: [],
-        query: ''
-      }
-    });
+    store = initStore();
+    getState = () => state(store);
   });
 
   it('should update the current lookup query', () => {

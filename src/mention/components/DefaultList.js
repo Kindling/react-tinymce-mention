@@ -3,11 +3,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import DefaultListItem from './DefaultListItem.js';
 
-@connect(state => ({
-  highlightIndex: state.mention.highlightIndex,
-  matchedSources: state.mention.matchedSources
-}))
-export default class DefaultList {
+export class DefaultList {
 
   static propTypes = {
     matchedSources: PropTypes.array.isRequired,
@@ -60,3 +56,8 @@ export default class DefaultList {
     );
   }
 }
+
+export default connect(state => ({
+  highlightIndex: state.mention.highlightIndex,
+  matchedSources: state.mention.matchedSources
+}))(DefaultList);

@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { select } from '../actions/mentionActions';
 
-@connect(state => ({
-  highlightIndex: state.mention.highlightIndex
-}))
 export default class DefaultListItem {
 
   static propTypes = {
@@ -35,3 +32,7 @@ export default class DefaultListItem {
     );
   }
 }
+
+export default connect(state => ({
+  highlightIndex: state.mention.highlightIndex
+}))(DefaultListItem);

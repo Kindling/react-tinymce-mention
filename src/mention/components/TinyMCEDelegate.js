@@ -6,11 +6,7 @@ import last from '../utils/last';
 import renderComponent from '../utils/renderComponent';
 import EditorMention from '../components/EditorMention';
 
-@connect(state => ({
-  editor: state.mention.editor,
-  mentions: state.mention.mentions
-}))
-export default class TinyMCEDelegate extends Component {
+export class TinyMCEDelegate extends Component {
 
   static propTypes = {
     customRTEMention: PropTypes.func,
@@ -99,3 +95,8 @@ export default class TinyMCEDelegate extends Component {
     return null;
   }
 }
+
+export default connect(state => ({
+  editor: state.mention.editor,
+  mentions: state.mention.mentions
+}))(TinyMCEDelegate);

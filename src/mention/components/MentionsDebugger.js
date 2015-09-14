@@ -1,11 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-@connect(state => ({
-  dataSource: state.mention.dataSource,
-  mentions: state.mention.mentions
-}))
-export default class MentionsDebugger {
+export class MentionsDebugger {
   render() {
     const { mentions, dataSource } = this.props;
 
@@ -42,3 +38,8 @@ export default class MentionsDebugger {
     );
   }
 }
+
+export default connect(state => ({
+  dataSource: state.mention.dataSource,
+  mentions: state.mention.mentions
+}))(MentionsDebugger);

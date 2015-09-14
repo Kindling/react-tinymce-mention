@@ -6,9 +6,9 @@
 
 Provides a simple yet flexible interface for adding `@mention` functionality into the TinyMCE rich text editor, built with [React.js](http://facebook.github.io/react/) and [Redux](https://github.com/gaearon/redux). Supports data sources that are simple Arrays as well as Promises, allows for data transformations, and exposes an interface for defining your own custom dropdown select menu.
 
-Works best with [react-tinymce](https://github.com/mzabriskie/react-tinymce/tree/master), but will work in any environment where `window.tinymce` is available.
+Out of the box support for all major browsers and IE 9-11, and will work with IE8 assuming your app implements a polyfill before the plugin is loaded (see https://babeljs.io/docs/usage/polyfill for polyfill instructions).
 
-Out of the box support for all major browsers and IE 9-11, and will work with IE8 assuming your app implements a polyfill before the plugin is loaded (if you're using Babel to compile your JavaScript, `import 'babel/polyfill'`).
+Works best with [react-tinymce](https://github.com/mzabriskie/react-tinymce/tree/master), but will work in any environment where `window.tinymce` is available.
 
 ![mentions](https://cloud.githubusercontent.com/assets/236943/9835207/4bd00be6-5993-11e5-8cdf-cf40a42f4498.gif)
 

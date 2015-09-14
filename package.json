@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/Kindling/react-tinymce-mention",
   "devDependencies": {
+    "axios": "git://github.com/mzabriskie/axios.git",
     "babel": "^5.8.23",
     "babel-core": "^5.8.20",
     "babel-eslint": "^4.0.5",
@@ -56,6 +57,7 @@
     "phantomjs": "^1.9.17",
     "pluck": "0.0.4",
     "react": "^0.13.0",
+    "react-tinymce": "^0.2.3",
     "react-test-tree": "^0.3.1",
     "react-tools": "^0.13.3",
     "webpack": "^1.10.5",
@@ -64,11 +66,9 @@
     "yargs": "^3.18.0"
   },
   "dependencies": {
-    "axios": "git://github.com/mzabriskie/axios.git",
     "classnames": "^2.1.3",
     "dom-closest": "^0.1.0",
     "dom-remove": "^1.1.0",
-    "es5-shim": "^4.1.13",
     "es6-promise": "^3.0.2",
     "invariant": "^2.1.0",
     "lodash.camelcase": "^3.0.1",
@@ -79,7 +79,6 @@
     "lodash.pluck": "^3.1.2",
     "lodash.without": "^3.2.1",
     "react-redux": "^2.1.0",
-    "react-tinymce": "^0.2.3",
     "redux": "^2.0.0",
     "redux-thunk": "^0.1.0",
     "sinon": "^1.16.1",

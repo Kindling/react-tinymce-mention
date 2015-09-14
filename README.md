@@ -4,6 +4,9 @@
 [![Build Status](https://travis-ci.org/Kindling/react-tinymce-mention.svg?branch=master)](https://travis-ci.org/Kindling/react-tinymce-mention)
 [![npm](https://img.shields.io/npm/v/react-tinymce-mention.svg)](https://www.npmjs.com/package/react-tinymce-mention)
 
+[![David](https://img.shields.io/david/kindling/react-tinymce-mention.svg)](https://david-dm.org/kindling/react-tinymce-mention)
+[![David](https://img.shields.io/david/dev/kindling/react-tinymce-mention.svg)](https://david-dm.org/kindling/react-tinymce-mention#info=devDependencies)
+
 Provides a simple yet flexible interface for adding `@mention` functionality into the TinyMCE rich text editor, built with [React.js](http://facebook.github.io/react/) and [Redux](https://github.com/gaearon/redux). Supports data sources that are simple Arrays as well as Promises, allows for data transformations, and exposes an interface for defining your own custom dropdown select menu.
 
 Works best with [react-tinymce](https://github.com/mzabriskie/react-tinymce/tree/master), but will work in any environment where `window.tinymce` is available.  

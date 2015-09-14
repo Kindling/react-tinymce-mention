@@ -1,1 +1,2 @@
-./node_modules/.bin/codeclimate-test-reporter < ./coverage/PhantomJS*/lcov.info
+LCOV=`find coverage/ -name lcov.info`
+node_modules/.bin/codeclimate-test-reporter < $LCOV;

@@ -63,7 +63,7 @@ React.render(
           };
         });
       }}
-      customListRenderer={({ highlightIndex, matchedSources, clickFn, fetching }) => {
+      customListRenderer={({ clickFn, fetching, highlightIndex, matchedSources }) => {
         return (
           <CustomList
             fetching={fetching}
@@ -83,11 +83,11 @@ React.render(
           />
         );
       }}
-      onAdd={({ mentions, changed }) => {
-        console.log('Added', mentions, changed);
+      onAdd={({ changed, mentions }) => {
+        console.log('Added', changed, mentions)
       }}
-      onRemove={({ mentions, changed }) => {
-        console.log('Removed', mentions, changed);
+      onRemove={({ changed, mentions }) => {
+        console.log('Removed', changed, mentions);
       }}
       showDebugger={true}
     />
@@ -156,7 +156,7 @@ React.render(
     <Mention
       showDebugger={true}
       delimiter={'@'}
-      asyncDataSource={(query) => {
+      asyncDataSource={query => {
         return new Promise(resolve => {
           axios.get(`/public/api/complex.json?q=${query}`)
             .then(response => {
@@ -164,7 +164,7 @@ React.render(
             });
         });
       }}
-      customListRenderer={({ highlightIndex, matchedSources, clickFn, fetching }) => {
+      customListRenderer={({ clickFn, fetching, highlightIndex, matchedSources }) => {
         return (
           <CustomList
             fetching={fetching}

@@ -126,7 +126,7 @@ function loadMentions(dataSource, resolve) {
         resolvedDataSource: dataSource
       });
     }
-  }, 20);
+  }, 100);
 }
 
 function start() {
@@ -144,7 +144,7 @@ function start() {
     editor.on('keypress', handleTopLevelEditorInput);
     editor.on('keydown', handleTopLevelActionKeys);
     editor.on('keyup', handleBackspace);
-  }, 20);
+  }, 50);
 }
 
 function stop() {

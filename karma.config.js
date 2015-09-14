@@ -1,15 +1,15 @@
 module.exports = function (config) {
 
   config.set({
-    // browsers: ['PhantomJS'],
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
+    // browsers: ['Chrome'],
 
     frameworks: [
       'jasmine',
       'jasmine-matchers'
     ],
 
-    reporters: ['progress', 'beep'],
+    reporters: ['progress', 'beep', 'coverage'],
 
     files: [
       'https://code.jquery.com/jquery-2.1.4.js',
@@ -20,8 +20,14 @@ module.exports = function (config) {
     preprocessors: {
       'karma.tests.webpack.js': [
         'webpack',
-        'sourcemap'
+        'sourcemap',
+        'coverage'
       ]
+    },
+
+    coverageReporter: {
+      type : 'lcov',
+      dir : 'coverage/'
     },
 
     webpack: {

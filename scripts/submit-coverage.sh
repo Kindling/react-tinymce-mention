@@ -1,0 +1,1 @@
+./node_modules/.bin/codeclimate-test-reporter < ./coverage/PhantomJS*/lcov.info

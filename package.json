@@ -5,11 +5,12 @@
   "main": "lib/index",
   "scripts": {
     "start": "node webpack.server.js",
-    "test": "node karma.server.js --single-run",
+    "test": "node karma.server.js --single-run && npm run submit-coverage",
     "test-watch": "node karma.server.js",
     "build": "sh scripts/build.sh",
     "prepublish": "npm run build",
-    "gh-pages": "sh scripts/gh-pages.sh"
+    "gh-pages": "sh scripts/gh-pages.sh",
+    "submit-coverage": "sh scripts/submit-coverage.sh"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "babel-eslint": "^4.0.5",
     "babel-loader": "^5.3.2",
     "babel-plugin-rewire": "^0.1.12",
+    "codeclimate-test-reporter": "^0.1.1",
     "eslint": "^1.0.0",
     "eslint-plugin-react": "^3.1.0",
     "gzip": "^0.1.0",
@@ -45,6 +47,7 @@
     "karma-babel-preprocessor": "^5.2.1",
     "karma-beep-reporter": "^0.1.4",
     "karma-chrome-launcher": "^0.2.0",
+    "karma-coverage": "^0.5.2",
     "karma-jasmine": "^0.3.6",
     "karma-jasmine-matchers": "^2.0.0-beta1",
     "karma-phantomjs-launcher": "^0.2.0",

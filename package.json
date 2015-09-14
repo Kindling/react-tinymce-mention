@@ -1,16 +1,15 @@
 {
   "name": "react-tinymce-mention",
-  "version": "0.1.0-rc.1",
+  "version": "0.1.0-rc.2",
   "description": "@Mention functionality for TinyMCE, built with React and Redux.",
   "main": "lib/index",
   "scripts": {
     "start": "node webpack.server.js",
-    "test": "node karma.server.js --single-run && npm run submit-coverage",
+    "test": "node karma.server.js --single-run",
     "test-watch": "node karma.server.js",
     "build": "sh scripts/build.sh",
     "prepublish": "npm run build",
-    "gh-pages": "sh scripts/gh-pages.sh",
-    "submit-coverage": "sh scripts/submit-coverage.sh"
+    "gh-pages": "sh scripts/gh-pages.sh"
   },
   "repository": {
     "type": "git",

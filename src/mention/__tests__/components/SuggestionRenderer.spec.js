@@ -3,7 +3,7 @@ import testTree from 'react-test-tree';
 import { SuggestionRenderer } from '../../components/SuggestionRenderer';
 import jasmineHelpers from '../helpers/jasmineHelpers';
 
-fdescribe('<SuggestionRenderer />', () => {
+describe('<SuggestionRenderer />', () => {
 
   beforeEach(() => {
     jasmineHelpers();

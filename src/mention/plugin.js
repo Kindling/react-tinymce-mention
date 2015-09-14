@@ -135,6 +135,7 @@ function start() {
   // inserting an @mention into the editor.
   if (window.tinymce.isIE) {
     editor.insertContent('&nbsp;');
+    editor.setContent('&nbsp;');
   }
 
   // FireFox fix

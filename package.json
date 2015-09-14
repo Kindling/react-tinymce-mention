@@ -46,7 +46,6 @@
     "karma-babel-preprocessor": "^5.2.1",
     "karma-beep-reporter": "^0.1.4",
     "karma-chrome-launcher": "^0.2.0",
-    "karma-coverage": "^0.5.2",
     "karma-jasmine": "^0.3.6",
     "karma-jasmine-matchers": "^2.0.0-beta1",
     "karma-phantomjs-launcher": "^0.2.0",

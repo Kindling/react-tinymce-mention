@@ -9,7 +9,7 @@ module.exports = function (config) {
       'jasmine-matchers'
     ],
 
-    reporters: ['progress', 'beep', 'coverage'],
+    reporters: ['progress', 'beep'],
 
     files: [
       'https://code.jquery.com/jquery-2.1.4.js',
@@ -21,13 +21,7 @@ module.exports = function (config) {
       'karma.tests.webpack.js': [
         'webpack',
         'sourcemap',
-        'coverage'
       ]
-    },
-
-    coverageReporter: {
-      type : 'lcov',
-      dir : 'coverage/'
     },
 
     webpack: {

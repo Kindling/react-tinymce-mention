@@ -130,7 +130,6 @@ function loadMentions(dataSource, resolve) {
 }
 
 function start() {
-  initIE();
 
   // FireFox fix
   setTimeout(() => {
@@ -312,16 +311,6 @@ function removeMentionFromEditor(mentionNode) {
 function normalizeEditorInput() {
   if (editor.getContent() === '' || editor.getContent({ format: 'raw' }) === '<br>') {
     editor.insertContent(' ');
-  }
-}
-
-function initIE() {
-  const ie = window.tinymce.isIE;
-
-  // IE fix against loss of cursor position when immediately
-  // inserting an @mention into the editor.
-  if (ie) {
-    editor.insertContent('&nbsp;&nbsp;');
   }
 }
 

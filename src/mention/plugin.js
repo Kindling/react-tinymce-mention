@@ -22,6 +22,7 @@ import {
 
 const keyMap = {
   BACKSPACE: 8,
+  DELETE: 46,
   DOWN: 40,
   ENTER: 13,
   TAB: 9,
@@ -162,7 +163,7 @@ function handleTopLevelEditorInput(event) {
 function handleTopLevelActionKeys(event) {
   const keyCode = getKeyCode(event);
 
-  if (focus.active && keyCode === keyMap.BACKSPACE) {
+  if (focus.active && keyCode === (keyMap.BACKSPACE || keyMap.DELETE)) {
     if (getLastChar(editor) === delimiter){
       stopListeningAndCleanup();
     } else {
@@ -207,7 +208,7 @@ function handleBackspace(event) {
   const mentionClassName = '.tinymce-mention';
   const $ = window.tinymce.dom.DomQuery;
 
-  if (keyCode === keyMap.BACKSPACE) {
+  if (keyCode === (keyMap.BACKSPACE || keyMap.DELETE)) {
     const node = editor.selection.getNode();
     const foundMentionNode = $(node).closest(mentionClassName)[0];
 
@@ -230,7 +231,7 @@ function shouldSelectOrMove(keyCode, event) {
   const { matchedSources } = store.getState().mention;
 
   if (matchedSources.length) {
-    if (keyCode === keyMap.BACKSPACE) {
+    if (keyCode === (keyMap.BACKSPACE || keyMap.DELETE)) {
       typedMention.update(keyCode);
       return handleKeyPress(event);
     }
@@ -279,7 +280,7 @@ function stopListeningAndCleanup() {
 }
 
 function updateMentionText(keyCode) {
-  const mentionText = keyCode !== keyMap.BACKSPACE
+  const mentionText = keyCode !== (keyMap.BACKSPACE || keyMap.DELETE)
     ? typedMention.update(getLastChar(editor))
     : typedMention.backspace();
 
@@ -333,7 +334,8 @@ function isFetching(keyMap, keyCode, store) {
 
     const inWhitelist = [
       keyMap.ESC,
-      keyMap.BACKSPACE
+      keyMap.BACKSPACE,
+      keyMap.DELETE
     ].some(k => k === actionKeyCode);
 
     return fetching && actionKeyCode === keyCode && !inWhitelist

@@ -1,4 +1,5 @@
 export default [
+  'admin@kindling',
   'test+noname',
   'test+categorymoderator',
   'Admin Awesomesauce',

@@ -295,7 +295,7 @@ function selectMention() {
 }
 
 function extractMentionFromNode(mentionNode, delimiter) {
-  const re = new RegExp('(?:' + delimiter + '|_)', 'g');
+  const re = new RegExp('(?:' + delimiter + '|_)');
   return mentionNode
     .innerHTML
     .replace(re, '')

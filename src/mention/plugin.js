@@ -163,7 +163,7 @@ function handleTopLevelEditorInput(event) {
 function handleTopLevelActionKeys(event) {
   const keyCode = getKeyCode(event);
 
-  if (focus.active && keyCode === (keyMap.BACKSPACE || keyMap.DELETE)) {
+  if (focus.active && keyCode === keyMap.BACKSPACE || keyCode === keyMap.DELETE) {
     if (getLastChar(editor) === delimiter){
       stopListeningAndCleanup();
     } else {
@@ -208,7 +208,7 @@ function handleBackspace(event) {
   const mentionClassName = '.tinymce-mention';
   const $ = window.tinymce.dom.DomQuery;
 
-  if (keyCode === (keyMap.BACKSPACE || keyMap.DELETE)) {
+  if (keyCode === keyMap.BACKSPACE || keyCode === keyMap.DELETE) {
     const node = editor.selection.getNode();
     const foundMentionNode = $(node).closest(mentionClassName)[0];
 
@@ -231,7 +231,7 @@ function shouldSelectOrMove(keyCode, event) {
   const { matchedSources } = store.getState().mention;
 
   if (matchedSources.length) {
-    if (keyCode === (keyMap.BACKSPACE || keyMap.DELETE)) {
+    if (keyCode === keyMap.BACKSPACE || keyCode.DELETE) {
       typedMention.update(keyCode);
       return handleKeyPress(event);
     }
@@ -280,7 +280,7 @@ function stopListeningAndCleanup() {
 }
 
 function updateMentionText(keyCode) {
-  const mentionText = keyCode !== (keyMap.BACKSPACE || keyMap.DELETE)
+  const mentionText = keyCode !== keyMap.BACKSPACE && keyCode !== keyMap.DELETE
     ? typedMention.update(getLastChar(editor))
     : typedMention.backspace();
 

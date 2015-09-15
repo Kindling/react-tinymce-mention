@@ -69,7 +69,7 @@ export class TinyMCEDelegate extends Component {
   _renderMentionIntoEditor() {
     const { customRTEMention, delimiter, editor, mentions } = this.props;
     const mention = last(mentions);
-    const re = new RegExp(delimiter + '\\w+___PLACEHOLDER___');
+    const re = new RegExp(delimiter + '\\S+___PLACEHOLDER___');
     const markup = customRTEMention
       ? customRTEMention({...mention, delimiter })
       : <EditorMention {...mention}

@@ -36,13 +36,10 @@ const actionsMap = {
   moveDown(state) {
     const { highlightIndex, matchedSources } = state;
     const len = matchedSources && matchedSources.length;
-    var newIndex;
 
-    if (highlightIndex < len - 1) {
-      newIndex = highlightIndex + 1;
-    } else {
-      newIndex = 0;
-    }
+    const newIndex = highlightIndex < len - 1
+      ? highlightIndex + 1
+      : 0;
 
     return {
       highlightIndex: newIndex
@@ -52,13 +49,10 @@ const actionsMap = {
   moveUp(state) {
     const { highlightIndex, matchedSources } = state;
     const len = matchedSources.length;
-    var newIndex;
 
-    if (highlightIndex > 0) {
-      newIndex = highlightIndex - 1;
-    } else {
-      newIndex = len - 1;
-    }
+    const newIndex = highlightIndex > 0
+      ? highlightIndex - 1
+      : len - 1;
 
     return {
       highlightIndex: newIndex
@@ -76,13 +70,10 @@ const actionsMap = {
     const matchedSources = dataSource.filter(source => {
       if (query.length) {
         const noSpaceQuery = query.replace(/\s/g, '');
-
         return source.searchKey
           .toUpperCase()
           .replace(/\s/g, '')
           .includes(noSpaceQuery);
-      } else {
-        return false;
       }
     });
 
@@ -109,7 +100,6 @@ const actionsMap = {
 
     const foundMention = last(mentions.filter(source => {
       const { displayLabel } = source;
-
       return displayLabel && displayLabel
         .toUpperCase()
         .includes(mention.toUpperCase());

@@ -17,11 +17,11 @@
   },
   "keywords": [
     "tinymce",
+    "mention",
     "mentions",
     "@mention",
-    "@mention",
+    "@mentions",
     "react",
-    "reactjs",
     "redux"
   ],
   "author": "Christopher Pappas <damassi.pappas@gmail.com>",

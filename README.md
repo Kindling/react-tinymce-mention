@@ -10,6 +10,8 @@ Out of the box support for all major browsers and IE 9-11, and will work with IE
 
 Works best with [react-tinymce](https://github.com/mzabriskie/react-tinymce/tree/master), but will work in any environment where `window.tinymce` is available.
 
+(NOTE: While this plugin is currently coupled with TinyMCE, extracting it from the current implementation should be fairly simple and we plan on releasing adaptors for other editors in the future.)
+
 ![mentions](https://cloud.githubusercontent.com/assets/236943/9835207/4bd00be6-5993-11e5-8cdf-cf40a42f4498.gif)
 
 ## Installation

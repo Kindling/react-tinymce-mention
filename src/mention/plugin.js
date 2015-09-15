@@ -130,18 +130,7 @@ function loadMentions(dataSource, resolve) {
 }
 
 function start() {
-  const ie = window.tinymce.isIE;
-
-  // IE fix against loss of cursor position when immediately
-  // inserting an @mention into the editor.
-  if (ie) {
-    if (ie === 11) {
-      editor.insertContent('&nbsp;');
-      editor.setContent('&nbsp;');
-    } else if (ie < 11) {
-      editor.insertContent('&nbsp;');
-    }
-  }
+  initIE();
 
   // FireFox fix
   setTimeout(() => {
@@ -323,6 +312,16 @@ function removeMentionFromEditor(mentionNode) {
 function normalizeEditorInput() {
   if (editor.getContent() === '' || editor.getContent({ format: 'raw' }) === '<br>') {
     editor.insertContent(' ');
+  }
+}
+
+function initIE() {
+  const ie = window.tinymce.isIE;
+
+  // IE fix against loss of cursor position when immediately
+  // inserting an @mention into the editor.
+  if (ie) {
+    editor.insertContent('&nbsp;&nbsp;');
   }
 }
 

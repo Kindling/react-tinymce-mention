@@ -130,11 +130,17 @@ function loadMentions(dataSource, resolve) {
 }
 
 function start() {
+  const ie = window.tinymce.isIE;
 
   // IE fix against loss of cursor position when immediately
   // inserting an @mention into the editor.
-  if (window.tinymce.isIE) {
-    editor.insertContent('&nbsp;');
+  if (ie) {
+    if (ie === 11) {
+      editor.insertContent('&nbsp;');
+      editor.setContent('&nbsp;');
+    } else if (ie < 11) {
+      editor.insertContent('&nbsp;');
+    }
   }
 
   // FireFox fix

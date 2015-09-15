@@ -1,6 +1,6 @@
 {
   "name": "react-tinymce-mention",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "@Mention functionality for TinyMCE, built with React and Redux.",
   "main": "lib/index",
   "scripts": {

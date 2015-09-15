@@ -12,6 +12,9 @@ validate_semver() {
   fi
 }
 
+echo "Did you remember to comment out example imports?"
+echo ""
+
 current_version=$(node -p "require('./package').version")
 
 printf "Next version (current is $current_version)? "

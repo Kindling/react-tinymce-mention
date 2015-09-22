@@ -9,6 +9,7 @@ import EditorMention from '../components/EditorMention';
 export class TinyMCEDelegate extends Component {
 
   static propTypes = {
+    beforeAdd: PropTypes.func,
     customRTEMention: PropTypes.func,
     editor: PropTypes.object,
     mentions: PropTypes.array,
@@ -58,11 +59,15 @@ export class TinyMCEDelegate extends Component {
 
   componentDidUpdate() {
     const { shouldRender } = this.state;
-    const { editor, mentions } = this.props;
+    const { beforeAdd, editor, mentions } = this.props;
     const mentionsValid = mentions && mentions.length;
 
     if (editor && mentionsValid && shouldRender) {
-      this._renderMentionIntoEditor();
+      if (beforeAdd) {
+        beforeAdd(::this._renderMentionIntoEditor, last(mentions));
+      } else {
+        this._renderMentionIntoEditor();
+      }
     }
   }
 

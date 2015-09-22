@@ -19,6 +19,7 @@ export default class Mention {
       PropTypes.object
     ]),
     asyncDataSource: PropTypes.func,
+    beforeAdd: PropTypes.func,
     customListRenderer: PropTypes.func,
     customRTEMention: PropTypes.func,
     delimiter: PropTypes.string,
@@ -74,6 +75,7 @@ export default class Mention {
 
   render() {
     const {
+      beforeAdd,
       customListRenderer,
       customRTEMention,
       delimiter,
@@ -91,6 +93,7 @@ export default class Mention {
           <TinyMCEDelegate
             delimiter={delimiter}
             customRTEMention={customRTEMention}
+            beforeAdd={beforeAdd}
             onAdd={onAdd}
             onRemove={onRemove}
           />

@@ -41,6 +41,10 @@ React.render(
           />
         );
       }}
+      beforeAdd={(render, props) => {
+        console.log(props);
+        return render();
+      }}
       onAdd={({ mentions, changed }) => {
         console.log('Added', mentions, changed);
       }}

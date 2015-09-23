@@ -33,7 +33,7 @@ const keyMap = {
 const defaultDelimiter = '@';
 const delimiterOptions = ['#', '@'];
 
-var delimiter, editor, store;
+let delimiter, editor, store;
 
 const focus = {
   active: false,

@@ -1,8 +1,7 @@
 import twitter from 'twitter-text';
 
 export default function extractMentions(content, delimiter) {
-  var mentions;
-  var prop;
+  let mentions, prop;
 
   if (delimiter === '@') {
     mentions = twitter.extractMentionsWithIndices(content);

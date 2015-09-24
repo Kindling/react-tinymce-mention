@@ -20,7 +20,7 @@ const {
   _loadMentions,
   _shouldSelectOrMove,
   _updateMentionText,
-  _normalizeEditorInput,
+  // _normalizeEditorInput,
   _isValidDelimiter,
 
   _removeMentionFromEditor,

@@ -353,7 +353,7 @@ export const testExports = {
   _loadMentions: loadMentions,
   _shouldSelectOrMove: shouldSelectOrMove,
   _updateMentionText: updateMentionText,
-  _normalizeEditorInput: normalizeEditorInput,
+  // _normalizeEditorInput: normalizeEditorInput,
   _isValidDelimiter: isValidDelimiter,
 
   _handleKeyPress: handleKeyPress,

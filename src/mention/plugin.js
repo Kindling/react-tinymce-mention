@@ -151,7 +151,7 @@ function handleTopLevelEditorInput(event) {
   const character = String.fromCharCode(keyCode);
   const foundDelimiter = delimiter.indexOf(character) > -1;
 
-  // normalizeEditorInput(editor);
+  normalizeEditorInput(editor);
 
   if (!focus.active && foundDelimiter) {
     startListeningForInput();
@@ -309,11 +309,11 @@ function removeMentionFromEditor(mentionNode) {
 
 // TODO: Cleanup
 // Force a root element in case one doesn't exist.
-// function normalizeEditorInput() {
-//   if (editor.getContent() === '' || editor.getContent({ format: 'raw' }) === '<br>') {
-//     editor.insertContent(' ');
-//   }
-// }
+function normalizeEditorInput() {
+  if (editor.getContent() === '' || editor.getContent({ format: 'raw' }) === '<br>') {
+    editor.insertContent(' ');
+  }
+}
 
 function pluginInitialized() {
   const ed = window.tinymce.activeEditor;
@@ -353,7 +353,7 @@ export const testExports = {
   _loadMentions: loadMentions,
   _shouldSelectOrMove: shouldSelectOrMove,
   _updateMentionText: updateMentionText,
-  // _normalizeEditorInput: normalizeEditorInput,
+  _normalizeEditorInput: normalizeEditorInput,
   _isValidDelimiter: isValidDelimiter,
 
   _handleKeyPress: handleKeyPress,

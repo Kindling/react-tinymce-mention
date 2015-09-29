@@ -231,7 +231,7 @@ function shouldSelectOrMove(keyCode, event) {
   const { matchedSources } = store.getState().mention;
 
   if (matchedSources.length) {
-    if (keyCode === keyMap.BACKSPACE || keyCode.DELETE) {
+    if (keyCode === keyMap.BACKSPACE || keyCode === keyCode.DELETE) {
       typedMention.update(keyCode);
       return handleKeyPress(event);
     }

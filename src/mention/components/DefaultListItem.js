@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { select } from '../actions/mentionActions';
 
-export default class DefaultListItem {
+export default class DefaultListItem extends React.Component {
 
   static propTypes = {
     highlightIndex: PropTypes.number.isRequired,

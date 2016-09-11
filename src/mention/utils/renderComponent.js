@@ -1,5 +1,5 @@
-import React from 'react';
+import ReactDomServer from 'react-dom/server'
 
 export default function renderComponent(component) {
-  return React.renderToStaticMarkup(component);
+  return ReactDomServer.renderToStaticMarkup(component);
 }

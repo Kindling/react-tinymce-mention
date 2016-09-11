@@ -1,9 +1,10 @@
 import isEqual from 'lodash.isequal';
 import React, { PropTypes } from 'react';
+import * as ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import DefaultListItem from './DefaultListItem.js';
 
-export class DefaultList {
+export class DefaultList extends React.Component {
 
   static propTypes = {
     matchedSources: PropTypes.array.isRequired,
@@ -18,8 +19,8 @@ export class DefaultList {
     const { highlightIndex, matchedSources } = this.props;
 
     if (matchedSources.length) {
-      const listNode = React.findDOMNode(this.refs.mentionList);
-      const focusedListItemNode = React.findDOMNode(this.refs['listItem' + highlightIndex]);
+      const listNode = ReactDOM.findDOMNode(this.refs.mentionList);
+      const focusedListItemNode = ReactDOM.findDOMNode(this.refs['listItem' + highlightIndex]);
       const listRect = listNode.getBoundingClientRect();
       const focusedRect = focusedListItemNode.getBoundingClientRect();
 

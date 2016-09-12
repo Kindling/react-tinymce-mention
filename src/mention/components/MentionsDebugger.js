@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-export class MentionsDebugger {
+export class MentionsDebugger extends React.Component {
   render() {
     const { mentions, dataSource } = this.props;
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { select } from '../actions/mentionActions';
 import DefaultList from '../components/DefaultList.js';
 
-export class SuggestionRenderer {
+export class SuggestionRenderer extends React.Component {
 
   static propTypes = {
     highlightIndex: PropTypes.number.isRequired,

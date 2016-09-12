@@ -10,7 +10,7 @@ import TinyMCEDelegate from './components/TinyMCEDelegate';
 import SuggestionRenderer from './components/SuggestionRenderer';
 import MentionsDebugger from './components/MentionsDebugger';
 
-export default class Mention {
+export default class Mention extends React.Component {
 
   static propTypes = {
     dataSource: PropTypes.oneOfType([
@@ -85,7 +85,7 @@ export default class Mention {
     } = this.props;
 
     return (
-      <Provider store={this.store}>{() =>
+      <Provider store={this.store}>
         <div>
           <SuggestionRenderer
             customListRenderer={customListRenderer}
@@ -100,7 +100,7 @@ export default class Mention {
           { showDebugger &&
             <MentionsDebugger /> }
         </div>
-      }</Provider>
+      </Provider>
     );
   }
 }

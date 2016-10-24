@@ -12,7 +12,7 @@ describe('tinyMCEUtils', () => {
 
   it('return the last character in a text area', () => {
     tinymce.activeEditor.setContent('<p>lorem ipsum</p>');
-    tinymce.activeEditor.focus();
+    tinymce.activeEditor.selection.select(tinyMCE.activeEditor.getBody(), true);
     expect(getLastChar(tinymce.activeEditor)).toEqual('m');
   });
 

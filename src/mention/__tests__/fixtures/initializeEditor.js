@@ -1,5 +1,6 @@
 import 'babel/polyfill';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import TinyMCE from 'react-tinymce';
 import Mention from '../../Mention';
 import simpleDataSource from './simple';
@@ -18,7 +19,7 @@ const plugins = [
 export default function initializeEditor() {
   var domNode = createContainer();
 
-  React.render(
+  ReactDOM.render(
     <div>
       <TinyMCE
         content={''}

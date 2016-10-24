@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default class CustomRTEMention {
+export default class CustomRTEMention extends React.Component {
 
   static propTypes = {
     displayLabel: PropTypes.string.isRequired,

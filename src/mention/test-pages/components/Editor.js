@@ -1,7 +1,7 @@
 import React from 'react';
 import TinyMCE from 'react-tinymce';
 
-export default class Editor {
+export default class Editor extends React.Component {
   render() {
     return (
       <div>

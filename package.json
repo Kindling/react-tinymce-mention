@@ -78,6 +78,7 @@
     "lodash.isequal": "^3.0.4",
     "lodash.pluck": "^3.1.2",
     "lodash.without": "^3.2.1",
+    "react-dom": "^15.3.2",
     "react-redux": "^2.1.0",
     "redux": "^2.0.0",
     "redux-thunk": "^0.1.0",

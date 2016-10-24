@@ -1,9 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Editor from './components/Editor';
 import Mention from '../Mention';
 
-React.render(
+ReactDOM.render(
   <div>
     <Editor />
     <Mention

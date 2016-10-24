@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import MentionListItem from './CustomListItem';
 
-export default class MentionList {
+export default class MentionList extends React.Component {
 
   static propTypes = {
     fetching: PropTypes.bool.isRequired,
@@ -14,8 +15,8 @@ export default class MentionList {
     const { highlightIndex, matchedSources } = this.props;
 
     if (matchedSources.length) {
-      const listNode = React.findDOMNode(this.refs.mentionList);
-      const focusedListItemNode = React.findDOMNode(this.refs['listItem' + highlightIndex]);
+      const listNode = ReactDOM.findDOMNode(this.refs.mentionList);
+      const focusedListItemNode = ReactDOM.findDOMNode(this.refs['listItem' + highlightIndex]);
       const listRect = listNode.getBoundingClientRect();
       const focusedRect = focusedListItemNode.getBoundingClientRect();
 

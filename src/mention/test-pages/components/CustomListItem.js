@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 
-export default class CustomListItem {
+export default class CustomListItem extends React.Component {
 
   static propTypes = {
     displayLabel: PropTypes.string.isRequired,
@@ -14,10 +14,6 @@ export default class CustomListItem {
     event.stopPropagation();
     const { index, onClick } = this.props;
     onClick(index);
-  }
-
-  componentWillMount() {
-    React.initializeTouchEvents(true);
   }
 
   render() {

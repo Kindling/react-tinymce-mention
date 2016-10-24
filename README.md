@@ -17,13 +17,17 @@ Works best with [react-tinymce](https://github.com/mzabriskie/react-tinymce/tree
 ## Installation
 `npm install --save react-tinymce-mention`
 
+## Compatibility
+The `0.2.x` line uses React `13.x`; if you're using React `15.x`, pull `0.3.x`.
+
 ### Simple Use Case
 ```javascript
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Mention from 'react-tinymce-mention';
 import Editor from './components/Editor';
 
-React.render(
+ReactDOM.render(
   <div>
     <Editor />
     <Mention dataSource={[
@@ -43,13 +47,14 @@ In the simplest case, only `dataSource` is required; the list containing `@menti
 ### Advanced (Complete API, minus `asyncDataSource`)
 ```javascript
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Mention from 'react-tinymce-mention';
 import Editor from './components/Editor';
 import CustomList from './components/CustomList';
 import CustomRTEMention from './components/CustomRTEMention';
 import complexDataSource from './api/complexDataSource';
 
-React.render(
+ReactDOM.render(
   <div>
     <Editor />
     <Mention
@@ -116,11 +121,12 @@ See `src/mention/test-pages/advanced.js` for a working example.
 ### Promise Example
 ```javascript
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Mention from 'react-tinymce-mention';
 import axios from 'axios';
 import Editor from './components/Editor';
 
-React.render(
+ReactDOM.render(
   <div>
     <Editor />
     <Mention
@@ -149,12 +155,13 @@ See `src/mention/test-pages/promise.js` for a working example.
 ### Async Example
 ```javascript
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Mention from 'react-tinymce-mention';
 import axios from 'axios';
 import Editor from './components/Editor';
 import CustomList from './components/CustomList';
 
-React.render(
+ReactDOM.render(
   <div>
     <Editor />
     <Mention
